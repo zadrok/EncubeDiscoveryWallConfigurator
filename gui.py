@@ -34,10 +34,8 @@ class GUI(tk.Frame):
 
     def create_screen(self):
         print("Creating a screen")
-        screen_paned = tk.PanedWindow(orient="vertical")
-        screen_label = tk.Label(text="Screen")
-        screen_paned.add(screen_label)
-        self.paned.add(screen_paned)
+        screen = Screen("id",120,400)
+        self.paned.add(screen.getTkObject())
 
     def set_up_canvas(self):
         # self.canvas = tk.PanedWindow(self,fill=BOTH,expand=1,bg="white")
