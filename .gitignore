@@ -102,7 +102,7 @@ ENV/
 
 other.xml
 jdk.table.xml
-ide.genereal.xml
+ide.general.xml
 editor.xml
 editor.codeinsight.xml
 debugger.xml
