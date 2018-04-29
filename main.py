@@ -1,10 +1,9 @@
 import tkinter as tk
 
-from model import Model
 from gui import GUI
-from screen import Screen
-from panel import Panel
 from jsonHandler import JsonHandler
+from model import Model
+
 
 class Application:
     def __init__(self):
@@ -17,11 +16,11 @@ class Application:
 
         self.root = tk.Tk()
         self.rootPrep()
-        
-        self.gui = GUI(self.model,self.jsonHandler,self.root)
+
+        self.gui = GUI(self.model, self.jsonHandler, self.root)
 
     def rootPrep(self):
-        self.root.minsize(width=self.width,height=self.height)
+        self.root.minsize(width=self.width, height=self.height)
         self.root.wm_title(self.title)
 
     def run(self):

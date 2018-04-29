@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 class Screen:
     def __init__(self, id="id", width=100, height=100):
         self.name = id

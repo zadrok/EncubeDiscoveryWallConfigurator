@@ -1,10 +1,14 @@
+import json
 
 class JsonHandler:
-    def __init__(self):
-        self.defaultFile = 'defaultConfig.json'
+    def importFile(self, file):
+        conifg = None
+        try:
+            conifg = json.load(open(file))
+        except FileNotFoundError:
+            print("Could not find/open " + str(file))
+        return conifg
 
-    def importConfig(self,file):
-        pass
-
-    def exportConfig(self,model):
-        pass
+    def exportFile(self, model, fileName):
+        with open(fileName, 'w') as outfile:
+            json.dump(model.options, outfile)
