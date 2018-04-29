@@ -1,7 +1,7 @@
 <application>
   <component name="FindSettings">
-    <option name="customScope" value="File '[controldev] - ...\fmaster.py'" />
-    <option name="defaultScopeName" value="File '[controldev] - ...\fmaster.py'" />
-    <option name="SEARCH_SCOPE" value="File '[controldev] - ...\fmaster.py'" />
+    <option name="customScope" value="Project 'EncubeDiscoveryWallConfigurator'" />
+    <option name="defaultScopeName" value="Project 'EncubeDiscoveryWallConfigurator'" />
+    <option name="SEARCH_SCOPE" value="Project 'EncubeDiscoveryWallConfigurator'" />
   </component>
 </application>
