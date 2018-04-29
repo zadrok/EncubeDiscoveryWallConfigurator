@@ -10,6 +10,7 @@ class GUI(tk.Frame):
         self.model = model
         self.jsonHandler = jsonHandler
         self.root = root
+        self.screens = []
         self.grid()
         self.create_widgets()
 
@@ -33,9 +34,22 @@ class GUI(tk.Frame):
         print("hi there, everyone!")
 
     def create_screen(self):
-        print("Creating a screen")
+        # Creating a new screen.
         screen = Screen("id",120,400)
-        self.paned.add(screen.getTkObject())
+        self.screens.append(screen)
+        count_screens = len(self.screens)
+        # Calculate new size of screens.
+        width = self.root.winfo_width() / count_screens
+        self.paned.add(screen.getTkObject(
+            window_height=self.root.winfo_height(),
+            window_width=width)
+        )
+        children = self.paned.winfo_children()
+        for screen in children:
+            screen.configure(width=width)
+        # self.paned.add(screen.getTkObject(
+        #     window_height=self.root.winfo_height(),
+        #     window_width=self.root.winfo_width()))
 
     def set_up_screen_area(self):
         self.paned = tk.PanedWindow(orient="horizontal",width=1280,height=720)

@@ -7,9 +7,10 @@ class Screen:
         self.width = width
         self.height = height
 
-    def getTkObject(self):
-    	paned = tk.PanedWindow(orient="vertical", bg="blue")
-    	text = self.id + ": " + str(self.width) + " x " + str(self.height)
-    	label = tk.Label(text=text)
-    	paned.add(label)
-    	return paned
+    def getTkObject(self, window_height, window_width):
+
+        paned = tk.PanedWindow(orient="vertical", bg="blue", height=window_height, width=window_width)
+        text = self.id + ": " + str(self.width) + " x " + str(self.height)
+        label = tk.Label(text=text)
+        paned.add(label)
+        return paned
