@@ -24,7 +24,7 @@ class GUI(tk.Frame):
         self.add_screen["command"] = self.create_screen
         self.add_screen.grid(row=0,column=1)
 
-        self.set_up_canvas()
+        self.set_up_screen_area()
 
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.root.destroy)
         self.quit.grid(row=1, column=0)
@@ -37,7 +37,6 @@ class GUI(tk.Frame):
         screen = Screen("id",120,400)
         self.paned.add(screen.getTkObject())
 
-    def set_up_canvas(self):
-        # self.canvas = tk.PanedWindow(self,fill=BOTH,expand=1,bg="white")
+    def set_up_screen_area(self):
         self.paned = tk.PanedWindow(orient="horizontal",width=1280,height=720)
         self.paned.grid(row=2,column=0)
