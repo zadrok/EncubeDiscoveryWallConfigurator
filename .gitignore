@@ -99,3 +99,13 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+other.xml
+jdk.table.xml
+ide.genereal.xml
+editor.xml
+editor.codeinsight.xml
+debugger.xml
+colors.scheme.xml
+codestyles/*
+_windows/*
