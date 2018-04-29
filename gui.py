@@ -37,19 +37,22 @@ class GUI(tk.Frame):
         # Creating a new screen.
         screen = Screen("id",120,400)
         self.screens.append(screen)
-        count_screens = len(self.screens)
+
         # Calculate new size of screens.
-        width = self.root.winfo_width() / count_screens
+        count_screens = len(self.screens)
+        height = self.root.winfo_height()
+        if count_screens > 0:
+            width = self.root.winfo_width() / count_screens
+        else:
+            width = self.root.winfo_width()
+
         self.paned.add(screen.getTkObject(
-            window_height=self.root.winfo_height(),
-            window_width=width)
-        )
-        children = self.paned.winfo_children()
-        for screen in children:
-            screen.configure(width=width)
-        # self.paned.add(screen.getTkObject(
-        #     window_height=self.root.winfo_height(),
-        #     window_width=self.root.winfo_width()))
+                window_height=height,
+                window_width=width)
+            )
+
+        for screen in self.paned.panes():
+            screen.config(width=width)
 
     def set_up_screen_area(self):
         self.paned = tk.PanedWindow(orient="horizontal",width=1280,height=720)
