@@ -14,23 +14,15 @@ class GUI(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.grid(row=0, column=0)
-
         self.add_screen = tk.Button(self)
         self.add_screen["text"] = "Add Screen"
         self.add_screen["command"] = self.create_screen
-        self.add_screen.grid(row=0, column=1)
+        self.add_screen.grid(row=0, column=0)
 
         self.set_up_screen_area()
 
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.root.destroy)
-        self.quit.grid(row=1, column=0)
-
-    def say_hi(self):
-        print("hi there, everyone!")
+        self.quit.grid(row=0, column=1)
 
     def create_screen(self):
 

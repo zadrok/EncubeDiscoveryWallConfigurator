@@ -9,6 +9,15 @@ class Screen:
         self.id = self.name + " : " + str(self.width) + " x " + str(self.height)
         self.pane = tk.LabelFrame(text=self.id, padx=self.height, pady=self.width)
 
+        self.panels = []
+        
+        self.add_panel = tk.Button(self.pane, text="+", command=self.create_panel)
+        self.add_panel.pack(fill="y")
+
+        # Set up delete button
+        self.delete = tk.Button(self.pane, text="Delete", command=self.delete)
+        self.delete.pack(fill="y")
+
     def get_pane(self):
         return self.pane
 
@@ -28,3 +37,10 @@ class Screen:
 
     def set_id(self, id):
         self.id = id + ": " + str(self.width) + " x " + str(self.height)
+
+    def delete(self):
+        print("Delete Screen: " + str(self.id))
+        # ToDo: emit event from here, listen for it in gui.class.
+
+    def create_panel(self): 
+        print("Creating Panel");
