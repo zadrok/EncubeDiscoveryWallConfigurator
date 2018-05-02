@@ -17,7 +17,7 @@ class Application:
 
         self.root = tk.Tk()
         self.rootPrep()
-        
+
         self.gui = GUI(self.model,self.jsonHandler,self.root)
 
     def rootPrep(self):
