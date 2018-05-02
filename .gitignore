@@ -109,3 +109,4 @@ debugger.xml
 colors.scheme.xml
 codestyles/*
 _windows/*
+.idea/

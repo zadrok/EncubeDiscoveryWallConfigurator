@@ -27,7 +27,7 @@ class GUI(tk.Frame):
     def create_screen(self):
 
         # Creating a new screen.
-        s = Screen("id", 0, 0)
+        s = Screen(self, "id", 0, 0, )
         self.screens.append(s)
 
         # Calculate new size of screens.
@@ -49,4 +49,29 @@ class GUI(tk.Frame):
 
     def set_up_screen_area(self):
         self.paned = tk.PanedWindow(orient="horizontal", width=1280, height=720)
+        self.paned.bind("<<Screen-Delete>>", lambda e: print("Screen Deleted"))
         self.paned.grid(row=2, column=0)
+
+    def delete_screen(self, id):
+        print("Gui@delete_screen" + str(id))
+        screen = None
+
+        for index, screen in enumerate(self.screens):
+            if screen.id == id:
+                screen = index
+        
+        for sc in self.screens:
+            self.paned.remove(sc.get_pane())
+
+        self.screens.pop(screen)
+        
+        count_screens = len(self.screens)
+
+        width = (self.root.winfo_width() / count_screens) if (count_screens > 0) else self.root.winfo_width()
+
+        for sc in self.screens:
+            sc.set_width(width)
+            sc.set_id(sc.get_name())
+            sc.update_pane()
+        for sc in self.screens:
+            self.paned.add(sc.get_pane(), stretch="always")
