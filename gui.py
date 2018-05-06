@@ -14,7 +14,10 @@ class GUI(tk.Frame):
         self.quit = None
         self.add_screen = None
         self.canvas = None
-        self.canvas_w = 1280
+        self.split_mode = None
+        self.split_h = tk.IntVar()
+        self.split_v = tk.IntVar()
+        self.canvas_w = 1080
         self.canvas_h = 720
         self.create_widgets()
 
@@ -27,24 +30,38 @@ class GUI(tk.Frame):
 
         self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
         self.canvas.bind('<Button-1>', self.canvas_clicked)
-        self.canvas.pack()
+        self.canvas.pack(side="left")
+
+        self.split_mode = tk.LabelFrame(self, text="Split Mode", width=200)
+        vert = tk.Checkbutton(self.split_mode, text="Vertical", variable=self.split_v)
+        hori = tk.Checkbutton(self.split_mode, text="Horizontal", variable=self.split_h)
+        vert.pack(fill="x")
+        hori.pack(fill="x")
+        self.split_mode.pack(side="left")
+
+        # vert = tk.Checkbutton(self, text="Vertical", variable=self.split_v)
+        # hori = tk.Checkbutton(self, text="Horizontal", variable=self.split_h)
+        # vert.pack(side="left")
+        # hori.pack(side="left")
+
 
     def canvas_clicked(self, event):
         print("clicked at: ", event.x, "x", event.y)
+        split_v = self.split_v.get()
+        split_h = self.split_h.get()
         for s in self.screens:
             sx = s.get_x()
             sw = s.get_width()
-            sy = s.get_y()
-            sh = s.get_height()
 
             ex = event.x
             ey = event.y
             if ex >= sx and ex <=  sw:
-                print("click within screen x", s.get_id())
+                s.clicked(ex, ey, split_v, split_h)
+
 
 
     def create_screen(self):
-        s = Screen(self.canvas, "Screen", 0, 0, 0, 0, self.random_color())
+        s = Screen(self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d")
         self.screens.append(s)
         count_screens = len(self.screens)
 

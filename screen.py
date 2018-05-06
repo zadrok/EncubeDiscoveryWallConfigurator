@@ -60,3 +60,11 @@ class Screen:
 
     def set_canvas(self, canvas):
         self.canvas = canvas
+
+    def clicked(self, x, y, h, v):
+        print("I, ", self.get_id(), " have been clicked at ", x, ",", y)
+        print("I have been asked to split: ")
+        if h:
+            print("horizontally")
+        if v:
+            print("vertically")
