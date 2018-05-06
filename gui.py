@@ -56,7 +56,7 @@ class GUI(tk.Frame):
             ex = event.x
             ey = event.y
             if ex >= sx and ex <=  sw:
-                s.clicked(ex, ey, split_v, split_h)
+                s.clicked(ex, ey, split_h, split_v)
 
 
 
