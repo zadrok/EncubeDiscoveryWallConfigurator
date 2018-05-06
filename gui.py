@@ -26,7 +26,22 @@ class GUI(tk.Frame):
         self.add_screen.pack()
 
         self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
+        self.canvas.bind('<Button-1>', self.canvas_clicked)
         self.canvas.pack()
+
+    def canvas_clicked(self, event):
+        print("clicked at: ", event.x, "x", event.y)
+        for s in self.screens:
+            sx = s.get_x()
+            sw = s.get_width()
+            sy = s.get_y()
+            sh = s.get_height()
+
+            ex = event.x
+            ey = event.y
+            if ex >= sx and ex <=  sw:
+                print("click within screen x", s.get_id())
+
 
     def create_screen(self):
         s = Screen(self.canvas, "Screen", 0, 0, 0, 0, self.random_color())
@@ -36,10 +51,13 @@ class GUI(tk.Frame):
         self.canvas.delete("all")
 
         for i, s in enumerate(self.screens):
-            x = (self.canvas_w / count_screens) * i if (i > 0) else 0
+            x = (self.canvas_w / count_screens) * i
+            w = (self.canvas_w / count_screens) + x
             y = 0
-            w = x * 2 if (x > 0) else self.canvas_w
             h = 720
+
+            ident = "#" + str(i) + ": " + str(x) + "," + str(y)
+            s.set_id(ident)
             s.set_position(x, y, w, h)
             s.draw()
 
