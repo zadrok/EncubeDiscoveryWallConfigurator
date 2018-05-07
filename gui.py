@@ -39,11 +39,8 @@ class GUI(tk.Frame):
         hori.pack(fill="x")
         self.split_mode.pack(side="left")
 
-        # vert = tk.Checkbutton(self, text="Vertical", variable=self.split_v)
-        # hori = tk.Checkbutton(self, text="Horizontal", variable=self.split_h)
-        # vert.pack(side="left")
-        # hori.pack(side="left")
-
+        for i in range(0, 6):
+            self.create_screen()
 
     def canvas_clicked(self, event):
         print("clicked at: ", event.x, "x", event.y)
