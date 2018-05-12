@@ -12,6 +12,5 @@ class MainWindow(tk.Frame):
 
     def createWidgets(self):
         # menu bar
-        self.menuBar = MBMain(self.root)
+        self.menuBar = MBMain(self)
         # other stuff
-        

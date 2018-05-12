@@ -24,6 +24,8 @@ class GUI():
         self.optionsWindow = OptionsWindow(self,self.root)
         self.optionsWindow.title("Options")
         self.optionsWindow.minsize(width=self.widthOptions,height=self.heightOptions)
+        # start with the options window closed
+        self.optionsWindow.withdraw()
 
     def mainloop(self):
         self.mainWindow.mainloop()

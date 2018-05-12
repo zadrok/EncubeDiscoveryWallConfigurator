@@ -2,9 +2,10 @@ import tkinter as tk
 from menuBar import MBOptions
 
 class OptionsWindow(tk.Toplevel):
-    def __init__(self,gui,root):
-        super().__init__(root)
-        self.root = root
+    def __init__(self,gui,master):
+        super().__init__(master)
+        self.master = master
+        self.protocol('WM_DELETE_WINDOW', self.withdraw)
         self.gui = gui
         self.grid()
 
@@ -38,8 +39,8 @@ class OptionsWindow(tk.Toplevel):
 
 
 class Item:
-    def __init__(self,root,i,j,key,value):
-        self.root = root
+    def __init__(self,master,i,j,key,value):
+        self.master = master
         self.i = i
         self.j = j
         self.key = key
@@ -47,8 +48,8 @@ class Item:
 
         self.entryVar = tk.StringVar()
         self.entryVar.set( str(self.value) )
-        self.label = tk.Label(self.root, text=str(self.key))
-        self.entry = tk.Entry(self.root, textvariable=self.entryVar, width=30)
+        self.label = tk.Label(self.master, text=str(self.key))
+        self.entry = tk.Entry(self.master, textvariable=self.entryVar, width=30)
 
         self.label.grid(row=i,column=j)
         self.entry.grid(row=i,column=j+1)
