@@ -10,20 +10,16 @@ class GUI():
 
         self.widthMain = 1280
         self.heightMain = 720
-        self.titleMain = "Encube Discovery Wall Configurator"
-        self.rootMain = tk.Tk()
-        self.rootMain.minsize(width=self.widthMain,height=self.heightMain)
-        self.rootMain.wm_title(self.titleMain)
-        self.mainWindow = MainWindow(self,self.rootMain)
+        self.root = tk.Tk()
+        self.root.title("Encube Discovery Wall Configurator")
+        self.root.minsize(width=self.widthMain,height=self.heightMain)
+        self.mainWindow = MainWindow(self,self.root)
 
         self.widthOptions = 600
         self.heightOptions = 800
-        self.titleOptions = "Options"
-        self.rootOptions = tk.Tk()
-        self.rootOptions.minsize(width=self.widthOptions,height=self.heightOptions)
-        self.rootOptions.wm_title(self.titleOptions)
-        self.optionsWindow = OptionsWindow(self,self.rootOptions)
+        self.optionsWindow = OptionsWindow(self,self.root)
+        self.optionsWindow.title("Options")
+        self.optionsWindow.minsize(width=self.widthOptions,height=self.heightOptions)
 
     def mainloop(self):
         self.mainWindow.mainloop()
-        self.optionsWindow.mainloop()

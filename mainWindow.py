@@ -6,9 +6,7 @@ class MainWindow(tk.Frame):
         super().__init__(root)
         self.root = root
         self.gui = gui
-
-        self.frame = tk.Frame(master=self.root)
-        self.frame.grid()
+        self.grid()
 
         self.createWidgets()
 
@@ -16,3 +14,4 @@ class MainWindow(tk.Frame):
         # menu bar
         self.menuBar = MBMain(self.root)
         # other stuff
+        
