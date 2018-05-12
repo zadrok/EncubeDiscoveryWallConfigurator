@@ -8,6 +8,7 @@ class GUI():
         self.model = model
         self.jsonHandler = jsonHandler
 
+        # setup main window
         self.widthMain = 1280
         self.heightMain = 720
         self.root = tk.Tk()
@@ -15,7 +16,10 @@ class GUI():
         self.root.minsize(width=self.widthMain,height=self.heightMain)
         self.mainWindow = MainWindow(self,self.root)
 
-        self.widthOptions = 600
+        # setup options window
+        # child of main window, will close when main does
+        # can be hidden/closed without affecting main window
+        self.widthOptions = 650
         self.heightOptions = 800
         self.optionsWindow = OptionsWindow(self,self.root)
         self.optionsWindow.title("Options")

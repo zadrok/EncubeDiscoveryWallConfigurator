@@ -27,8 +27,8 @@ class OptionsWindow(tk.Toplevel):
             self.items.append( Item( self, i, j, str(key), str(value) ) )
             i += 1
 
-        self.button = tk.Button(self, text='Check Print', command=self.printCallback)
-        self.button.grid()
+        # self.button = tk.Button(self, text='Check Print', command=self.printCallback)
+        # self.button.grid()
 
 
     def printCallback(self):
@@ -48,7 +48,7 @@ class Item:
         self.entryVar = tk.StringVar()
         self.entryVar.set( str(self.value) )
         self.label = tk.Label(self.root, text=str(self.key))
-        self.entry = tk.Entry(self.root, textvariable=self.entryVar)
+        self.entry = tk.Entry(self.root, textvariable=self.entryVar, width=30)
 
         self.label.grid(row=i,column=j)
         self.entry.grid(row=i,column=j+1)

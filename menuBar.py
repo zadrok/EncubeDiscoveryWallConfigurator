@@ -8,7 +8,6 @@ class MBMain():
         self.fileMenu.add_command(label = "Open", command = self.doNothing)
         self.fileMenu.add_command(label = "Save", command = self.doNothing)
         self.fileMenu.add_command(label = "Save as...", command = self.doNothing)
-        self.fileMenu.add_command(label = "Close", command = self.doNothing)
         self.fileMenu.add_separator()
         self.fileMenu.add_command(label = "Exit", command = root.quit)
 
@@ -36,7 +35,7 @@ class MBMain():
         root.config(menu=self.menuBar)
 
     def doNothing(self):
-        pass
+        print( ' This button does nothing ' )
 
 class MBOptions():
     def __init__(self,root):
@@ -44,7 +43,7 @@ class MBOptions():
         self.fileMenu = tk.Menu(self.menuBar,tearoff=0)
         self.fileMenu.add_command(label="None", command = self.doNothing)
         self.fileMenu.add_separator()
-        self.fileMenu.add_command(label = "Exit", command = root.quit)
+        self.fileMenu.add_command(label = "Close", command = root.withdraw)
         self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
 
         self.editMenu = tk.Menu(self.menuBar, tearoff=0)
@@ -58,4 +57,4 @@ class MBOptions():
         root.config(menu=self.menuBar)
 
     def doNothing(self):
-        pass
+        print( ' This button does nothing ' )
