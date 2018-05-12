@@ -29,6 +29,7 @@ class MBMain():
 # ------------------------------------------------------------------------------
         self.optionMenu = tk.Menu(self.menuBar,tearoff=0)
         self.optionMenu.add_command(label = "Options", command = self.master.gui.toggleOptionWindow)
+        self.optionMenu.add_command(label = "Print Options", command = self.master.gui.model.printOptions)
         self.menuBar.add_cascade(label = "Options", menu = self.optionMenu)
 # ------------------------------------------------------------------------------
         # self.helpMenu = tk.Menu(self.menuBar, tearoff=0)

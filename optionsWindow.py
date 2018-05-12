@@ -27,6 +27,8 @@ class OptionsWindow(tk.Toplevel):
             self.items.append( Item( self, self.i, self.j, str(key), str(value) ) )
             self.i += 1
 
+        self.refreshValues()
+
         # window used to create options
         self.addOptionsWindow = AddOptionsWindow(self)
         self.addOptionsWindow.withdraw()
@@ -97,11 +99,15 @@ class Item:
 
         self.entryVar = tk.StringVar()
         self.entryVar.set( str(self.value) )
+        self.entryVar.trace('w', self.callback)
         self.label = tk.Label(self.master, text=str(self.key))
         self.entry = tk.Entry(self.master, textvariable=self.entryVar, width=30)
 
         self.label.grid(row=i,column=j)
         self.entry.grid(row=i,column=j+1)
+
+    def callback(self,*args):
+        self.master.gui.model.updateOption( self.key,self.entryVar.get() )
 
     def reGrid(self,i,j):
         self.label.grid(row=i,column=j)

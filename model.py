@@ -12,11 +12,26 @@ class Model:
     def addOption(self,key,value):
         self.options.update( {key:value} )
 
+    def updateOption(self,uKey,uValue):
+        # print('update called')
+        for key,value in self.options.items():
+            if key == uKey:
+                # print( str(key) + ' == ' + str(uKey) )
+                self.options[key] = uValue
+                # value = uValue
+
     def inOptions(self,item):
         for key,value in self.options.items():
             if key == item:
                 return True
         return False
+
+    def printOptions(self):
+        print('---------------------')
+        print('All Options:')
+        for k,v in self.options.items():
+            print( 'K: ' + str(k) + ', v: ' + str(v) )
+        print('---------------------')
 
 
     def open(self,fname):
