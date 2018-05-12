@@ -16,27 +16,54 @@ class OptionsWindow(tk.Toplevel):
         self.menuBar = MBOptions(self)
         # options
         self.items = []
-        i = 0
-        j = 0
+        self.i = 0
+        self.j = 0
+        self.max = 30
+        self.side = 11
         for key,value in self.gui.model.options.items():
-            # print( str(key) + ' ' + str(value) )
+            if self.i > self.max:
+                self.i = 0
+                self.j += self.side
+            self.items.append( Item( self, self.i, self.j, str(key), str(value) ) )
+            self.i += 1
 
-            if i > 30:
-                i = 0
-                j += 11
+    def refreshValues(self):
+        # change options or add new ones
+        for key,value in self.gui.model.options.items():
+            # find option
+            if self.getItem(key) != None:
+                self.getItem(key).entryVar.set(value)
+            else:
+                # add this as a new option
+                if self.i > self.max:
+                    self.i = 0
+                    self.j += self.side
+                self.items.append( Item( self, self.i, self.j, str(key), str(value) ) )
+                self.i += 1
+        # remove old item if not needed
+        for itm in self.items:
+            if not self.gui.model.inOptions(itm.key):
+                itm.destroy()
+                self.items.remove(itm)
+        # make sure there are no gapes between items
+        self.reGridItems()
 
-            self.items.append( Item( self, i, j, str(key), str(value) ) )
-            i += 1
+    def reGridItems(self):
+        self.i = 0
+        self.j = 0
+        self.max = 30
+        self.side = 11
+        for item in self.items:
+            if self.i > self.max:
+                self.i = 0
+                self.j += self.side
+            item.reGrid(self.i,self.j)
+            self.i += 1
 
-        # self.button = tk.Button(self, text='Check Print', command=self.printCallback)
-        # self.button.grid()
-
-
-    def printCallback(self):
-        for x in self.items:
-            print( x.entryVar.get() )
-            print( x.entry.get() )
-
+    def getItem(self,item):
+        for i in self.items:
+            if i.key == item: return i
+        return None
 
 class Item:
     def __init__(self,master,i,j,key,value):
@@ -53,3 +80,11 @@ class Item:
 
         self.label.grid(row=i,column=j)
         self.entry.grid(row=i,column=j+1)
+
+    def reGrid(self,i,j):
+        self.label.grid(row=i,column=j)
+        self.entry.grid(row=i,column=j+1)
+
+    def destroy(self):
+        self.label.destroy()
+        self.entry.destroy()

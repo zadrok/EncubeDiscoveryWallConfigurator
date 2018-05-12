@@ -14,3 +14,9 @@ class Model:
         # print( self.options['platform'] )
 
         # JsonHandler().exportFile(self,"newConfig.json")
+
+    def inOptions(self,item):
+        for key,value in self.options.items():
+            if key == item:
+                return True
+        return False
