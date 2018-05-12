@@ -20,6 +20,11 @@ class Model:
                 self.options[key] = uValue
                 # value = uValue
 
+    def removeOption(self,key):
+        r = dict( self.options )
+        del r[key]
+        self.options = r
+
     def inOptions(self,item):
         for key,value in self.options.items():
             if key == item:

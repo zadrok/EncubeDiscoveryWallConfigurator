@@ -89,6 +89,10 @@ class OptionsWindow(tk.Toplevel):
             if i.key == item: return i
         return None
 
+    def removeItem(self,item):
+        self.gui.model.removeOption(item.key)
+        self.refreshValues()
+
 class Item:
     def __init__(self,master,i,j,key,value):
         self.master = master
@@ -103,8 +107,14 @@ class Item:
         self.label = tk.Label(self.master, text=str(self.key))
         self.entry = tk.Entry(self.master, textvariable=self.entryVar, width=30)
 
+        self.removeBttn = tk.Button(self.master,text='X',command=self.delete,bg="indianRed1")
+
         self.label.grid(row=i,column=j)
         self.entry.grid(row=i,column=j+1)
+        self.removeBttn.grid(row=i,column=j+2)
+
+    def delete(self):
+        self.master.removeItem(self)
 
     def callback(self,*args):
         self.master.gui.model.updateOption( self.key,self.entryVar.get() )
@@ -112,10 +122,12 @@ class Item:
     def reGrid(self,i,j):
         self.label.grid(row=i,column=j)
         self.entry.grid(row=i,column=j+1)
+        self.removeBttn.grid(row=i,column=j+2)
 
     def destroy(self):
         self.label.destroy()
         self.entry.destroy()
+        self.removeBttn.destroy()
 
 
 class AddOptionsWindow(tk.Toplevel):
