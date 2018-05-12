@@ -9,7 +9,7 @@ class MBMain():
         self.menuBar = tk.Menu(master.root)
 # ------------------------------------------------------------------------------
         self.fileMenu = tk.Menu(self.menuBar,tearoff=0)
-        self.fileMenu.add_command(label = "New", command = self.doNothing)
+        # self.fileMenu.add_command(label = "New", command = self.doNothing)
         self.fileMenu.add_command(label = "Open", command = self.open)
         self.fileMenu.add_command(label = "Save", command = self.save)
         # self.fileMenu.add_command(label = "Save as...", command = self.doNothing)
