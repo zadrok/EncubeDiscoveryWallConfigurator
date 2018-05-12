@@ -9,11 +9,8 @@ class Model:
         self.defaultConfigFile = 'defaultConfig.json'
         self.options = JsonHandler().importFile(self.defaultConfigFile)
 
-        # print( self.options['platform'] )
-        # self.options['platform'] = "test"
-        # print( self.options['platform'] )
-
-        # JsonHandler().exportFile(self,"newConfig.json")
+    def addOption(self,key,value):
+        self.options.update( {key:value} )
 
     def inOptions(self,item):
         for key,value in self.options.items():
@@ -25,7 +22,6 @@ class Model:
         data = '{\n'
 
         for key,value in self.options.items():
-            # print(str(value))
             d = self.processVar( str(value) )
             data += '  "' + str(key) + '": ' + d + ',\n'
 

@@ -21,7 +21,7 @@ class GUI():
         # can be hidden/closed without affecting main window
         self.widthOptions = 650
         self.heightOptions = 800
-        self.optionsWindow = OptionsWindow(self,self.root)
+        self.optionsWindow = OptionsWindow(self.root,self)
         self.optionsWindow.title("Options")
         self.optionsWindow.minsize(width=self.widthOptions,height=self.heightOptions)
         # start with the options window closed

@@ -2,7 +2,7 @@ import tkinter as tk
 from menuBar import MBOptions
 
 class OptionsWindow(tk.Toplevel):
-    def __init__(self,gui,master):
+    def __init__(self,master,gui):
         super().__init__(master)
         self.master = master
         self.protocol('WM_DELETE_WINDOW', self.withdraw)
@@ -26,6 +26,28 @@ class OptionsWindow(tk.Toplevel):
                 self.j += self.side
             self.items.append( Item( self, self.i, self.j, str(key), str(value) ) )
             self.i += 1
+
+        # window used to create options
+        self.addOptionsWindow = AddOptionsWindow(self)
+        self.addOptionsWindow.withdraw()
+
+    def toggleAddOptionWindow(self):
+        if self.addOptionsWindow.state() == 'normal':
+            self.addOptionsWindow.withdraw()
+        elif self.addOptionsWindow.state() == 'withdrawn':
+            self.addOptionsWindow.deiconify()
+
+    def commitOption(self):
+        key = self.addOptionsWindow.KEYentryVar.get()
+        value = self.addOptionsWindow.VALUEentryVar.get()
+        # add option to model.options
+        self.gui.model.addOption(key,value)
+        # create item
+        self.items.append( Item( self, self.i+1, self.j, str(key), str(value) ) )
+        # hide window
+        self.toggleAddOptionWindow()
+        # reGrid Items
+        self.reGridItems()
 
     def refreshValues(self):
         # change options or add new ones
@@ -88,3 +110,35 @@ class Item:
     def destroy(self):
         self.label.destroy()
         self.entry.destroy()
+
+
+class AddOptionsWindow(tk.Toplevel):
+    def __init__(self,master):
+        super().__init__(master.master)
+        self.master = master
+        self.protocol('WM_DELETE_WINDOW', self.withdraw)
+        self.grid()
+        self.createWidgets()
+
+    def createWidgets(self):
+        # key
+        self.KEYentryVar = tk.StringVar()
+        self.KEYentryVar.set( '' )
+        self.KEYlabel = tk.Label(self, text='Key')
+        self.KEYentry = tk.Entry(self, textvariable=self.KEYentryVar, width=30)
+
+        self.KEYlabel.grid()
+        self.KEYentry.grid()
+
+        # value
+        self.VALUEentryVar = tk.StringVar()
+        self.VALUEentryVar.set( '' )
+        self.VALUElabel = tk.Label(self, text='Value')
+        self.VALUEentry = tk.Entry(self, textvariable=self.VALUEentryVar, width=30)
+
+        self.VALUElabel.grid()
+        self.VALUEentry.grid()
+
+        # done button
+        self.doneBttn = tk.Button(self,text='Commit',command=self.master.commitOption)
+        self.doneBttn.grid()

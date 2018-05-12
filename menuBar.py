@@ -61,11 +61,12 @@ class MBMain():
 
 class MBOptions():
     def __init__(self,master):
+        self.master = master
         self.menuBar = tk.Menu(master)
 # ------------------------------------------------------------------------------
         self.fileMenu = tk.Menu(self.menuBar,tearoff=0)
-        # self.fileMenu.add_command(label = "None", command = self.doNothing)
-        # self.fileMenu.add_separator()
+        self.fileMenu.add_command(label = "Add Option", command = self.master.toggleAddOptionWindow)
+        self.fileMenu.add_separator()
         self.fileMenu.add_command(label = "Close", command = master.withdraw)
         self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
 # ------------------------------------------------------------------------------
