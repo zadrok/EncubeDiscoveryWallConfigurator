@@ -13,4 +13,4 @@ class Model:
         # self.options['platform'] = "test"
         # print( self.options['platform'] )
 
-        JsonHandler().exportFile(self,"newConfig.json")
+        # JsonHandler().exportFile(self,"newConfig.json")

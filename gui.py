@@ -1,25 +1,29 @@
 import tkinter as tk
 
-from screen import Screen
-from panel import Panel
+from mainWindow import MainWindow
+from optionsWindow import OptionsWindow
 
-class GUI(tk.Frame):
-    def __init__(self,model,jsonHandler,root):
-        super().__init__(root)
+class GUI():
+    def __init__(self,model,jsonHandler):
         self.model = model
         self.jsonHandler = jsonHandler
-        self.root = root
-        self.grid()
-        self.create_widgets()
 
-    def create_widgets(self):
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.grid(row=0, column=0)
+        self.widthMain = 1280
+        self.heightMain = 720
+        self.titleMain = "Encube Discovery Wall Configurator"
+        self.rootMain = tk.Tk()
+        self.rootMain.minsize(width=self.widthMain,height=self.heightMain)
+        self.rootMain.wm_title(self.titleMain)
+        self.mainWindow = MainWindow(self,self.rootMain)
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.root.destroy)
-        self.quit.grid(row=1, column=0)
+        self.widthOptions = 600
+        self.heightOptions = 800
+        self.titleOptions = "Options"
+        self.rootOptions = tk.Tk()
+        self.rootOptions.minsize(width=self.widthOptions,height=self.heightOptions)
+        self.rootOptions.wm_title(self.titleOptions)
+        self.optionsWindow = OptionsWindow(self,self.rootOptions)
 
-    def say_hi(self):
-        print("hi there, everyone!")
+    def mainloop(self):
+        self.mainWindow.mainloop()
+        self.optionsWindow.mainloop()
