@@ -51,7 +51,8 @@ class MBMain():
         self.master.gui.optionsWindow.refreshValues()
 
     def save(self):
-        pass
+        fname = tk.filedialog.asksaveasfilename()
+        JsonHandler().exportFile( self.master.gui.model, fname )
 
     def doNothing(self):
         print( ' This button does nothing ' )

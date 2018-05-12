@@ -1,4 +1,5 @@
 import json
+import io
 
 class JsonHandler:
     def importFile(self,file):
@@ -10,5 +11,5 @@ class JsonHandler:
         return conifg
 
     def exportFile(self,model,fileName):
-        with open(fileName, 'w') as outfile:
-            json.dump(model.options, outfile)
+        with io.open(fileName, 'w', encoding='utf-8') as f:
+            f.write( model.toJson() )
