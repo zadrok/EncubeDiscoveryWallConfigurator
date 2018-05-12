@@ -41,6 +41,5 @@
   "workflow_data_dir": "/someWhere/encube/control/workflow_data",
   "db": "/someWhere/encube/control/workflow_data/db.csv",
   "shareVol_json": "/someWhere/encube/control/default.json",
-  "colours": {"Controls": "#39bf39", "SympHD": "#dd842c", "PreHD": "#4c4cff"},
-  "other": 5555556
+  "colours": {"Controls": "#39bf39", "SympHD": "#dd842c", "PreHD": "#4c4cff"}
 }

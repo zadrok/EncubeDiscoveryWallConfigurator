@@ -18,6 +18,14 @@ class Model:
                 return True
         return False
 
+
+    def open(self,fname):
+        self.options = JsonHandler().importFile( fname )
+
+    def save(self,fname):
+        JsonHandler().exportFile( self, fname )
+
+
     def toJson(self):
         data = '{\n'
 

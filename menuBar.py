@@ -28,7 +28,7 @@ class MBMain():
         # self.menuBar.add_cascade(label = "Edit", menu = self.editMenu)
 # ------------------------------------------------------------------------------
         self.optionMenu = tk.Menu(self.menuBar,tearoff=0)
-        self.optionMenu.add_command(label = "Options", command = self.toggleOptionWindow)
+        self.optionMenu.add_command(label = "Options", command = self.master.gui.toggleOptionWindow)
         self.menuBar.add_cascade(label = "Options", menu = self.optionMenu)
 # ------------------------------------------------------------------------------
         # self.helpMenu = tk.Menu(self.menuBar, tearoff=0)
@@ -38,21 +38,14 @@ class MBMain():
 # ------------------------------------------------------------------------------
         master.root.config(menu=self.menuBar)
 
-
-    def toggleOptionWindow(self):
-        if self.master.gui.optionsWindow.state() == 'normal':
-            self.master.gui.optionsWindow.withdraw()
-        elif self.master.gui.optionsWindow.state() == 'withdrawn':
-            self.master.gui.optionsWindow.deiconify()
-
     def open(self):
         fname = tk.filedialog.askopenfilename()
-        self.master.gui.model.options = JsonHandler().importFile( fname )
+        self.master.gui.model.open(fname)
         self.master.gui.optionsWindow.refreshValues()
 
     def save(self):
         fname = tk.filedialog.asksaveasfilename()
-        JsonHandler().exportFile( self.master.gui.model, fname )
+        self.master.gui.model.save(fname)
 
     def doNothing(self):
         print( ' This button does nothing ' )

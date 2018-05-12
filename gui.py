@@ -29,3 +29,9 @@ class GUI():
 
     def mainloop(self):
         self.mainWindow.mainloop()
+
+    def toggleOptionWindow(self):
+        if self.optionsWindow.state() == 'normal':
+            self.optionsWindow.withdraw()
+        elif self.optionsWindow.state() == 'withdrawn':
+            self.optionsWindow.deiconify()

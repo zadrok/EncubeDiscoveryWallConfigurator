@@ -116,6 +116,7 @@ class AddOptionsWindow(tk.Toplevel):
     def __init__(self,master):
         super().__init__(master.master)
         self.master = master
+        self.title("Add Option")
         self.protocol('WM_DELETE_WINDOW', self.withdraw)
         self.grid()
         self.createWidgets()
