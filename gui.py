@@ -1,5 +1,4 @@
 import tkinter as tk
-import random
 from screen import Screen
 
 
@@ -79,6 +78,3 @@ class GUI(tk.Frame):
             s.set_id(ident)
             s.set_position(x, y, w, h)
             s.draw()
-
-    def random_color(self):
-        return '#%02X%02X%02X' % (random.randint(0, 255),random.randint(0, 255),random.randint(0, 255))

@@ -1,4 +1,3 @@
-import random
 
 class Panel:
     def __init__(self, canvas, ident, x=10, y=10, width=100, height=100, ):
@@ -62,7 +61,7 @@ class Panel:
             self.width,
             self.height,
             width=2,
-            fill=self.random_color(),
+            fill="#00FFFF",
             tags="panel"
         )
 
@@ -70,6 +69,3 @@ class Panel:
         v_size = self.get_height() - self.get_y()
         v_size = v_size / 2
         self.set_height(self.get_y()+v_size)
-
-    def random_color(self):
-        return '#%02X%02X%02X' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))

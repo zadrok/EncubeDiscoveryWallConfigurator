@@ -81,14 +81,15 @@ class Screen:
         panel_at_xy = self.get_panel_at_xy(x, y)
         if panel_at_xy is not None:
             print("there is already a panel here, will split:", panel_at_xy.get_id())
+            orig_h = panel_at_xy.get_height()
             panel_at_xy.split_horizontally()
             p = Panel(
                 canvas=self.canvas,
-                ident="x",
+                ident=str(len(self.panels)),
                 x=self.get_x() + 2,
-                y=panel_at_xy.get_height() + panel_at_xy.get_y(),
+                y=panel_at_xy.get_height(),
                 width=panel_at_xy.get_width(),
-                height=panel_at_xy.get_height() * 2
+                height=orig_h
             )
             self.panels.append(p)
         else:
