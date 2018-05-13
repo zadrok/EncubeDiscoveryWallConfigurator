@@ -5,6 +5,7 @@ from tkinter import filedialog
 
 class MBMain():
     def __init__(self,master):
+        ''' creates the menu bar for a window '''
         self.master = master
         self.menuBar = tk.Menu(master.root)
 # ------------------------------------------------------------------------------
@@ -40,21 +41,25 @@ class MBMain():
         master.root.config(menu=self.menuBar)
 
     def open(self):
+        ''' opens a file dialog and passes the file to the model '''
         fname = tk.filedialog.askopenfilename()
         self.master.gui.model.open(fname)
         self.master.gui.optionsWindow.refreshValues()
 
     def save(self):
+        ''' opens a file dialog and passes the file to the model '''
         fname = tk.filedialog.asksaveasfilename()
         self.master.gui.model.save(fname)
 
     def doNothing(self):
+        ''' used for menu items that are not implemented yet '''
         print( ' This button does nothing ' )
 
 
 
 class MBOptions():
     def __init__(self,master):
+        ''' creates the menu bar for a window '''
         self.master = master
         self.menuBar = tk.Menu(master)
 # ------------------------------------------------------------------------------
@@ -75,4 +80,5 @@ class MBOptions():
         master.config(menu=self.menuBar)
 
     def doNothing(self):
+        ''' used for menu items that are not implemented yet '''
         print( ' This button does nothing ' )

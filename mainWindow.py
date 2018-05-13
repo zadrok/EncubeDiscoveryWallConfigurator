@@ -5,6 +5,7 @@ from screen import Screen
 
 class MainWindow(tk.Frame):
     def __init__(self, gui, root):
+        ''' creates main window, screens and panels are displayed here '''
         super().__init__(root)
         self.root = root
         self.gui = gui
@@ -21,6 +22,7 @@ class MainWindow(tk.Frame):
         self.createWidgets()
 
     def createWidgets(self):
+        ''' sets up companents for user to interact with '''
         # menu bar
         self.menuBar = MBMain(self)
         # other stuff
