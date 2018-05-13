@@ -3,6 +3,7 @@ import tkinter as tk
 from mainWindow import MainWindow
 from optionsWindow import OptionsWindow
 
+
 class GUI():
     def __init__(self,model,jsonHandler):
         self.model = model
