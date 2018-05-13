@@ -55,8 +55,6 @@ class GUI(tk.Frame):
             if ex >= sx and ex <=  sw:
                 s.clicked(ex, ey, split_h, split_v)
 
-
-
     def create_screen(self):
         s = Screen(self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d")
         self.screens.append(s)
