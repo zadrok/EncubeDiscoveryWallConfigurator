@@ -10,7 +10,7 @@ class MainWindow(tk.Frame):
         self.root = root
         self.gui = gui
         self.screens = []
-        self.grid()
+        self.pack()
         self.add_screen = None
         self.canvas = None
         self.split_mode = None
