@@ -69,3 +69,8 @@ class Panel:
         v_size = self.get_height() - self.get_y()
         v_size = v_size / 2
         self.set_height(self.get_y()+v_size)
+
+    def split_vertically(self):
+        h_size = self.get_width() - self.get_x()
+        h_size = h_size / 2
+        self.set_width(self.get_x() + h_size)

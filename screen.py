@@ -73,8 +73,9 @@ class Screen:
         if h:
             print("horizontally")
             self.split_horizontally(x, y)
-        if v:
+        elif v:
             print("vertically")
+            self.split_vertically(x, y)
 
     def split_horizontally(self, x, y):
         # check for panel at XY
@@ -86,7 +87,7 @@ class Screen:
             p = Panel(
                 canvas=self.canvas,
                 ident=str(len(self.panels)),
-                x=self.get_x() + 2,
+                x=panel_at_xy.get_x(),
                 y=panel_at_xy.get_height(),
                 width=panel_at_xy.get_width(),
                 height=orig_h
@@ -107,6 +108,42 @@ class Screen:
                 ident="1",
                 x=self.get_x() + 2,
                 y=self.get_y() + self.get_height() / 2,
+                width=self.get_width(),
+                height=self.get_height()
+            )
+            self.panels.append(panel_one)
+            self.panels.append(panel_two)
+
+    def split_vertically(self, x, y):
+        panel_at_xy = self.get_panel_at_xy(x, y)
+        if panel_at_xy is not None:
+            print("there is already a panel here, will split:", panel_at_xy.get_id())
+            orig_w = panel_at_xy.get_width()
+            panel_at_xy.split_vertically()
+            p = Panel(
+                canvas=self.canvas,
+                ident=str(len(self.panels)),
+                x=panel_at_xy.get_width(),
+                y=panel_at_xy.get_y(),
+                width=orig_w,
+                height=panel_at_xy.get_height()
+            )
+            self.panels.append(p)
+        else:
+            print("There is no panel here, two new panels incoming")
+            panel_one = Panel(
+                canvas=self.canvas,
+                ident="0",
+                x=self.get_x() + 2,
+                y=self.get_y() + 2,
+                width=((self.get_width() - self.get_x()) / 2 ) + self.get_x(),
+                height=self.get_height()
+            )
+            panel_two = Panel(
+                canvas=self.canvas,
+                ident="1",
+                x=panel_one.get_width(),
+                y=self.get_y() + 2,
                 width=self.get_width(),
                 height=self.get_height()
             )
