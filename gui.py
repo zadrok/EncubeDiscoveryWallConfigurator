@@ -46,6 +46,7 @@ class GUI(tk.Frame):
         print("clicked at: ", event.x, "x", event.y)
         split_v = self.split_v.get()
         split_h = self.split_h.get()
+        canvas_changed = False
         for s in self.screens:
             sx = s.get_x()
             sw = s.get_width()
@@ -54,6 +55,12 @@ class GUI(tk.Frame):
             ey = event.y
             if ex >= sx and ex <=  sw:
                 s.clicked(ex, ey, split_h, split_v)
+                canvas_changed = True
+
+        if canvas_changed:
+            self.canvas.delete("all")
+            for i, s in enumerate(self.screens):
+                s.draw()
 
     def create_screen(self):
         s = Screen(self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d")

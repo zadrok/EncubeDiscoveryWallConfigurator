@@ -76,9 +76,6 @@ class Screen:
         if v:
             print("vertically")
 
-        for panel in self.panels:
-            panel.draw()
-
     def split_horizontally(self, x, y):
         # check for panel at XY
         panel_at_xy = self.get_panel_at_xy(x, y)
