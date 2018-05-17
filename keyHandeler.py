@@ -26,10 +26,10 @@ class KeyHandeler:
 
   def doEventUp(self,keySym):
     # print('Doing up event ' + keySym)
-    pass
+    self.master.draw()
 
   def doEventDown(self,keySym):
-    print('Doing down event ' + keySym)
+    # print('Doing down event ' + keySym)
     if keySym == '1':
       selcon.splitHorizontally()
       selcon.deselect()
@@ -44,6 +44,8 @@ class KeyHandeler:
       selcon.deselect()
     if keySym == '5':
       selcon.deselect()
+    if keySym == '6':
+      selcon.allselect()
 
     self.master.draw()
 

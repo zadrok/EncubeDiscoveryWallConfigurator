@@ -18,14 +18,8 @@ class Screen:
         if selcon.screenSelected(self):
           color = '#6d6d6d'
 
-        self.canvas.create_rectangle(
-            self.x,
-            self.y,
-            self.width,
-            self.height,
-            width=3,
-            fill=color
-        )
+        bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
+        self.canvas.create_rectangle( bbox, width=3, fill=color )
         for panel in self.panels:
             panel.draw()
 
@@ -71,99 +65,74 @@ class Screen:
     def set_canvas(self, canvas):
         self.canvas = canvas
 
-    def clicked(self, x, y, h, v):
-        selcon.screenClick(x,y,self)
-        # print("I, ", self.get_id(), " have been clicked at ", x, ",", y)
-        # print("I have been asked to split: ")
-        #
-        # if h:
-        #     print("horizontally")
-        #     self.split_horizontally(x, y)
-        # elif v:
-        #     print("vertically")
-        #     self.split_vertically(x, y)
+    def divideHorizontally(self):
+        ''' return two new panels '''
+        p1 = None
+        p2 = None
 
-    def split_horizontally(self, x, y):
-        panel_at_xy = self.get_panel_at_xy(x, y)
-        if panel_at_xy is not None:
-            orig_h = panel_at_xy.get_height()
-            panel_at_xy.split_horizontally()
-            p = Panel(
-                screen=self,
-                canvas=self.canvas,
-                ident=str(len(self.panels)),
-                x=panel_at_xy.get_x(),
-                y=panel_at_xy.get_height(),
-                width=panel_at_xy.get_width(),
-                height=orig_h
-            )
-            self.panels.append(p)
-        else:
-            panel_one = Panel(
-                screen=self,
-                canvas=self.canvas,
-                ident="0",
-                x=self.get_x() + 2,
-                y=self.get_y() + 2,
-                width=self.get_width(),
-                height=self.get_height() / 2
-            )
-            panel_two = Panel(
-                screen=self,
-                canvas=self.canvas,
-                ident="1",
-                x=self.get_x() + 2,
-                y=self.get_y() + self.get_height() / 2,
-                width=self.get_width(),
-                height=self.get_height()
-            )
-            self.panels.append(panel_one)
-            self.panels.append(panel_two)
+        x = self.get_x() + 2
+        y = self.get_y() + 2
+        w = self.get_width() - 4
+        h = (self.get_height() / 2) - 2
 
-    def split_vertically(self, x, y):
-        panel_at_xy = self.get_panel_at_xy(x, y)
-        if panel_at_xy is not None:
-            orig_w = panel_at_xy.get_width()
-            panel_at_xy.split_vertically()
-            p = Panel(
-                screen=self,
-                canvas=self.canvas,
-                ident=str(len(self.panels)),
-                x=panel_at_xy.get_width(),
-                y=panel_at_xy.get_y(),
-                width=orig_w,
-                height=panel_at_xy.get_height()
-            )
-            self.panels.append(p)
-        else:
-            panel_one = Panel(
-                screen=self,
-                canvas=self.canvas,
-                ident="0",
-                x=self.get_x() + 2,
-                y=self.get_y() + 2,
-                width=((self.get_width() - self.get_x()) / 2 ) + self.get_x(),
-                height=self.get_height()
-            )
-            panel_two = Panel(
-                screen=self,
-                canvas=self.canvas,
-                ident="1",
-                x=panel_one.get_width(),
-                y=self.get_y() + 2,
-                width=self.get_width(),
-                height=self.get_height()
-            )
-            self.panels.append(panel_one)
-            self.panels.append(panel_two)
+        p1 = Panel(
+            screen=self,
+            canvas=self.canvas,
+            ident="0",
+            x=x,
+            y=y,
+            width=w,
+            height=h
+        )
+        p2 = Panel(
+            screen=self,
+            canvas=self.canvas,
+            ident="0",
+            x=x,
+            y=y + h,
+            width=w,
+            height=h
+        )
+
+        return p1,p2
+
+    def divideVertically(self):
+        ''' return two new panels '''
+        p1 = None
+        p2 = None
+
+        x = self.get_x() + 2
+        y = self.get_y() + 2
+        w = (self.get_width() / 2) - 2
+        h = self.get_height() - 4
+
+        p1 = Panel(
+            screen=self,
+            canvas=self.canvas,
+            ident="1",
+            x=x,
+            y=y,
+            width=w,
+            height=h
+        )
+        p2 = Panel(
+            screen=self,
+            canvas=self.canvas,
+            ident="1",
+            x=x + w,
+            y=y,
+            width=w,
+            height=h
+        )
+
+        return p1,p2
 
     def get_panel_at_xy(self, x, y):
-        panel = None
         for i, p in enumerate(self.panels):
             px = p.get_x()
             py = p.get_y()
-            pw = p.get_width()
-            ph = p.get_height()
+            pw = px + p.get_width()
+            ph = py + p.get_height()
             if (x >= px and x <= pw) and (y >= py and y <= ph):
-                panel = p
-        return panel
+                return p
+        return None

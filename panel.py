@@ -55,22 +55,67 @@ class Panel:
         if selcon.panelSelected(self):
           color = '#00ff90'
 
-        self.rectangle = self.canvas.create_rectangle(
-            self.x,
-            self.y,
-            self.width,
-            self.height,
-            width=2,
-            fill=color,
-            tags="panel"
+        bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
+        self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
+
+    def divideHorizontally(self):
+        ''' return two new panels '''
+        p1 = None
+        p2 = None
+
+        x = self.get_x()
+        y = self.get_y()
+        w = self.get_width()
+        h = (self.get_height() / 2)
+
+        p1 = Panel(
+            screen=self.screen,
+            canvas=self.canvas,
+            ident="0",
+            x=x,
+            y=y,
+            width=w,
+            height=h
+        )
+        p2 = Panel(
+            screen=self.screen,
+            canvas=self.canvas,
+            ident="0",
+            x=x,
+            y=y + h,
+            width=w,
+            height=h
         )
 
-    def split_horizontally(self):
-        v_size = self.get_height() - self.get_y()
-        v_size = v_size / 2
-        self.set_height(self.get_y()+v_size)
+        return p1,p2
 
-    def split_vertically(self):
-        h_size = self.get_width() - self.get_x()
-        h_size = h_size / 2
-        self.set_width(self.get_x() + h_size)
+    def divideVertically(self):
+        ''' return two new panels '''
+        p1 = None
+        p2 = None
+
+        x = self.get_x()
+        y = self.get_y()
+        w = (self.get_width() / 2)
+        h = self.get_height()
+
+        p1 = Panel(
+            screen=self.screen,
+            canvas=self.canvas,
+            ident="1",
+            x=x,
+            y=y,
+            width=w,
+            height=h
+        )
+        p2 = Panel(
+            screen=self.screen,
+            canvas=self.canvas,
+            ident="1",
+            x=x + w,
+            y=y,
+            width=w,
+            height=h
+        )
+
+        return p1,p2

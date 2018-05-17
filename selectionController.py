@@ -29,20 +29,32 @@ class SelectionController:
         self.screens = []
         self.screens.append( screen )
 
-
   def splitHorizontally(self):
     # print('Split Horizontally')
     for s in self.screens:
-      s.split_horizontally(s.x,s.y)
+      p1, p2 = s.divideHorizontally()
+      s.panels.append(p1)
+      s.panels.append(p2)
     for p in self.panels:
-      p.screen.split_horizontally(p.x,p.y)
+      screen = p.screen
+      p1, p2 = p.divideHorizontally()
+      screen.panels.remove(p)
+      screen.panels.append(p1)
+      screen.panels.append(p2)
+
 
   def splitVertically(self):
     # print('Split Vertically')
     for s in self.screens:
-      s.split_vertically(s.x,s.y)
+      p1, p2 = s.divideVertically()
+      s.panels.append(p1)
+      s.panels.append(p2)
     for p in self.panels:
-      p.screen.split_vertically(p.x,p.y)
+      screen = p.screen
+      p1, p2 = p.divideVertically()
+      screen.panels.remove(p)
+      screen.panels.append(p1)
+      screen.panels.append(p2)
 
   def join(self):
     print('TODO Join')
@@ -59,6 +71,15 @@ class SelectionController:
   def deselect(self):
     # print('Deselect')
     self.clearAll()
+
+  def allselect(self):
+    if self.window != None:
+      for s in self.window.screens:
+        if len(s.panels) <= 0:
+          self.screens.append( s )
+        else:
+          for p in s.panels:
+            self.panels.append( p )
 
   def panelSelected(self,panel):
     for p in self.panels:
