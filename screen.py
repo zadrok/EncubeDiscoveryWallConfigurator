@@ -1,8 +1,9 @@
 from panel import Panel
-
+from selectionController import selcon
 
 class Screen:
-    def __init__(self, canvas, ident, x, y, width, height, color):
+    def __init__(self, master, canvas, ident, x, y, width, height, color):
+        self.master = master
         self.canvas = canvas
         self.id = ident
         self.x = x
@@ -13,13 +14,17 @@ class Screen:
         self.panels = []
 
     def draw(self):
+        color = self.color
+        if selcon.screenSelected(self):
+          color = '#6d6d6d'
+
         self.canvas.create_rectangle(
             self.x,
             self.y,
             self.width,
             self.height,
             width=3,
-            fill=self.color
+            fill=color
         )
         for panel in self.panels:
             panel.draw()
@@ -32,7 +37,7 @@ class Screen:
 
     def get_id(self):
         return self.id
-    
+
     def set_id(self, ident):
         self.id = ident
 
@@ -67,15 +72,16 @@ class Screen:
         self.canvas = canvas
 
     def clicked(self, x, y, h, v):
-        print("I, ", self.get_id(), " have been clicked at ", x, ",", y)
-        print("I have been asked to split: ")
-
-        if h:
-            print("horizontally")
-            self.split_horizontally(x, y)
-        elif v:
-            print("vertically")
-            self.split_vertically(x, y)
+        selcon.screenClick(x,y,self)
+        # print("I, ", self.get_id(), " have been clicked at ", x, ",", y)
+        # print("I have been asked to split: ")
+        #
+        # if h:
+        #     print("horizontally")
+        #     self.split_horizontally(x, y)
+        # elif v:
+        #     print("vertically")
+        #     self.split_vertically(x, y)
 
     def split_horizontally(self, x, y):
         panel_at_xy = self.get_panel_at_xy(x, y)
@@ -83,6 +89,7 @@ class Screen:
             orig_h = panel_at_xy.get_height()
             panel_at_xy.split_horizontally()
             p = Panel(
+                screen=self,
                 canvas=self.canvas,
                 ident=str(len(self.panels)),
                 x=panel_at_xy.get_x(),
@@ -93,6 +100,7 @@ class Screen:
             self.panels.append(p)
         else:
             panel_one = Panel(
+                screen=self,
                 canvas=self.canvas,
                 ident="0",
                 x=self.get_x() + 2,
@@ -101,6 +109,7 @@ class Screen:
                 height=self.get_height() / 2
             )
             panel_two = Panel(
+                screen=self,
                 canvas=self.canvas,
                 ident="1",
                 x=self.get_x() + 2,
@@ -117,6 +126,7 @@ class Screen:
             orig_w = panel_at_xy.get_width()
             panel_at_xy.split_vertically()
             p = Panel(
+                screen=self,
                 canvas=self.canvas,
                 ident=str(len(self.panels)),
                 x=panel_at_xy.get_width(),
@@ -127,6 +137,7 @@ class Screen:
             self.panels.append(p)
         else:
             panel_one = Panel(
+                screen=self,
                 canvas=self.canvas,
                 ident="0",
                 x=self.get_x() + 2,
@@ -135,6 +146,7 @@ class Screen:
                 height=self.get_height()
             )
             panel_two = Panel(
+                screen=self,
                 canvas=self.canvas,
                 ident="1",
                 x=panel_one.get_width(),

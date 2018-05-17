@@ -1,6 +1,8 @@
 import tkinter as tk
 from menuBar import MBMain
 from screen import Screen
+from keyHandeler import KeyHandeler
+from selectionController import selcon
 
 
 class MainWindow(tk.Frame):
@@ -19,7 +21,12 @@ class MainWindow(tk.Frame):
         self.canvas_w = 1080
         self.canvas_h = 720
 
+        self.keyHandeler = KeyHandeler(self.root,self)
+
         self.createWidgets()
+        self.focus_set()
+
+        selcon.setWindow(self)
 
     def createWidgets(self):
         ''' sets up companents for user to interact with '''
@@ -65,8 +72,12 @@ class MainWindow(tk.Frame):
             for i, s in enumerate(self.screens):
                 s.draw()
 
+    def draw(self):
+        for s in self.screens:
+            s.draw()
+
     def create_screen(self):
-        s = Screen(self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d")
+        s = Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d")
         self.screens.append(s)
         count_screens = len(self.screens)
 

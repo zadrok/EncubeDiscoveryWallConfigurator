@@ -1,7 +1,9 @@
+from selectionController import selcon
 
 class Panel:
-    def __init__(self, canvas, ident, x=10, y=10, width=100, height=100, ):
+    def __init__(self, screen, canvas, ident, x=10, y=10, width=100, height=100, ):
         self.id = ident
+        self.screen = screen
         self.canvas = canvas
         self.x = x
         self.y = y
@@ -49,13 +51,17 @@ class Panel:
         return self.rectangle
 
     def draw(self):
+        color = "#00FFFF"
+        if selcon.panelSelected(self):
+          color = '#00ff90'
+
         self.rectangle = self.canvas.create_rectangle(
             self.x,
             self.y,
             self.width,
             self.height,
             width=2,
-            fill="#00FFFF",
+            fill=color,
             tags="panel"
         )
 
