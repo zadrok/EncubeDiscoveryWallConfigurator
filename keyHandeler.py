@@ -46,6 +46,8 @@ class KeyHandeler:
       selcon.deselect()
     if keySym == '6':
       selcon.allselect()
+    if keySym == '7':
+      self.master.create_screen()
 
     self.master.draw()
 

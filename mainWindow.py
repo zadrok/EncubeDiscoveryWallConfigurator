@@ -50,7 +50,9 @@ class MainWindow(tk.Frame):
         # hori.pack(fill="x")
         # self.split_mode.pack(side="left")
 
-        for i in range(0, 6):
+        # TODO - base this off of what is read in from options
+        # TODO - update options when screens and/or panels are updated
+        for i in range(6):
             self.create_screen()
 
     def canvas_clicked(self, event):
@@ -70,6 +72,7 @@ class MainWindow(tk.Frame):
     def rePackScreens(self):
       self.canvas.delete("all")
       cScreens = len(self.screens)
+      if cScreens == 0: return
       width = self.canvas_w / cScreens
       for i, s in enumerate(self.screens):
         x = width * i
