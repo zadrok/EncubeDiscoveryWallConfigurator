@@ -38,6 +38,9 @@ class MBMain():
     # self.helpMenu.add_command(label = "About...", command = self.doNothing)
     # self.menuBar.add_cascade(label = "Help", menu = self.helpMenu)
 # ------------------------------------------------------------------------------
+    self.splitNumIndex = 3 # if adding something before this +1 to index !!!!!!!
+    self.menuBar.add_cascade(label=self.master.keyHandeler.getScrollCountText())
+
     master.root.config(menu=self.menuBar)
 
   def open(self):

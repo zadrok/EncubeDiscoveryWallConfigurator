@@ -50,16 +50,16 @@ class SelectionController:
 
   def splitHorizontally(self):
     for s in self.screens:
-      s.divideHorizontally()
+      s.divideHorizontally(num=self.keyHandeler.getScrollCount())
     for p in self.panels:
-      p.divideHorizontally()
+      p.divideHorizontally(num=self.keyHandeler.getScrollCount())
 
 
   def splitVertically(self):
     for s in self.screens:
-      s.divideVertically()
+      s.divideVertically(num=self.keyHandeler.getScrollCount())
     for p in self.panels:
-      p.divideVertically()
+      p.divideVertically(num=self.keyHandeler.getScrollCount())
 
   def join(self):
     # TODO - make this work

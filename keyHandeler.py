@@ -12,8 +12,11 @@ class KeyHandeler:
     self.root = root
     self.master = master
 
+    self.scrollCount = 2
+
     self.root.bind("<KeyRelease>", self.keyUp)
     self.root.bind("<KeyPress>", self.keyDown)
+    self.root.bind('<MouseWheel>', self.onMouseWheel)
 
     # needed to make sure key events only happen once
     self.keyMemory = {}
@@ -23,6 +26,18 @@ class KeyHandeler:
     # tell selcon about this
     selcon.setKeyHandeler(self)
 
+  def onMouseWheel(self,event):
+    d = int( event.delta/120 )
+    self.scrollCount += d
+    self.scrollCount = max(2,self.scrollCount)
+
+    self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
+
+  def getScrollCountText(self):
+    return 'Split num: ' + str(self.scrollCount)
+
+  def getScrollCount(self):
+    return self.scrollCount
 
   def doEventUp(self,keySym):
     # print('Doing up event ' + keySym)

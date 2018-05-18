@@ -18,6 +18,7 @@ class MainWindow(tk.Frame):
     self.split_mode = None
     self.split_h = tk.IntVar()
     self.split_v = tk.IntVar()
+    self.splitAmount = tk.StringVar()
     self.canvas_w = 1080
     self.canvas_h = 720
 

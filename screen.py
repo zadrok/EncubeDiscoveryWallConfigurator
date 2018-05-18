@@ -68,67 +68,45 @@ class Screen:
   def get_rectangle(self):
     return self.x, self.y, self.width, self.height
 
-  def divideHorizontally(self):
+  def divideHorizontally(self,num=2):
     ''' create two new panels '''
-    x = self.get_x() + 2
-    y = self.get_y() + 2
-    w = self.get_width() - 4
-    h = (self.get_height() / 2) - 2
+    x = self.get_x()
+    y = self.get_y()
+    w = self.get_width()
+    h = (self.get_height() / num)
 
-    p1 = Panel(
-      screen=self,
-      canvas=self.canvas,
-      ident="0",
-      method='h',
-      x=x,
-      y=y,
-      width=w,
-      height=h
-    )
-    p2 = Panel(
-      screen=self,
-      canvas=self.canvas,
-      ident="0",
-      method='h',
-      x=x,
-      y=y + h,
-      width=w,
-      height=h
-    )
+    for n in range(num):
+      p = Panel(
+        screen=self,
+        canvas=self.canvas,
+        ident="0",
+        method='h',
+        x=x,
+        y=y + (h*n),
+        width=w,
+        height=h
+      )
+      self.panels.append( p )
 
-    self.panels.append( p1 )
-    self.panels.append( p2 )
-
-  def divideVertically(self):
+  def divideVertically(self,num=2):
     ''' create two new panels '''
-    x = self.get_x() + 2
-    y = self.get_y() + 2
-    w = (self.get_width() / 2) - 2
-    h = self.get_height() - 4
+    x = self.get_x()
+    y = self.get_y()
+    w = (self.get_width() / num)
+    h = self.get_height()
 
-    p1 = Panel(
-      screen=self,
-      canvas=self.canvas,
-      ident="1",
-      method='v',
-      x=x,
-      y=y,
-      width=w,
-      height=h
-    )
-    p2 = Panel(
-      screen=self,
-      canvas=self.canvas,
-      ident="1",
-      method='v',
-      x=x + w,
-      y=y,
-      width=w,
-      height=h
-    )
-
-    self.panels.append( p1 )
-    self.panels.append( p2 )
+    for n in range(num):
+      p = Panel(
+        screen=self,
+        canvas=self.canvas,
+        ident="0",
+        method='h',
+        x=x + (w*n),
+        y=y,
+        width=w,
+        height=h
+      )
+      self.panels.append( p )
 
   def get_panel_at_xy(self, x, y):
     for p in self.panels:
