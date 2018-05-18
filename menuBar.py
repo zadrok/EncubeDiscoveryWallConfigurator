@@ -6,6 +6,7 @@ from tkinter import filedialog
 class MBMain():
   def __init__(self,master):
     ''' creates the menu bar for a window '''
+    self.eventLock = False
     self.master = master
     self.menuBar = tk.Menu(master.root)
 # ------------------------------------------------------------------------------
@@ -29,7 +30,17 @@ class MBMain():
     # self.menuBar.add_cascade(label = "Edit", menu = self.editMenu)
 # ------------------------------------------------------------------------------
     self.optionMenu = tk.Menu(self.menuBar,tearoff=0)
+    self.optionMenu.add_command(label = "Split horizontally   - Key: 1", command=self.doKeyEvent1)
+    self.optionMenu.add_command(label = "Split vertically        - Key: 2", command=self.doKeyEvent2)
+    self.optionMenu.add_command(label = "Join                         - Key: 3", command=self.doKeyEvent3)
+    self.optionMenu.add_command(label = "Remove                  - Key: 4", command=self.doKeyEvent4)
+    self.optionMenu.add_command(label = "Deselect                  - Key: 5", command=self.doKeyEvent5)
+    self.optionMenu.add_command(label = "Select all                 - Key: 6", command=self.doKeyEvent6)
+    self.optionMenu.add_command(label = "Create screen         - Key: 7", command=self.doKeyEvent7)
+    self.optionMenu.add_command(label = "Force redraw          - Key: 8", command=self.doKeyEvent8)
+    self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Options", command = self.master.gui.toggleOptionWindow)
+    self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Print Options", command = self.master.gui.model.printOptions)
     self.menuBar.add_cascade(label = "Options", menu = self.optionMenu)
 # ------------------------------------------------------------------------------
@@ -53,6 +64,21 @@ class MBMain():
     ''' opens a file dialog and passes the file to the model '''
     fname = tk.filedialog.asksaveasfilename()
     self.master.gui.model.save(fname)
+
+  def doKeyEvent1(self): self.passKeyEvent('1')
+  def doKeyEvent2(self): self.passKeyEvent('2')
+  def doKeyEvent3(self): self.passKeyEvent('3')
+  def doKeyEvent4(self): self.passKeyEvent('4')
+  def doKeyEvent5(self): self.passKeyEvent('5')
+  def doKeyEvent6(self): self.passKeyEvent('6')
+  def doKeyEvent7(self): self.passKeyEvent('7')
+  def doKeyEvent8(self): self.passKeyEvent('8')
+  def doKeyEvent9(self): self.passKeyEvent('9')
+  def doKeyEvent0(self): self.passKeyEvent('0')
+
+  def passKeyEvent(self,event):
+    if self.eventLock:
+      self.master.keyHandeler.doEventDown(event)
 
   def doNothing(self):
     ''' used for menu items that are not implemented yet '''

@@ -63,6 +63,8 @@ class KeyHandeler:
       selcon.allselect()
     if keySym == '7':
       self.master.create_screen()
+    if keySym == '8':
+      pass # just redraw
 
     self.master.draw()
 

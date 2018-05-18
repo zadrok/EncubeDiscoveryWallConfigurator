@@ -56,6 +56,8 @@ class MainWindow(tk.Frame):
     for i in range(6):
       self.create_screen()
 
+    self.menuBar.eventLock = True
+
   def canvas_clicked(self, event):
     # print('x ' + str(event.x) + ', y ' + str(event.y))
     for s in self.screens:
