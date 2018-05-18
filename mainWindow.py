@@ -33,23 +33,10 @@ class MainWindow(tk.Frame):
     ''' sets up companents for user to interact with '''
     # menu bar
     self.menuBar = MBMain(self)
-    # other stuff
-    # self.quit = tk.Button(self, text="QUIT", fg="red", command=self.root.destroy)
-    # self.quit.pack()
-    #
-    # self.add_screen = tk.Button(self, text="Add Screen", command=self.create_screen)
-    # self.add_screen.pack()
 
     self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
     self.canvas.bind('<Button-1>', self.canvas_clicked)
     self.canvas.pack(side="left")
-
-    # self.split_mode = tk.LabelFrame(self, text="Split Mode", width=200)
-    # vert = tk.Checkbutton(self.split_mode, text="Vertical", variable=self.split_v)
-    # hori = tk.Checkbutton(self.split_mode, text="Horizontal", variable=self.split_h)
-    # vert.pack(fill="x")
-    # hori.pack(fill="x")
-    # self.split_mode.pack(side="left")
 
     # TODO - base this off of what is read in from options
     # TODO - update options when screens and/or panels are updated
@@ -59,7 +46,6 @@ class MainWindow(tk.Frame):
     self.menuBar.eventLock = True
 
   def canvas_clicked(self, event):
-    # print('x ' + str(event.x) + ', y ' + str(event.y))
     for s in self.screens:
       sx = s.get_x()
       sw = sx + s.get_width()
