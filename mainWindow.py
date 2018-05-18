@@ -22,7 +22,7 @@ class MainWindow(tk.Frame):
         self.createWidgets()
 
     def createWidgets(self):
-        ''' sets up companents for user to interact with '''
+        ''' sets up components for user to interact with '''
         # menu bar
         self.menuBar = MBMain(self)
         # other stuff
@@ -35,7 +35,7 @@ class MainWindow(tk.Frame):
         self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
         self.canvas.bind('<Button-1>', self.canvas_clicked)
         self.canvas.pack(side="left")
-
+        
         self.split_mode = tk.LabelFrame(self, text="Split Mode", width=200)
         vert = tk.Checkbutton(self.split_mode, text="Vertical", variable=self.split_v)
         hori = tk.Checkbutton(self.split_mode, text="Horizontal", variable=self.split_h)

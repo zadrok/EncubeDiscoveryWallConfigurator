@@ -58,6 +58,7 @@ class Panel:
             fill="#00FFFF",
             tags="panel"
         )
+        self.draw_id()
 
     def split_horizontally(self):
         v_size = self.get_height() - self.get_y()
@@ -68,3 +69,18 @@ class Panel:
         h_size = self.get_width() - self.get_x()
         h_size = h_size / 2
         self.set_width(self.get_x() + h_size)
+
+    def draw_id(self):
+        self.canvas.create_rectangle(
+            self.x, 
+            self.y, 
+            self.x + 20, 
+            self.y + 20, 
+            fill="#8144A9"
+        )
+        self.canvas.create_text(
+            self.x + 10, 
+            self.y + 10, 
+            text=self.id[:2],
+            font="Arial 8 bold"
+        )

@@ -21,8 +21,24 @@ class Screen:
             width=3,
             fill=self.color
         )
+        self.draw_id()
         for panel in self.panels:
             panel.draw()
+
+    def draw_id(self):
+        self.canvas.create_rectangle(
+            self.x, 
+            self.y, 
+            self.x + 20, 
+            self.y + 20, 
+            fill="#81AAA9"
+        )
+        self.canvas.create_text(
+            self.x + 10, 
+            self.y + 10, 
+            text=self.id[:2],
+            font="Arial 8 bold"
+        )
 
     def set_position(self, x, y, w, h):
         self.x = x
