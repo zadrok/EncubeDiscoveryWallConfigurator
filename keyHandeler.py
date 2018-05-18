@@ -32,18 +32,18 @@ class KeyHandeler:
     # print('Doing down event ' + keySym)
     if keySym == '1':
       selcon.splitHorizontally()
-      selcon.deselect()
+      selcon.deselectAll()
     if keySym == '2':
       selcon.splitVertically()
-      selcon.deselect()
+      selcon.deselectAll()
     if keySym == '3':
       selcon.join()
-      selcon.deselect()
+      selcon.deselectAll()
     if keySym == '4':
       selcon.remove()
-      selcon.deselect()
+      selcon.deselectAll()
     if keySym == '5':
-      selcon.deselect()
+      selcon.deselectAll()
     if keySym == '6':
       selcon.allselect()
     if keySym == '7':
