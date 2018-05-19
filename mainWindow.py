@@ -82,3 +82,4 @@ class MainWindow(tk.Frame):
             s.set_id(ident)
             s.set_position(x, y, w, h)
             s.draw()
+            s.draw_id(False)

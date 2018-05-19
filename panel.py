@@ -1,6 +1,6 @@
 
 class Panel:
-    def __init__(self, canvas, ident, x=10, y=10, width=100, height=100, ):
+    def __init__(self, canvas, ident, x=10, y=10, width=100, height=100):
         self.id = ident
         self.canvas = canvas
         self.x = x
