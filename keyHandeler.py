@@ -1,4 +1,5 @@
 import tkinter as tk
+import platform
 from selectionController import selcon
 
 # all keysyms that need to be tracked
@@ -16,7 +17,11 @@ class KeyHandeler:
 
     self.root.bind("<KeyRelease>", self.keyUp)
     self.root.bind("<KeyPress>", self.keyDown)
-    self.root.bind('<MouseWheel>', self.onMouseWheel)
+    if platform.system() == "Linux":
+        self.root.bind("<Button-4>", self.onMouseWheelLinux)
+        self.root.bind("<Button-5>", self.onMouseWheelLinux)
+    else:
+        self.root.bind('<MouseWheel>', self.onMouseWheel)
 
     # needed to make sure key events only happen once
     self.keyMemory = {}
@@ -26,8 +31,16 @@ class KeyHandeler:
     # tell selcon about this
     selcon.setKeyHandeler(self)
 
-  def onMouseWheel(self,event):
-    d = int( event.delta/120 )
+  def onMouseWheelLinux(self, event):
+    if event.num == 4:
+      self.scrollCount += 1
+    elif event.num == 5:
+      self.scrollCount -= 1
+
+    self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
+
+  def onMouseWheel(self, event):
+    d = int( event.delta/10 )
     self.scrollCount += d
     self.scrollCount = max(2,self.scrollCount)
 
