@@ -12,7 +12,7 @@ class Screen:
         self.color = color
         self.panels = []
 
-    def draw(self, visible):
+    def draw(self):
         self.canvas.create_rectangle(
             self.x,
             self.y,
@@ -22,31 +22,23 @@ class Screen:
             fill=self.color
         )
         for panel in self.panels:
-            panel.draw(visible)
-        #draw the id boxes after panels to keep alive
-        self.draw_id(visible)
+            panel.draw()
 
     def draw_id(self, visible):
         if visible is True:
-            #use for placement of id boxes
-            xOrigin = self.x
-            yOrigin = self.y
-            width = 20
-            height = 20
             self.canvas.create_rectangle(
-                xOrigin, 
-                yOrigin, 
-                xOrigin + width, 
-                yOrigin + height, 
+                self.x, 
+                self.y, 
+                self.x + 20, 
+                self.y + 20, 
                 fill="#81AAA9"
             )
             self.canvas.create_text(
-                xOrigin + width/2, 
-                yOrigin + height/2, 
+                self.x + 10, 
+                self.y + 10, 
                 text=self.id[:2],
                 font="Arial 8 bold"
             )
-            
 
     def set_position(self, x, y, w, h):
         self.x = x

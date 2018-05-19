@@ -48,7 +48,7 @@ class Panel:
     def get_rectangle(self):
         return self.rectangle
 
-    def draw(self, visible):
+    def draw(self):
         self.rectangle = self.canvas.create_rectangle(
             self.x,
             self.y,
@@ -58,25 +58,7 @@ class Panel:
             fill="#00FFFF",
             tags="panel"
         )
-        if visible is True:
-            #use for placement of id boxes
-            xOrigin = self.x
-            yOrigin = self.y + 20
-            width = 20
-            height = 20
-            self.canvas.create_rectangle(
-                xOrigin, 
-                yOrigin, 
-                xOrigin + width, 
-                yOrigin + height, 
-                fill="#8144A9"
-            )
-            self.canvas.create_text(
-                xOrigin + width/2, 
-                yOrigin + height/2, 
-                text=self.id[:2],
-                font="Arial 8 bold"
-            )
+        self.draw_id()
 
     def split_horizontally(self):
         v_size = self.get_height() - self.get_y()
@@ -88,3 +70,17 @@ class Panel:
         h_size = h_size / 2
         self.set_width(self.get_x() + h_size)
 
+    def draw_id(self):
+        self.canvas.create_rectangle(
+            self.x, 
+            self.y, 
+            self.x + 20, 
+            self.y + 20, 
+            fill="#8144A9"
+        )
+        self.canvas.create_text(
+            self.x + 10, 
+            self.y + 10, 
+            text=self.id[:2],
+            font="Arial 8 bold"
+        )
