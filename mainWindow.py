@@ -16,6 +16,7 @@ class MainWindow(tk.Frame):
         self.split_mode = None
         self.split_h = tk.IntVar()
         self.split_v = tk.IntVar()
+        self.display_id = tk.BooleanVar()
         self.canvas_w = 1080
         self.canvas_h = 720
 
@@ -39,16 +40,26 @@ class MainWindow(tk.Frame):
         self.split_mode = tk.LabelFrame(self, text="Split Mode", width=200)
         vert = tk.Checkbutton(self.split_mode, text="Vertical", variable=self.split_v)
         hori = tk.Checkbutton(self.split_mode, text="Horizontal", variable=self.split_h)
+        idbtn = tk.Checkbutton(self.split_mode, text="Display IDs", variable=self.display_id, command=self.displayId)
         vert.pack(fill="x")
         hori.pack(fill="x")
+        idbtn.pack(fill="x")
         self.split_mode.pack(side="left")
 
         for i in range(0, 6):
             self.create_screen()
 
+    def displayId(self):
+        display_id = self.display_id.get()
+        print ("variable is ", display_id)
+        self.canvas.delete("all")
+        for i, s in enumerate(self.screens):
+            s.draw(display_id)
+
     def canvas_clicked(self, event):
         split_v = self.split_v.get()
         split_h = self.split_h.get()
+        display_id = self.display_id.get()
         canvas_changed = False
         for s in self.screens:
             sx = s.get_x()
@@ -63,13 +74,13 @@ class MainWindow(tk.Frame):
         if canvas_changed:
             self.canvas.delete("all")
             for i, s in enumerate(self.screens):
-                s.draw()
+                s.draw(display_id)
 
     def create_screen(self):
         s = Screen(self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d")
         self.screens.append(s)
         count_screens = len(self.screens)
-
+        display_id = self.display_id.get()
         self.canvas.delete("all")
 
         for i, s in enumerate(self.screens):
@@ -81,5 +92,4 @@ class MainWindow(tk.Frame):
             ident = "#" + str(i) + ": " + str(x) + "," + str(y)
             s.set_id(ident)
             s.set_position(x, y, w, h)
-            s.draw()
-            s.draw_id(False)
+            s.draw(display_id)
