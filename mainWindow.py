@@ -85,6 +85,8 @@ class MainWindow(tk.Frame):
     for s in self.screens:
       s.draw()
 
+    self.gui.model.set_screens(self.screens, width=self.canvas_w, height=self.canvas_h)
+
   def create_screen(self):
     self.screens.append( Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d") )
     self.rePackScreens()
