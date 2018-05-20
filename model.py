@@ -34,11 +34,11 @@ class Model:
     py2 = panel.get_height()
 
     nx1 = px1 / self.max_width
-    nx2 = px2 / self.max_width
+    nx2 = nx1 + (px2 / self.max_width)
     # Because S2PLOT uses a reversed coordinate system, we need to transform our coords
     # eg. 0.25 in a tkInter Canvas becomes 0.75 on a S2PLOT XY system.
     ny1 = py1 / self.max_height
-    ny2 = py2 / self.max_height
+    ny2 = ny1 + (py2 / self.max_height)
 
     return [nx1, ny1, nx2, ny2]
 
