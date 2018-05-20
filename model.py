@@ -37,6 +37,7 @@ class Model:
       for panel in screen.panels:
         out_screens.append(self.panel_to_array(panel))
 
+    out_screens = self.flatten(out_screens)
     return out_screens
 
   def calculate_area(self, panel):
@@ -97,6 +98,8 @@ class Model:
     ''' calls jsonHandler.exportFile and passes it options to save '''
     JsonHandler().exportFile( self, fname )
 
+  def flatten(self, l):
+    return self.flatten(l[0]) + (self.flatten(l[1:]) if len(l) > 1 else []) if type(l) is list else [l]
 
   def toJson(self):
     ''' creates a json sting to save to file '''
@@ -105,10 +108,15 @@ class Model:
     for key,value in self.options.items():
         d = self.processVar( str(value) )
         data += '  "' + str(key) + '": ' + d + ',\n'
-    # data += '  "screens": [\n'
-    # for screen in out_screens:
-    #     data += '    [' + str(screen[0]) + ", " + str(screen[1]) + ", " + str(screen[2]) + ", " + str(screen[3]) + "],\n"
-    # data += '  ],\n'
+    data += '  "screens": [\n    ['
+    for index, screen in enumerate(out_screens):
+        if index == 0:
+          data += str(screen)
+        elif index % 4 == 0:
+          data += "],\n    ["+str(screen)
+        else:
+          data += ", "+str(screen)
+    data += '  ],\n'
     data = data[:-2] + '\n}'
     data = data.replace("'", '"')
     return data
