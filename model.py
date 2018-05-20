@@ -1,4 +1,6 @@
 from jsonHandler import JsonHandler
+import sys
+
 
 class Model:
   def __init__(self):
@@ -16,15 +18,25 @@ class Model:
     self.max_height = height
     self.max_width = width
 
+  def panel_to_array(self, panel):
+    ret = []
+
+    if len(panel.panels) > 0:
+      for sub_panel in panel.panels:
+        ret.append(self.panel_to_array(sub_panel))
+    else:
+      ret.append(self.calculate_area(panel))
+
+    return ret
+
   def screens_to_array(self):
+    # account for recursive func in model.py
+    # sys.setrecursionlimit(9999999)
     out_screens = []
     for screen in self.screens:
       for panel in screen.panels:
-        if len(panel.panels) > 0:
-          for sub_panel in panel.panels:
-            out_screens.append(self.calculate_area(sub_panel))
-        else:
-          out_screens.append(self.calculate_area(panel))
+        out_screens.append(self.panel_to_array(panel))
+
     return out_screens
 
   def calculate_area(self, panel):
@@ -93,10 +105,10 @@ class Model:
     for key,value in self.options.items():
         d = self.processVar( str(value) )
         data += '  "' + str(key) + '": ' + d + ',\n'
-    data += '  "screens": [\n'
-    for screen in out_screens:
-        data += '    [' + str(screen[0]) + ", " + str(screen[1]) + ", " + str(screen[2]) + ", " + str(screen[3]) + "],\n"
-    data += '  ],\n'
+    # data += '  "screens": [\n'
+    # for screen in out_screens:
+    #     data += '    [' + str(screen[0]) + ", " + str(screen[1]) + ", " + str(screen[2]) + ", " + str(screen[3]) + "],\n"
+    # data += '  ],\n'
     data = data[:-2] + '\n}'
     data = data.replace("'", '"')
     return data
