@@ -37,14 +37,28 @@ class KeyHandeler:
     elif event.num == 5:
       self.scrollCount -= 1
 
+    self.limitScrollCount()
     self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
 
   def onMouseWheel(self, event):
-    d = int( event.delta/10 )
-    self.scrollCount += d
-    self.scrollCount = max(2,self.scrollCount)
+    if event.delta > 0:
+      self.scrollCount += 1
+    elif event.delta < 0:
+      self.scrollCount -= 1
 
+    self.limitScrollCount()
     self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
+
+
+  # set limits on self.scrollCount
+  def limitScrollCount(self):
+    limitMin = 1
+    limitMax = 10
+    if self.scrollCount < limitMin:
+      self.scrollCount = limitMin
+    if self.scrollCount > limitMax:
+      self.scrollCount = limitMax
+
 
   def getScrollCountText(self):
     return 'Split num: ' + str(self.scrollCount)
