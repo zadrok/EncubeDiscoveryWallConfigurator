@@ -137,6 +137,12 @@ class Panel:
     ''' pack panels within the screen, passing in the change in position '''
     # make sure this instance has panels to replace
     if len(self.panels) <= 0: return
+
+    # if this panel only has one panel in it remove it
+    if len(self.panels) == 1:
+      self.panels = []
+      return
+
     # check method of how panels were divided
     m = self.panels[0].method # will be 'h' or 'v'
     # apply position change and pass down panel chain
