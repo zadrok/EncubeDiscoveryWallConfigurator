@@ -68,6 +68,12 @@ class Screen:
   def get_rectangle(self):
     return self.x, self.y, self.width, self.height
 
+  def countPanels(self):
+    count = 0
+    for panel in self.panels:
+      count += panel.countPanels()
+    return count
+
   def divideHorizontally(self,num=2):
     ''' create two new panels '''
     x = self.get_x()
@@ -100,7 +106,7 @@ class Screen:
         screen=self,
         canvas=self.canvas,
         ident="0",
-        method='h',
+        method='v',
         x=x + (w*n),
         y=y,
         width=w,
@@ -131,34 +137,33 @@ class Screen:
       for p in self.panels:
         p.removePanel(panel)
 
-  def rePackPanels(self,cX,cY,cW,cH):
+  def rePackPanels(self,pX,pY,pW,pH):
     ''' pack panels within the screen, passing in the change in position '''
     # make sure this instance has panels to replace
     if len(self.panels) <= 0: return
 
-    # if this screen only has one panel make it fill the whole screen
-    if len(self.panels) == 1:
-      self.panels[0].set_position(self.x,self.y,self.width,self.height)
-
     # check method of how panels were divided
     m = self.panels[0].method # will be 'h' or 'v'
-    # apply position change and pass down panel chain
+
+    # apply position and pass down panel chain
     for i,p in enumerate(self.panels):
       # work out the new position for each panel
-      x = cX
-      y = cY
-      w = cW
-      h = cH
+      x = pX
+      y = pY
+      w = pW
+      h = pH
+      l = len(self.panels)
 
       # adjust for method
       if m == 'v':
-        w = cW / len(self.panels)
-        x += w*i
+        x = pX + int( i*(pW/l) )
+        w = int( (pW/l) )
       elif m == 'h':
-        h = cH / len(self.panels)
+        y = pY + int( i*(pH/l) )
+        h = int( pH/l )
 
       # adjust panel to new position
-      p.adjustPosition(x,y,w,h)
+      p.set_position(x,y,w,h)
       # if this panel has panels, pass them the change in position
       if len(p.panels) > 0:
         p.rePackPanels(x,y,w,h)

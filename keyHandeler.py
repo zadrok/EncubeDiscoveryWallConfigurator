@@ -92,6 +92,8 @@ class KeyHandeler:
       self.master.create_screen()
     if keySym == '8':
       pass # just redraw
+    if keySym == 'c':
+      self.master.countScreensPanels()
 
     self.master.draw()
 

@@ -51,6 +51,12 @@ class Panel:
   def get_rectangle(self):
     return self.x, self.y, self.width, self.height
 
+  def countPanels(self):
+    count = 0
+    for panel in self.panels:
+      count += panel.countPanels()
+    return count + 1
+
   def draw(self):
     if len(self.panels) > 0:
       for p in self.panels:
@@ -95,7 +101,7 @@ class Panel:
         screen=self,
         canvas=self.canvas,
         ident="0",
-        method='h',
+        method='v',
         x=x + (w*n),
         y=y,
         width=w,
@@ -133,35 +139,38 @@ class Panel:
     self.width += cW
     self.height += cH
 
-  def rePackPanels(self,cX,cY,cW,cH):
+  def rePackPanels(self,pX,pY,pW,pH):
     ''' pack panels within the screen, passing in the change in position '''
     # make sure this instance has panels to replace
     if len(self.panels) <= 0: return
 
-    # if this panel only has one panel in it remove it
+    # if this panel only has one panel in it, take any panels it has, move them to this panel and remove the panel
     if len(self.panels) == 1:
-      self.panels = []
-      return
+      self.panels = self.panels[0].panels
+      if len(self.panels) <= 0: return
 
     # check method of how panels were divided
     m = self.panels[0].method # will be 'h' or 'v'
+
     # apply position change and pass down panel chain
     for i,p in enumerate(self.panels):
       # work out the new position for each panel
-      x = cX
-      y = cY
-      w = cW
-      h = cH
+      x = pX
+      y = pY
+      w = pW
+      h = pH
+      l = len(self.panels)
 
       # adjust for method
       if m == 'v':
-        w = cW / len(self.panels)
-        x += w*i
+        x = pX + int( i*(pW/l) )
+        w = int( (pW/l) )
       elif m == 'h':
-        h = cH / len(self.panels)
+        y = pY + int( i*(pH/l) )
+        h = int( pH/l )
 
-      # adjust panel to new position
-      p.adjustPosition(x,y,w,h)
+      # set panel to new position
+      p.set_position(x,y,w,h)
       # if this panel has panels, pass them the change in position
       if len(p.panels) > 0:
         p.rePackPanels(x,y,w,h)

@@ -64,19 +64,13 @@ class MainWindow(tk.Frame):
     if cScreens == 0: return
     width = self.canvas_w / cScreens
     for i, s in enumerate(self.screens):
-      sX,sY,sW,sH = s.get_rectangle()
       x = width * i
       y = 0
       w = width
       h = 720
 
-      s.set_position(x,y,w,h)
-      # pass change in position
-      cX = x - sX
-      cY = y - sY
-      cW = w - sW
-      cH = h - sH
-      s.rePackPanels( cX,cY,cW,cH )
+      s.set_position( x,y,w,h )
+      s.rePackPanels( x,y,w,h )
 
     self.draw()
 
@@ -90,3 +84,14 @@ class MainWindow(tk.Frame):
   def create_screen(self):
     self.screens.append( Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d") )
     self.rePackScreens()
+
+  def countScreensPanels(self):
+    cS = 0
+    cP = 0
+
+    for screen in self.screens:
+      cS += 1
+      cP += screen.countPanels()
+
+    print('Screens: ' + str(cS))
+    print('Panels: ' + str(cP))
