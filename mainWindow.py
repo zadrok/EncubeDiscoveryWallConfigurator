@@ -34,14 +34,9 @@ class MainWindow(tk.Frame):
     # menu bar
     self.menuBar = MBMain(self)
 
-    self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
+    self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="gray74")
     self.canvas.bind('<Button-1>', self.canvas_clicked)
     self.canvas.pack(side="left")
-
-    # TODO - base this off of what is read in from options
-    # TODO - update options when screens and/or panels are updated
-    for i in range(6):
-      self.create_screen()
 
     self.menuBar.eventLock = True
 
