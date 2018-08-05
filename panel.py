@@ -70,7 +70,7 @@ class Panel:
       self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
 
   def divideHorizontally(self,num=2):
-    ''' create two new panels '''
+    ''' create new panels '''
     x = self.get_x()
     y = self.get_y()
     w = self.get_width()
@@ -78,7 +78,7 @@ class Panel:
 
     for n in range(num):
       p = Panel(
-        screen=self,
+        screen=self.screen,
         canvas=self.canvas,
         ident="0",
         method='h',
@@ -87,10 +87,12 @@ class Panel:
         width=w,
         height=h
       )
-      self.panels.append( p )
+      self.screen.panels.append( p )
+
+    self.screen.panels.remove(self)
 
   def divideVertically(self,num=2):
-    ''' create two new panels '''
+    ''' create new panels '''
     x = self.get_x()
     y = self.get_y()
     w = (self.get_width() / num)
@@ -98,7 +100,7 @@ class Panel:
 
     for n in range(num):
       p = Panel(
-        screen=self,
+        screen=self.screen,
         canvas=self.canvas,
         ident="0",
         method='v',
@@ -107,7 +109,9 @@ class Panel:
         width=w,
         height=h
       )
-      self.panels.append( p )
+      self.screen.panels.append( p )
+
+    self.screen.panels.remove(self)
 
 
   def get_panel_at_xy(self, x, y):
@@ -133,44 +137,38 @@ class Panel:
       for p in self.panels:
         p.removePanel(panel)
 
-  def adjustPosition(self,cX,cY,cW,cH):
-    self.x += cX
-    self.y += cY
-    self.width += cW
-    self.height += cH
-
-  def rePackPanels(self,pX,pY,pW,pH):
-    ''' pack panels within the screen, passing in the change in position '''
-    # make sure this instance has panels to replace
-    if len(self.panels) <= 0: return
-
-    # if this panel only has one panel in it, take any panels it has, move them to this panel and remove the panel
-    if len(self.panels) == 1:
-      self.panels = self.panels[0].panels
-      if len(self.panels) <= 0: return
-
-    # check method of how panels were divided
-    m = self.panels[0].method # will be 'h' or 'v'
-
-    # apply position change and pass down panel chain
-    for i,p in enumerate(self.panels):
-      # work out the new position for each panel
-      x = pX
-      y = pY
-      w = pW
-      h = pH
-      l = len(self.panels)
-
-      # adjust for method
-      if m == 'v':
-        x = pX + int( i*(pW/l) )
-        w = int( (pW/l) )
-      elif m == 'h':
-        y = pY + int( i*(pH/l) )
-        h = int( pH/l )
-
-      # set panel to new position
-      p.set_position(x,y,w,h)
-      # if this panel has panels, pass them the change in position
-      if len(p.panels) > 0:
-        p.rePackPanels(x,y,w,h)
+  # def rePackPanels(self,pX,pY,pW,pH):
+  #   ''' pack panels within the screen, passing in the change in position '''
+  #   # make sure this instance has panels to replace
+  #   if len(self.panels) <= 0: return
+  #
+  #   # if this panel only has one panel in it, take any panels it has, move them to this panel and remove the panel
+  #   if len(self.panels) == 1:
+  #     self.panels = self.panels[0].panels
+  #     if len(self.panels) <= 0: return
+  #
+  #   # check method of how panels were divided
+  #   m = self.panels[0].method # will be 'h' or 'v'
+  #
+  #   # apply position change and pass down panel chain
+  #   for i,p in enumerate(self.panels):
+  #     # work out the new position for each panel
+  #     x = pX
+  #     y = pY
+  #     w = pW
+  #     h = pH
+  #     l = len(self.panels)
+  #
+  #     # adjust for method
+  #     if m == 'v':
+  #       x = pX + int( i*(pW/l) )
+  #       w = int( (pW/l) )
+  #     elif m == 'h':
+  #       y = pY + int( i*(pH/l) )
+  #       h = int( pH/l )
+  #
+  #     # set panel to new position
+  #     p.set_position(x,y,w,h)
+  #     # if this panel has panels, pass them the change in position
+  #     if len(p.panels) > 0:
+  #       p.rePackPanels(x,y,w,h)

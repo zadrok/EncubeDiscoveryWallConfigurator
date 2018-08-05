@@ -64,7 +64,7 @@ class SelectionController:
   def join(self):
     # TODO - make this work
     print('TODO - Join')
-
+    
 
 
 
@@ -72,8 +72,6 @@ class SelectionController:
     if self.window != None:
       for p in self.panels:
         p.screen.removePanel(p)
-
-      self.window.rePackScreens()
 
   def deselectAll(self):
     self.clearAll()
