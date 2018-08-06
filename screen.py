@@ -74,6 +74,19 @@ class Screen:
       count += panel.countPanels()
     return count
 
+  def createPanel(self, method, x, y, width, height):
+    self.panels.append( Panel(
+      screen=self,
+      canvas=self.canvas,
+      ident="0",
+      method=method,
+      x=x,
+      y=y,
+      width=width,
+      height=height
+      )
+    )
+
   def divideHorizontally(self,num=2):
     ''' create new panels '''
     x = self.get_x()

@@ -63,8 +63,47 @@ class SelectionController:
 
   def join(self):
     # TODO - make this work
-    print('TODO - Join')
-    
+    # print('TODO - Join')
+
+    # go through all screens
+    for aScreen in self.window.screens:
+      # make a list of panels in the same screen to join together
+      jPanels = []
+      # go through each panel in the screen
+      for asPanel in aScreen.panels:
+        # go through all selected panels
+        for sPanel in self.panels:
+          # if these panels are the same add them to the list to join
+          if asPanel == sPanel:
+            jPanels.append(asPanel)
+            # remove panel form selected list so it isn't checked again
+            self.panels.remove(asPanel)
+
+      # if there are no panels to join continue
+      if len(jPanels) < 1: continue
+
+      # find the bounding box for join panels
+      xMin = min( jPanels, key=lambda p: p.x )
+      yMin = min( jPanels, key=lambda p: p.y )
+      wMax = max( jPanels, key=lambda p: p.x + p.width )
+      hMax = max( jPanels, key=lambda p: p.y + p.height )
+
+      xMin =  xMin.x
+      yMin =  yMin.y
+      wMax =  wMax.x + wMax.width - xMin
+      hMax =  hMax.y + hMax.height - yMin
+
+      # print('xMin ' + str(int(xMin)) + ', yMin ' + str(int(yMin)) + ', wMax ' + str(int(wMax)) + ', hMax ' + str(int(hMax)))
+      # print('xMin ' + str(xMin) + ', yMin ' + str(yMin) + ', wMax ' + str(wMax) + ', hMax ' + str(hMax))
+
+      # go through all panels marked as join (in the join list)
+      for jPanel in jPanels:
+        # remove the panel
+        aScreen.panels.remove(jPanel)
+
+      # create the new panel
+      aScreen.createPanel(method='n', x=xMin, y=yMin, width=wMax, height=hMax)
+
 
 
 
