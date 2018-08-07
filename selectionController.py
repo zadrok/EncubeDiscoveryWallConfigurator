@@ -32,6 +32,9 @@ class SelectionController:
 
   def screenClick(self,x,y,screen):
     panel = screen.get_panel_at_xy(x,y)
+
+    # if panel != None: print( 'x ' + str(panel.x) + ', y ' + str(panel.y) + ', w ' + str(panel.width) + ', h ' + str(panel.height) )
+
     # check if this is a deselect
     if not self.deselect(screen,panel):
       # select it
@@ -61,6 +64,11 @@ class SelectionController:
     for p in self.panels:
       p.divideVertically(num=self.keyHandeler.getScrollCount())
 
+
+
+
+
+
   def join(self):
     # TODO - make this work
     # print('TODO - Join')
@@ -82,27 +90,188 @@ class SelectionController:
       # if there are no panels to join continue
       if len(jPanels) < 1: continue
 
-      # find the bounding box for join panels
-      xMin = min( jPanels, key=lambda p: p.x )
-      yMin = min( jPanels, key=lambda p: p.y )
-      wMax = max( jPanels, key=lambda p: p.x + p.width )
-      hMax = max( jPanels, key=lambda p: p.y + p.height )
+      # TODO - Split panels into 'zones'/'groups' within each screen
+      # only join panels that are next together and make a rectangle/square
+      # jPanels <- all panels in this screen that want to join
 
-      xMin =  xMin.x
-      yMin =  yMin.y
-      wMax =  wMax.x + wMax.width - xMin
-      hMax =  hMax.y + hMax.height - yMin
+      panelGroups = []
 
-      # print('xMin ' + str(int(xMin)) + ', yMin ' + str(int(yMin)) + ', wMax ' + str(int(wMax)) + ', hMax ' + str(int(hMax)))
-      # print('xMin ' + str(xMin) + ', yMin ' + str(yMin) + ', wMax ' + str(wMax) + ', hMax ' + str(hMax))
+      while len(jPanels) > 1:
+        curPanel = jPanels.pop()
+        curGroup = []
+        curGroup.append(curPanel)
+        for pan in jPanels:
+          if curPanel == jPanels:
+            jPanels.remove(curPanel)
+            # print('same panel, removing')
+            continue
+          if self.panelShareEdge(curPanel,pan):
+            curGroup.append(pan)
+            jPanels.remove(pan)
+            break
 
-      # go through all panels marked as join (in the join list)
-      for jPanel in jPanels:
-        # remove the panel
-        aScreen.panels.remove(jPanel)
+        panelGroups.append(curGroup)
 
-      # create the new panel
-      aScreen.createPanel(method='n', x=xMin, y=yMin, width=wMax, height=hMax)
+      join = True
+      maxLoop = 100
+      loop = 0
+      while join and loop < maxLoop:
+        join = False
+        loop += 1
+        for group in panelGroups:
+          for otherGroup in panelGroups:
+            if group == otherGroup: continue
+            if self.groupShareEdge(group,otherGroup):
+              newGroup = []
+              newGroup.extend(group)
+              newGroup.extend(otherGroup)
+              panelGroups.remove(group)
+              panelGroups.remove(otherGroup)
+              panelGroups.append(newGroup)
+              join = True
+              break
+
+
+      if loop >= maxLoop:
+        print('exit due to loop max')
+
+      # cI = 0
+      # for group in panelGroups:
+      #   colors = ['gold', 'hot pink', 'khaki1', 'tomato2', 'magenta3', 'SeaGreen1', 'slate blue', 'ivory2', 'OrangeRed2', 'plum2', 'DarkOliveGreen2', 'purple', 'pink1', 'forest green', 'navy']
+      #   color = colors[cI]
+      #   cI += 1
+      #   if cI >= len(colors): cI = 0
+      #   for panel in group:
+      #     panel.colorOther = color
+
+
+      for group in panelGroups:
+        # find the bounding box for join panels
+        xMin = min( group, key=lambda p: p.x )
+        yMin = min( group, key=lambda p: p.y )
+        wMax = max( group, key=lambda p: p.x + p.width )
+        hMax = max( group, key=lambda p: p.y + p.height )
+
+        xMin =  xMin.x
+        yMin =  yMin.y
+        wMax =  wMax.x + wMax.width - xMin
+        hMax =  hMax.y + hMax.height - yMin
+
+        # print('xMin ' + str(int(xMin)) + ', yMin ' + str(int(yMin)) + ', wMax ' + str(int(wMax)) + ', hMax ' + str(int(hMax)))
+        # print('xMin ' + str(xMin) + ', yMin ' + str(yMin) + ', wMax ' + str(wMax) + ', hMax ' + str(hMax))
+
+        # go through all panels marked as join (in the join list)
+        for panel in group:
+          # remove the panel
+          aScreen.panels.remove(panel)
+
+        # create the new panel
+        aScreen.createPanel(method='n', x=xMin, y=yMin, width=wMax, height=hMax)
+
+
+
+
+  def panelShareEdge(self,panelA,panelB):
+    # create vertices
+    verticesA = self.getPanelVertices(panelA)
+    verticesB = self.getPanelVertices(panelB)
+
+    # print( 'verticesA: 0 ' + str(verticesA[0][0]) + ', ' + str(verticesA[0][1]) +
+    #        '     1 ' + str(verticesA[1][0]) + ', ' + str(verticesA[1][1]) +
+    #        '     2 ' + str(verticesA[2][0]) + ', ' + str(verticesA[2][1]) +
+    #        '     3 ' + str(verticesA[3][0]) + ', ' + str(verticesA[3][1]) )
+    #
+    # print( 'verticesB: 0 ' + str(verticesB[0][0]) + ', ' + str(verticesB[0][1]) +
+    #        '     1 ' + str(verticesB[1][0]) + ', ' + str(verticesB[1][1]) +
+    #        '     2 ' + str(verticesB[2][0]) + ', ' + str(verticesB[2][1]) +
+    #        '     3 ' + str(verticesB[3][0]) + ', ' + str(verticesB[3][1]) )
+
+    sameCount = 0
+    for verA in verticesA:
+      for verB in verticesB:
+        if verA[0] == verB[0] and verA[1] == verB[1]:
+          # print('match ' + str(sameCount))
+          sameCount += 1
+        if sameCount >= 2:
+          return True
+
+    return False
+
+
+
+
+  def panelShareVertex(self,panelA,panelB):
+    # create vertices
+    verticesA = self.getPanelVertices(panelA)
+    verticesB = self.getPanelVertices(panelB)
+    # go through all vertices and check if they match
+    for verA in verticesA:
+      for verB in verticesB:
+        if verA[0] == verB[0] and verA[1] == verB[1]:
+          return True
+
+    return False
+
+
+
+  def getPanelVertices(self,panel):
+    vertices = []
+    vertices.append( [panel.x, panel.y] )
+    vertices.append( [panel.x + panel.width, panel.y] )
+    vertices.append( [panel.x, panel.y + panel.height] )
+    vertices.append( [panel.x + panel.width, panel.y + panel.height] )
+    return vertices
+
+
+  def getGroupVertices(self,group):
+    vertices = []
+
+    # find the bounding box for join panels
+    xMin = min( group, key=lambda p: p.x )
+    yMin = min( group, key=lambda p: p.y )
+    wMax = max( group, key=lambda p: p.x + p.width )
+    hMax = max( group, key=lambda p: p.y + p.height )
+
+    xMin =  xMin.x
+    yMin =  yMin.y
+    wMax =  wMax.x + wMax.width - xMin
+    hMax =  hMax.y + hMax.height - yMin
+
+    # print('xMin ' + str(xMin) + ', yMin ' + str(yMin) + ', wMax ' + str(wMax) + ', hMax ' + str(hMax))
+
+    vertices.append( [xMin, yMin] )
+    vertices.append( [xMin + wMax, yMin] )
+    vertices.append( [xMin, yMin + hMax] )
+    vertices.append( [xMin + wMax, yMin + hMax] )
+    return vertices
+
+
+
+  def groupShareEdge(self,groupA,groupB):
+    # create vertices
+    verticesA = self.getGroupVertices(groupA)
+    verticesB = self.getGroupVertices(groupB)
+
+    # print( 'verticesA: 0 ' + str(verticesA[0][0]) + ', ' + str(verticesA[0][1]) +
+    #        '     1 ' + str(verticesA[1][0]) + ', ' + str(verticesA[1][1]) +
+    #        '     2 ' + str(verticesA[2][0]) + ', ' + str(verticesA[2][1]) +
+    #        '     3 ' + str(verticesA[3][0]) + ', ' + str(verticesA[3][1]) )
+    #
+    # print( 'verticesB: 0 ' + str(verticesB[0][0]) + ', ' + str(verticesB[0][1]) +
+    #        '     1 ' + str(verticesB[1][0]) + ', ' + str(verticesB[1][1]) +
+    #        '     2 ' + str(verticesB[2][0]) + ', ' + str(verticesB[2][1]) +
+    #        '     3 ' + str(verticesB[3][0]) + ', ' + str(verticesB[3][1]) )
+
+    sameCount = 0
+    for verA in verticesA:
+      for verB in verticesB:
+        if verA[0] == verB[0] and verA[1] == verB[1]:
+          # print('match ' + str(sameCount))
+          sameCount += 1
+        if sameCount >= 2:
+          return True
+
+    return False
 
 
 

@@ -12,6 +12,11 @@ class Panel:
     self.height = height
     self.panels = []
 
+    self.colorNormal = "#00FFFF"
+    self.colorSelected = '#00ff90'
+    self.colorOther = None
+
+
   def set_position(self, x, y, w, h):
     self.x = x
     self.y = y
@@ -62,9 +67,11 @@ class Panel:
       for p in self.panels:
         p.draw()
     else:
-      color = "#00FFFF"
+      color = self.colorNormal
       if selcon.panelSelected(self):
-        color = '#00ff90'
+        color = self.colorSelected
+      if self.colorOther != None:
+        color = self.colorOther
 
       bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
       self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
