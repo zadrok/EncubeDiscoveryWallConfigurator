@@ -116,8 +116,8 @@ class Model:
           data += "],\n    ["+str(screen)
         else:
           data += ", "+str(screen)
-    data += '  ],\n'
-    data = data[:-2] + '\n}'
+    data += '],\n\t],'
+    data += '\n}'
     data = data.replace("'", '"')
     return data
 
