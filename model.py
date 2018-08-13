@@ -8,7 +8,7 @@ class Model:
     self.panels = []
     self.max_width = 0
     self.max_height = 0
-
+    self.n_panels   = 0
     # options
     self.defaultConfigFile = 'defaultConfig.json'
     self.options = JsonHandler().importFile(self.defaultConfigFile)
@@ -37,6 +37,7 @@ class Model:
       for panel in screen.panels:
         out_screens.append(self.panel_to_array(panel))
 
+    self.n_panels = len(out_screens);
     out_screens = self.flatten(out_screens)
     return out_screens
 
@@ -108,6 +109,7 @@ class Model:
     for key,value in self.options.items():
         d = self.processVar( str(value) )
         data += '  "' + str(key) + '": ' + d + ',\n'
+    data += '  "n_panels" : ' + str(self.n_panels) + ", \n"
     data += '  "screens": [\n    ['
     for index, screen in enumerate(out_screens):
         if index == 0:
