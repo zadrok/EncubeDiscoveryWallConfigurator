@@ -25,21 +25,17 @@ class Model:
       for sub_panel in panel.panels:
         ret.append(self.panel_to_array(sub_panel))
     else:
-      ret.append(self.calculate_area(panel))
+      ret = self.calculate_area(panel)
 
     return ret
 
   def screens_to_array(self):
-    # account for recursive func in model.py
-    # sys.setrecursionlimit(9999999)
-    out_screens = []
+    screens = []
     for screen in self.screens:
-      for panel in screen.panels:
-        out_screens.append(self.panel_to_array(panel))
+        screens.append(screen.toArray())
 
-    self.n_panels = len(out_screens);
-    out_screens = self.flatten(out_screens)
-    return out_screens
+    print(screens)
+    return screens
 
   def calculate_area(self, panel):
     px1 = panel.get_x()

@@ -137,6 +137,12 @@ class Screen:
       for p in self.panels:
         p.removePanel(panel)
 
+  def toArray(self):
+    screen = []
+    for panel in self.panels:
+        screen.append(panel.toArray())
+    return screen
+
   def rePackPanels(self,pX,pY,pW,pH):
     ''' pack panels within the screen, passing in the change in position '''
     # make sure this instance has panels to replace

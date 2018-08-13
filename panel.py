@@ -139,6 +139,28 @@ class Panel:
     self.width += cW
     self.height += cH
 
+  def s2plotDimensions(self):
+      px1 = self.get_x()
+      py1 = self.get_y()
+      px2 = self.get_width()
+      py2 = self.get_height()
+
+      nx1 = px1 / self.screen.get_width()
+      nx2 = nx1 + (px2 / self.screen.get_width())
+      # Because S2PLOT uses a reversed coordinate system, we need to transform our coords
+      # eg. 0.25 in a tkInter Canvas becomes 0.75 on a S2PLOT XY system.
+      ny1 = py1 / self.screen.get_height()
+      ny2 = ny1 + (py2 / self.screen.get_height())
+
+      return [nx1, ny1, nx2, ny2]
+
+  def toArray(self):
+    if len(self.panels) > 0:
+        for panel in self.panels:
+            panel.toArray()
+    else:
+        return self.s2plotDimensions()
+
   def rePackPanels(self,pX,pY,pW,pH):
     ''' pack panels within the screen, passing in the change in position '''
     # make sure this instance has panels to replace
