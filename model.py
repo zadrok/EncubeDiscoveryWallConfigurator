@@ -1,5 +1,6 @@
 from jsonHandler import JsonHandler
 import sys
+import pprint
 
 
 class Model:
@@ -34,7 +35,6 @@ class Model:
     for screen in self.screens:
         screens.append(screen.to_dimension_array())
 
-    print("model@screens_to_array", screens)
     return screens
 
   def calculate_area(self, panel):
@@ -102,16 +102,7 @@ class Model:
     for key,value in self.options.items():
         d = self.processVar( str(value) )
         data += '  "' + str(key) + '": ' + d + ',\n'
-    data += '  "n_panels" : ' + str(self.n_panels) + ", \n"
-    data += '  "screens": [\n    ['
-    for index, screen in enumerate(out_screens):
-        if index == 0:
-          data += str(screen)
-        elif index % 4 == 0:
-          data += "],\n    ["+str(screen)
-        else:
-          data += ", "+str(screen)
-    data += '],\n\t],'
+    data += '  "screens":' + pprint.pformat(out_screens)
     data += '\n}'
     data = data.replace("'", '"')
     return data

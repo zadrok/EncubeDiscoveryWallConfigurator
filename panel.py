@@ -139,7 +139,7 @@ class Panel:
     self.width += cW
     self.height += cH
 
-  def s2plotDimensions(self):
+  def s2_plot_dimensions(self):
     x1 = self.get_x()
     y1 = self.get_y()
     x2 = self.get_x() + self.get_width()

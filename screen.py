@@ -138,16 +138,15 @@ class Screen:
         p.removePanel(panel)
 
   def to_dimension_array(self):
-    print("Screen----------------")
     screen = []
-    dimensionArray = []
+    dimension_array = []
     for panel in self.panels:
         panel.to_dimension_array(screen)
 
     for panel in screen:
-        dimensionArray.append(panel.s2plotDimensions())
+        dimension_array.append(panel.s2_plot_dimensions())
 
-    return dimensionArray
+    return dimension_array
 
   def rePackPanels(self,pX,pY,pW,pH):
     ''' pack panels within the screen, passing in the change in position '''
