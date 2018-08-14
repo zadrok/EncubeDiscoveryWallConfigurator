@@ -140,26 +140,33 @@ class Panel:
     self.height += cH
 
   def s2plotDimensions(self):
-      px1 = self.get_x()
-      py1 = self.get_y()
-      px2 = self.get_width()
-      py2 = self.get_height()
+    x1 = self.get_x()
+    y1 = self.get_y()
+    x2 = self.get_x() + self.get_width()
+    y2 = self.get_y() + self.get_height()
+    screen_width  = self.screen.get_x() + self.screen.get_width()
+    screen_height = self.screen.get_y() + self.screen.get_height()
+    nx1 = x1 / screen_width
+    nx2 = x2 / screen_width
 
-      nx1 = px1 / self.screen.get_width()
-      nx2 = nx1 + (px2 / self.screen.get_width())
-      # Because S2PLOT uses a reversed coordinate system, we need to transform our coords
-      # eg. 0.25 in a tkInter Canvas becomes 0.75 on a S2PLOT XY system.
-      ny1 = py1 / self.screen.get_height()
-      ny2 = ny1 + (py2 / self.screen.get_height())
+    # calculate then invert the Y coordinates (inversion for S2PLOT's xy system)
+    ny1 = y1 / screen_height
+    ny1 = abs((ny1-1)*1)
 
-      return [nx1, ny1, nx2, ny2]
+    ny2 = y2 / screen_height
+    ny2 = abs((ny2-1)*1)
 
-  def toArray(self):
+    return [nx1, ny1, nx2, ny2]
+
+  def flatten(self,l):
+    return self.flatten(l[0]) + (self.flatten(l[1:]) if len(l) > 1 else []) if type(l) is list else [l]
+
+  def to_dimension_array(self, appendTo):
     if len(self.panels) > 0:
         for panel in self.panels:
-            panel.toArray()
+            panel.to_dimension_array(appendTo)
     else:
-        return self.s2plotDimensions()
+        appendTo.append(self)
 
   def rePackPanels(self,pX,pY,pW,pH):
     ''' pack panels within the screen, passing in the change in position '''

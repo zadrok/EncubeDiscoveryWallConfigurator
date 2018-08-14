@@ -32,9 +32,9 @@ class Model:
   def screens_to_array(self):
     screens = []
     for screen in self.screens:
-        screens.append(screen.toArray())
+        screens.append(screen.to_dimension_array())
 
-    print(screens)
+    print("model@screens_to_array", screens)
     return screens
 
   def calculate_area(self, panel):
@@ -94,9 +94,6 @@ class Model:
   def save(self,fname):
     ''' calls jsonHandler.exportFile and passes it options to save '''
     JsonHandler().exportFile( self, fname )
-
-  def flatten(self, l):
-    return self.flatten(l[0]) + (self.flatten(l[1:]) if len(l) > 1 else []) if type(l) is list else [l]
 
   def toJson(self):
     ''' creates a json sting to save to file '''
