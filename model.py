@@ -1,4 +1,5 @@
 from jsonHandler import JsonHandler
+import tkinter as tk
 import sys
 
 
@@ -36,9 +37,8 @@ class Model:
     for screen in self.screens:
       for panel in screen.panels:
         out_screens.append(self.panel_to_array(panel))
-
     out_screens = self.flatten(out_screens)
-    return out_screens
+    return out_screens    
 
   def calculate_area(self, panel):
     px1 = panel.get_x()
@@ -99,28 +99,38 @@ class Model:
     JsonHandler().exportFile( self, fname )
 
   def flatten(self, l):
-    return self.flatten(l[0]) + (self.flatten(l[1:]) if len(l) > 1 else []) if type(l) is list else [l]
+    ''' ensure there are screens to save to json file '''
+    try:
+      value = self.flatten(l[0]) + (self.flatten(l[1:]) if len(l) > 1 else []) if type(l) is list else [l]
+      return value
+    except IndexError:
+      print('No panels exist. Please add.')
+    
 
   def toJson(self):
     ''' creates a json sting to save to file '''
     data = '{\n'
-    out_screens = self.screens_to_array()
-    for key,value in self.options.items():
-        d = self.processVar( str(value) )
-        data += '  "' + str(key) + '": ' + d + ',\n'
-    data += '  "screens": [\n    ['
-    for index, screen in enumerate(out_screens):
-        if index == 0:
-          data += str(screen)
-        elif index % 4 == 0:
-          data += "],\n    ["+str(screen)
-        else:
-          data += ", "+str(screen)
+    ''' check that there are screens to add'''
+    try:
+      out_screens = self.screens_to_array()
+      for key,value in self.options.items():
+          d = self.processVar( str(value) )
+          data += '  "' + str(key) + '": ' + d + ',\n'
+      data += '  "screens": [\n    ['
+      for index, screen in enumerate(out_screens):
+          if index == 0:
+            data += str(screen)
+          elif index % 4 == 0:
+            data += "],\n    ["+str(screen)
+          else:
+            data += ", "+str(screen)
+    except TypeError:
+      print('No screens were added to this configuration')
     data += '],\n\t],'
     data += '\n}'
     data = data.replace("'", '"')
     return data
-
+    
   def processVar(self,d):
     ''' creates if value has to be modified when converted to string '''
     if d == '': return '""'
