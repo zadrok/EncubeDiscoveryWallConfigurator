@@ -1,5 +1,4 @@
 from jsonHandler import JsonHandler
-import tkinter as tk
 import sys
 
 
@@ -126,6 +125,7 @@ class Model:
             data += ", "+str(screen)
     except TypeError:
       print('No screens were added to this configuration')
+      ''' add a visual message box popup for user here'''
     data += '],\n\t],'
     data += '\n}'
     data = data.replace("'", '"')
