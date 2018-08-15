@@ -1,6 +1,6 @@
 from jsonHandler import JsonHandler
 import sys
-
+import tkinter.messagebox
 
 class Model:
   def __init__(self):
@@ -124,8 +124,7 @@ class Model:
           else:
             data += ", "+str(screen)
     except TypeError:
-      print('No screens were added to this configuration')
-      ''' add a visual message box popup for user here'''
+      tkinter.messagebox.showerror(title='Configuration Error', message='No screens were added to this configuration')
     data += '],\n\t],'
     data += '\n}'
     data = data.replace("'", '"')
