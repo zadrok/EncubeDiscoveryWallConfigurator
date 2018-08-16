@@ -57,14 +57,16 @@ class Panel:
       count += panel.countPanels()
     return count + 1
 
-  def draw(self):
+  def draw(self, color):
     if len(self.panels) > 0:
       for p in self.panels:
-        p.draw()
+        p.draw(color)
     else:
-      color = "#00FFFF"
       if selcon.panelSelected(self):
-        color = '#00ff90'
+        if color == "#4d94ff":
+          color = "#70db70"
+        else:
+          color = "#2EB82E"
 
       bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
       self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )

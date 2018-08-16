@@ -2,7 +2,7 @@ from panel import Panel
 from selectionController import selcon
 
 class Screen:
-  def __init__(self, master, canvas, ident, x, y, width, height, color):
+  def __init__(self, master, canvas, ident, x, y, width, height, color, panel_color):
     self.master = master
     self.canvas = canvas
     self.id = ident
@@ -11,6 +11,7 @@ class Screen:
     self.width = width
     self.height = height
     self.color = color
+    self.panel_color = panel_color
     self.panels = []
 
   def draw(self):
@@ -21,7 +22,7 @@ class Screen:
     bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
     self.canvas.create_rectangle( bbox, width=3, fill=color )
     for panel in self.panels:
-      panel.draw()
+      panel.draw(self.panel_color)
 
   def set_position(self, x, y, w, h):
     self.x = x

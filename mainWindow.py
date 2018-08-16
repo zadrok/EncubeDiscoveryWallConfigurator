@@ -41,7 +41,12 @@ class MainWindow(tk.Frame):
     # TODO - base this off of what is read in from options
     # TODO - update options when screens and/or panels are updated
     for i in range(6):
-      self.create_screen()
+      if(i % 2 == 0):
+        color = "#4d94ff"
+      else:
+        color = "#3366FF"
+
+      self.create_screen(color)
 
     self.menuBar.eventLock = True
 
@@ -81,8 +86,8 @@ class MainWindow(tk.Frame):
 
     self.gui.model.set_screens(self.screens, width=self.canvas_w, height=self.canvas_h)
 
-  def create_screen(self):
-    self.screens.append( Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d") )
+  def create_screen(self, color):
+    self.screens.append(Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color))
     self.rePackScreens()
 
   def countScreensPanels(self):
