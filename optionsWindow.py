@@ -13,7 +13,7 @@ class OptionsWindow(tk.Toplevel):
     self.createWidgets()
 
   def createWidgets(self):
-    ''' sets up companents for user to interact with '''
+    ''' sets up components for user to interact with '''
     # menu bar
     self.menuBar = MBOptions(self)
     # options

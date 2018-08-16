@@ -1,7 +1,7 @@
 from jsonHandler import JsonHandler
 import sys
 import pprint
-
+import tkinter.messagebox
 
 class Model:
   def __init__(self):
@@ -102,11 +102,14 @@ class Model:
     for key,value in self.options.items():
         d = self.processVar( str(value) )
         data += '  "' + str(key) + '": ' + d + ',\n'
-    data += '  "screens":' + pprint.pformat(out_screens)
+    try:
+      data += '  "screens":' + pprint.pformat(out_screens)
+    except TypeError:
+      tkinter.messagebox.showerror(title='Configuration Error', message='No screens were added to this configuration')
     data += '\n}'
     data = data.replace("'", '"')
     return data
-
+    
   def processVar(self,d):
     ''' creates if value has to be modified when converted to string '''
     if d == '': return '""'
