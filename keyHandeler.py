@@ -90,6 +90,8 @@ class KeyHandeler:
       selcon.allselect()
     if keySym == '7':
       pass # just redraw
+    if keySym == '8':
+      selcon.fillGap()
     if keySym == 'c':
       self.master.countScreensPanels()
 
