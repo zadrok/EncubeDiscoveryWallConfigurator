@@ -19,7 +19,7 @@ class Screen:
       color = '#6d6d6d'
 
     bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
-    self.canvas.create_rectangle( bbox, width=3, fill=color )
+    self.canvas.create_rectangle( bbox, width=7, fill=color, outline='red' )
     for panel in self.panels:
       panel.draw()
 
