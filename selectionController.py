@@ -275,6 +275,9 @@ class SelectionController:
 
 
 
+
+
+
   def fillGap(self):
     # for each selected panel
     for p in self.panels:
@@ -285,15 +288,16 @@ class SelectionController:
       self.panelExpandRight(p)
 
 
-
-
   def valueInRange(self, value, min, max):
     return (value >= min) and (value <= max)
+
 
   def rectOverlap(self, A, B):
     xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width);
     yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height);
+    print(xOverlap and yOverlap)
     return xOverlap and yOverlap;
+
 
   def rectIntersection(self, panel, panels):
     for p in panels:
@@ -302,63 +306,34 @@ class SelectionController:
     return False
 
 
-
   def panelExpandUp(self, panel):
-    # save the change in y, add to height
-    change = 0
-    # make a list of all panels that are above this one.
-    panels = []
-    for p in panel.screen.panels:
-      if p != panel and p.get_y() < panel.get_y():
-        panels.append(p)
-
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while panel.get_y() >= panel.screen.get_y() and not self.rectIntersection(panel,panels):
+    while panel.get_y() >= panel.screen.get_y() and not self.rectIntersection(panel,panel.screen.panels):
       panel.y -= 1
-      change += 1
-
-    panel.height += change
+      panel.height += 1
 
 
   def panelExpandDown(self, panel):
-    # make a list of all panels that are below this one.
-    panels = []
-    for p in panel.screen.panels:
-      if p != panel and p.get_y() > panel.get_y():
-        panels.append(p)
-
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while ( panel.y + panel.height ) <= ( panel.screen.y + panel.screen.height ) and not self.rectIntersection(panel,panels):
+    while ( panel.y + panel.height ) <= ( panel.screen.y + panel.screen.height ) and not self.rectIntersection(panel,panel.screen.panels):
       panel.height += 1
 
 
   def panelExpandLeft(self, panel):
-    # save the change in x, add to width
-    change = 0
-    # make a list of all panels that are left of this one.
-    panels = []
-    for p in panel.screen.panels:
-      if p != panel and p.get_x() < panel.get_x():
-        panels.append(p)
-
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while panel.get_x() >= panel.screen.get_x() and not self.rectIntersection(panel,panels):
+    while panel.get_x() >= panel.screen.get_x() and not self.rectIntersection(panel,panel.screen.panels):
       panel.x -= 1
-      change += 1
-
-    panel.width += change
+      panel.width += 1
 
 
   def panelExpandRight(self, panel):
-    # make a list of all panels that are right this one.
-    panels = []
-    for p in panel.screen.panels:
-      if p != panel and p.get_x() > panel.get_x():
-        panels.append(p)
-
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while ( panel.x + panel.width ) <= ( panel.screen.x + panel.screen.width ) and not self.rectIntersection(panel,panels):
+    while ( panel.x + panel.width ) <= ( panel.screen.x + panel.screen.width ) and not self.rectIntersection(panel,panel.screen.panels):
       panel.width += 1
+
+
+
+
 
 
 
