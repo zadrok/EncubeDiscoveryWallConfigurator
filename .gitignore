@@ -105,3 +105,4 @@ ENV/
 
 # jetbrains
 .idea/
+.vscode/settings.json
