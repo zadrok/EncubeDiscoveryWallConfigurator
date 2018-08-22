@@ -149,7 +149,7 @@ class Screen:
 
     return dimension_array
   
-  #utilised when initialising config manager
+  #utilised when initialising config manager, panel constructer currently hardcoded dimensions
   def addPanel(self, pX, pY, pW, pH):
     p = Panel(
         screen=self,
