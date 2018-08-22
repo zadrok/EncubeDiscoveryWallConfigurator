@@ -10,15 +10,14 @@ class Wbuttons():
     def __init__(self, secondaryWindow):
 
         self.secondaryWindow = secondaryWindow
-
+        #Display split number
         self.splitNumIndex = 3  # if adding something before this +1 to index !!!!!!!
         self.scrollNum = tk.StringVar()
         self.scrolLabel = tk.Label(self.secondaryWindow, textvariable=self.scrollNum)
         self.scrolLabel.pack(side="top")
         self.scrollNum.set(self.secondaryWindow.keyHandeler.getScrollCountText())
 
-        #self.scroll = tk.Label(secondaryWindow, text=self.secondaryWindow.keyHandeler.getScrollCountText())
-        #self.scroll.pack(side="top")
+
 
         self.secondaryWindow.HorizonSplitButton = tk.Button(self.secondaryWindow, text ="H-split", command=self.HSplit)
         self.secondaryWindow.HorizonSplitButton.pack(side="top")
