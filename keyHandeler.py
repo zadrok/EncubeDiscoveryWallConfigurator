@@ -40,6 +40,7 @@ class KeyHandeler:
 
     self.limitScrollCount()
     self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
+    self.master.buttonWidget.scrollNum.set(self.getScrollCountText())
 
   def onMouseWheel(self, event):
     if event.delta > 0:
@@ -49,7 +50,7 @@ class KeyHandeler:
 
     self.limitScrollCount()
     self.master.menuBar.menuBar.entryconfig(self.master.menuBar.splitNumIndex, label=self.getScrollCountText())
-
+    self.master.buttonWidget.scrollNum.set(self.getScrollCountText())
 
   # set limits on self.scrollCount
   def limitScrollCount(self):

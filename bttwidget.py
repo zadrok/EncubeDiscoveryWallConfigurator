@@ -11,15 +11,21 @@ class Wbuttons():
 
         self.secondaryWindow = secondaryWindow
 
-        self.scroll = tk.Label(secondaryWindow, text=self.secondaryWindow.keyHandeler.getScrollCountText())
-        self.scroll.pack(side="top")
+        self.splitNumIndex = 3  # if adding something before this +1 to index !!!!!!!
+        self.scrollNum = tk.StringVar()
+        self.scrolLabel = tk.Label(self.secondaryWindow, textvariable=self.scrollNum)
+        self.scrolLabel.pack(side="top")
+        self.scrollNum.set(self.secondaryWindow.keyHandeler.getScrollCountText())
+
+        #self.scroll = tk.Label(secondaryWindow, text=self.secondaryWindow.keyHandeler.getScrollCountText())
+        #self.scroll.pack(side="top")
 
         self.secondaryWindow.HorizonSplitButton = tk.Button(self.secondaryWindow, text ="H-split", command=self.HSplit)
         self.secondaryWindow.HorizonSplitButton.pack(side="top")
 
         self.secondaryWindow.VerticalSplitButton = tk.Button(self.secondaryWindow, text="V-split", command=self.VSplit)
         self.secondaryWindow.VerticalSplitButton.pack(side="top")
-        self.splitNumIndex = 3  # if adding something before this +1 to index !!!!!!!
+
 
     def HSplit(self):
         selcon.splitHorizontally()

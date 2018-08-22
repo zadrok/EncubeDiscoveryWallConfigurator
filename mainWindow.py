@@ -34,7 +34,7 @@ class MainWindow(tk.Frame):
   def createWidgets(self):
     ''' sets up companents for user to interact with '''
     self.menuBar = MBMain(self)
-    self.buttons = Wbuttons(self)
+    self.buttonWidget = Wbuttons(self)
     self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
     self.canvas.bind('<Button-1>', self.canvas_clicked)
     self.canvas.pack(side="left")
