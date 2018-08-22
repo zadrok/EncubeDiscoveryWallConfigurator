@@ -148,6 +148,21 @@ class Screen:
         dimension_array.append(panel.s2_plot_dimensions())
 
     return dimension_array
+  
+  #utilised when initialising config manager
+  def addPanel(self, pX, pY, pW, pH):
+    p = Panel(
+        screen=self,
+        canvas=self.canvas,
+        ident="0",
+        method=None,
+        x = pX,
+        y = pY,
+        width = pW,
+        height = pH
+      )
+    self.panels.append( p )
+    return None
 
   def rePackPanels(self,pX,pY,pW,pH):
     ''' pack panels within the screen, passing in the change in position '''

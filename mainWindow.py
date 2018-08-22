@@ -23,13 +23,13 @@ class MainWindow(tk.Frame):
     self.canvas_h = 720
 
     self.keyHandeler = KeyHandeler(self.root,self)
-
-    self.createWidgets()
+    initilising = True
+    self.createWidgets(initilising)
     self.focus_set()
 
     selcon.setWindow(self)
 
-  def createWidgets(self):
+  def createWidgets(self, initilising):
     ''' sets up companents for user to interact with '''
     # menu bar
     self.menuBar = MBMain(self)
@@ -46,7 +46,7 @@ class MainWindow(tk.Frame):
       else:
         color = "#3366FF"
 
-      self.create_screen(color)
+      self.create_screen(color, initilising)
 
     self.menuBar.eventLock = True
 
@@ -86,8 +86,12 @@ class MainWindow(tk.Frame):
 
     self.gui.model.set_screens(self.screens, width=self.canvas_w, height=self.canvas_h)
 
-  def create_screen(self, color):
-    self.screens.append(Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color))
+  def create_screen(self, color, initilising):
+    screen = Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color)
+    #ensure there is a panel within a screen when initialising
+    if initilising:
+      screen.addPanel(0, 0, 0, 0) #dimensions currently hardcoded in panel.py
+    self.screens.append(screen)
     self.rePackScreens()
 
   def countScreensPanels(self):
