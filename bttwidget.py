@@ -15,12 +15,20 @@ class Wbuttons():
         self.frame = tk.Frame(self.secondaryWindow)
         self.frame.pack(side="top")
 
+        #Decrease Split number button, using Unicode to create Arrow
+        self.secondaryWindow.DecreaseSplitNumberButton = tk.Button(self.frame, text=u"\u2B9C", command=self.DecreaseSplitNum, activebackground="white")
+        self.secondaryWindow.DecreaseSplitNumberButton.pack(side="left", padx=20)
+
         # Display split number
-        self.splitNumIndex = 3  # if adding something before this +1 to index !!!!!!!
-        self.scrollNum = tk.StringVar()
-        self.scrolLabel = tk.Label(self.frame, textvariable=self.scrollNum)
-        self.scrolLabel.pack(side="left")
-        self.scrollNum.set(self.secondaryWindow.keyHandeler.getScrollCountText())
+        self.splitNumberString = tk.StringVar()
+        self.splitNumber = 2
+        self.splitNumberLabel = tk.Label(self.frame, textvariable= self.splitNumberString)
+        self.splitNumberLabel.pack(side="left")
+        self.splitNumberString.set(str(self.splitNumber))
+
+        # Increase Split number button, using Unicode to create Arrow
+        self.secondaryWindow.IncreaseSplitNumberButton = tk.Button(self.frame,  text=u"\u2B9E", command=self.IncreaseSplitNum, activebackground="white")
+        self.secondaryWindow.IncreaseSplitNumberButton.pack(side="left", padx=20)
 
         self.secondaryWindow.HorizonSplitButton = tk.Button(self.frame, text ="H-split", command=self.HSplit, activebackground = "white")
         self.secondaryWindow.HorizonSplitButton.pack(side="left",padx= 20 )
@@ -38,6 +46,13 @@ class Wbuttons():
         self.secondaryWindow.VerticalSplitButton = tk.Button(self.frame, text="Reset", command=self.Reset)
         self.secondaryWindow.VerticalSplitButton.pack(side="left", padx=20)
 
+    def DecreaseSplitNum(self):
+        self.splitNumber -= 1
+        self.splitNumberString.set(str(self.splitNumber))
+
+    def IncreaseSplitNum(self):
+        self.splitNumber += 1
+        self.splitNumberString.set(str(self.splitNumber))
 
     def HSplit(self):
         selcon.splitHorizontally()
