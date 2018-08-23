@@ -141,7 +141,7 @@ class Screen:
           return p
     return None
 
-  def removePanel(self,panel):
+  def removePanel(self, panel):
     # try and remove this panel from self.panels list
     try:
       self.panels.remove(panel)
@@ -149,6 +149,12 @@ class Screen:
       # if error pass down panel chain
       for p in self.panels:
         p.removePanel(panel)
+
+  def to_dimension_array(self):
+    panels = []
+    for p in self.panels:
+        panels.append(p.to_s2plot_dimensions())
+    return panels
 
   # def rePackPanels(self,pX,pY,pW,pH):
   #   ''' pack panels within the screen, passing in the change in position '''

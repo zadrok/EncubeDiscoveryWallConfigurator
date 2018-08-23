@@ -76,6 +76,22 @@ class Panel:
       bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
       self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
 
+  def to_s2plot_dimensions(self):
+    x1 = self.get_x()
+    y1 = self.get_y()
+    x2 = self.get_x() + self.get_width()
+    y2 = self.get_y() + self.get_height()
+    screen_width = self.screen.get_x() + self.screen.get_width()
+    screen_height = self.screen.get_y() + self.screen.get_height()
+    nx1 = x1 / screen_width
+    nx2 = x2 / screen_width
+    # calculate then invert the Y coordinates (inversion for S2PLOT's xy system)
+    ny1 = y1 / screen_height
+    ny1 = abs((ny1 - 1) * 1)
+    ny2 = y2 / screen_height
+    ny2 = abs((ny2 - 1) * 1)
+    return [nx1, ny1, nx2, ny2]
+
   def divideHorizontally(self,num=2):
     ''' create new panels '''
     x = self.get_x()
