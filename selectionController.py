@@ -13,6 +13,7 @@ class SelectionController:
 
   def setWindow(self,w):
     self.window = w
+    self.reset()
 
   def deselect(self,screen,panel):
     try:
@@ -65,13 +66,26 @@ class SelectionController:
     # TODO - make this work
     print('TODO - Join')
 
+  def initialPanel(self):
+    for s in self.screens:
+      s.divideVertically(1)
+
+
+  def reset(self):
+    self.allselect()
+    self.remove()
+    self.deselectAll()
+    self.allselect()
+    self.initialPanel()
+
   def remove(self):
     if self.window != None:
       for p in self.panels:
         p.screen.removePanel(p)
 
-      for s in self.screens:
-        self.window.screens.remove(s)
+      if len(self.screens) > 6:
+        for s in self.screens:
+          self.window.screens.remove(s)
 
       self.window.rePackScreens()
 

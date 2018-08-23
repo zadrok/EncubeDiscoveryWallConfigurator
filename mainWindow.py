@@ -3,6 +3,7 @@ from menuBar import MBMain
 from screen import Screen
 from keyHandeler import KeyHandeler
 from selectionController import selcon
+from bttwidget import Wbuttons
 
 
 class MainWindow(tk.Frame):
@@ -20,7 +21,7 @@ class MainWindow(tk.Frame):
     self.split_v = tk.IntVar()
     self.splitAmount = tk.StringVar()
     self.canvas_w = 1080
-    self.canvas_h = 720
+    self.canvas_h = 250
 
     self.keyHandeler = KeyHandeler(self.root,self)
 
@@ -28,16 +29,18 @@ class MainWindow(tk.Frame):
     self.focus_set()
 
     selcon.setWindow(self)
+    self.draw()
+
 
   def createWidgets(self):
     ''' sets up companents for user to interact with '''
-    # menu bar
     self.menuBar = MBMain(self)
-
+    self.buttonWidget = Wbuttons(self)
     self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
     self.canvas.bind('<Button-1>', self.canvas_clicked)
     self.canvas.pack(side="left")
 
+    # menu bar
     # TODO - base this off of what is read in from options
     # TODO - update options when screens and/or panels are updated
     for i in range(6):
@@ -72,7 +75,7 @@ class MainWindow(tk.Frame):
       x = width * i
       y = 0
       w = width
-      h = 720
+      h = 250
 
       s.set_position( x,y,w,h )
       s.rePackPanels( x,y,w,h )

@@ -1,6 +1,7 @@
 import tkinter as tk
 import platform
 from selectionController import selcon
+from bttwidget import *
 
 # all keysyms that need to be tracked
 keysyms = [ 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',
@@ -39,6 +40,7 @@ class KeyHandeler:
 
     self.limitScrollCount()
     self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
+    self.master.buttonWidget.scrollNum.set(self.getScrollCountText())
 
   def onMouseWheel(self, event):
     if event.delta > 0:
@@ -47,8 +49,8 @@ class KeyHandeler:
       self.scrollCount -= 1
 
     self.limitScrollCount()
-    self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
-
+    self.master.menuBar.menuBar.entryconfig(self.master.menuBar.splitNumIndex, label=self.getScrollCountText())
+    self.master.buttonWidget.scrollNum.set(self.getScrollCountText())
 
   # set limits on self.scrollCount
   def limitScrollCount(self):
