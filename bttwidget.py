@@ -24,7 +24,7 @@ class Wbuttons():
         self.splitNumber = 2
         self.splitNumberLabel = tk.Label(self.frame, textvariable= self.splitNumberString)
         self.splitNumberLabel.pack(side="left")
-        self.splitNumberString.set(str(self.splitNumber))
+        self.splitNumberString.set("Split Number : "+str(self.splitNumber))
 
         # Increase Split number button, using Unicode to create Arrow
         self.secondaryWindow.IncreaseSplitNumberButton = tk.Button(self.frame,  text=u"\u2B9E", command=self.IncreaseSplitNum, activebackground="white")
@@ -47,12 +47,15 @@ class Wbuttons():
         self.secondaryWindow.VerticalSplitButton.pack(side="left", padx=20)
 
     def DecreaseSplitNum(self):
-        self.splitNumber -= 1
-        self.splitNumberString.set(str(self.splitNumber))
+        if self.splitNumber > 2:
+            self.splitNumber -= 1
+            self.splitNumberString.set("Split Number : "+ str(self.splitNumber))
+
 
     def IncreaseSplitNum(self):
-        self.splitNumber += 1
-        self.splitNumberString.set(str(self.splitNumber))
+        if self.splitNumber < 8:
+            self.splitNumber += 1
+            self.splitNumberString.set("Split Number : "+ str(self.splitNumber))
 
     def HSplit(self):
         selcon.splitHorizontally()
