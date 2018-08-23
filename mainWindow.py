@@ -36,7 +36,7 @@ class MainWindow(tk.Frame):
     ''' sets up companents for user to interact with '''
     self.menuBar = MBMain(self)
     self.buttonWidget = Wbuttons(self)
-    self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="blue")
+    self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="gray74")
     self.canvas.bind('<Button-1>', self.canvas_clicked)
     self.canvas.pack(side="left")
 
@@ -58,29 +58,34 @@ class MainWindow(tk.Frame):
       sx = s.get_x()
       sw = sx + s.get_width()
 
+      sy = s.get_y()
+      sh = sy + s.get_height()
+
       ex = event.x
       ey = event.y
-      if ex >= sx and ex <=  sw:
-        # found clicked screen
-        selcon.screenClick(ex,ey,s)
+      if ex >= sx and ex <= sw:
+        if ey >= sy and ey <= sh:
+          # found clicked screen
+          selcon.screenClick(ex,ey,s)
 
     self.draw()
 
-  def rePackScreens(self):
-    self.canvas.delete("all")
-    cScreens = len(self.screens)
-    if cScreens == 0: return
-    width = self.canvas_w / cScreens
-    for i, s in enumerate(self.screens):
-      x = width * i
-      y = 0
-      w = width
-      h = 250
 
-      s.set_position( x,y,w,h )
-      s.rePackPanels( x,y,w,h )
-
-    self.draw()
+  # def rePackScreens(self):
+  #   self.canvas.delete("all")
+  #   cScreens = len(self.screens)
+  #   if cScreens == 0: return
+  #   width = self.canvas_w / cScreens
+  #   for i, s in enumerate(self.screens):
+  #     x = width * i
+  #     y = 0
+  #     w = width
+  #     h = 720
+  #
+  #     s.set_position( x,y,w,h )
+  #     # s.rePackPanels( x,y,w,h )
+  #
+  #   self.draw()
 
   def draw(self):
     self.canvas.delete("all")
@@ -91,7 +96,24 @@ class MainWindow(tk.Frame):
 
   def create_screen(self, color):
     self.screens.append(Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color))
-    self.rePackScreens()
+
+  def createScreens(self,numScreenRows,numScreenColumns):
+    self.numScreenRows = numScreenRows
+    self.numScreenColumns = numScreenColumns
+
+    x = 0
+    y = 0
+    w = int( self.canvas_w / self.numScreenColumns )
+    h = int( self.canvas_h / self.numScreenRows )
+
+    for row in range(numScreenRows):
+      for col in range(numScreenColumns):
+        self.screens.append( Screen(self, self.canvas, "Screen", x, y, w, h, "#3d3d3d", "#3366FF") )
+        x += w
+      x = 0
+      y += h
+
+    self.draw()
 
   def countScreensPanels(self):
     cS = 0
