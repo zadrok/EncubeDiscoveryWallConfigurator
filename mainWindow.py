@@ -29,6 +29,7 @@ class MainWindow(tk.Frame):
     self.focus_set()
 
     selcon.setWindow(self)
+    self.draw()
 
 
   def createWidgets(self):
