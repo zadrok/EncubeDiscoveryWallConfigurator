@@ -2,6 +2,7 @@ import tkinter as tk
 
 from mainWindow import MainWindow
 from optionsWindow import OptionsWindow
+from initSettingsWindow import InitSettingsWindow
 
 
 class GUI():
@@ -29,6 +30,18 @@ class GUI():
     # start with the options window hidden
     self.toggleOptionWindow(state='hide')
 
+    # setup initilization settings window
+    # child of main window, will close when main does
+    # can be hidden/closed without affecting main window
+    self.widthInitSettings = 400
+    self.heightInitSettings = 600
+    self.initSettingsWindow = InitSettingsWindow(self.root,self)
+    self.initSettingsWindow.title("Init Settings")
+    self.initSettingsWindow.minsize(width=self.widthInitSettings,height=self.heightInitSettings)
+    # start with the options window hidden
+    self.toggleinitSettingsWindow(state='show')
+
+
   def mainloop(self):
     ''' starts the main loop for the main window, where all other windows use as a root.
         run this to start the GUI '''
@@ -48,3 +61,19 @@ class GUI():
       self.optionsWindow.withdraw()
     elif self.optionsWindow.state() == 'withdrawn':
       self.optionsWindow.deiconify()
+
+
+  def toggleinitSettingsWindow(self,state=None):
+    ''' shows and hides the options window.
+        state=<hide/show> '''
+    # check if state specified
+    if state != None:
+      if state == 'hide':
+        self.initSettingsWindow.withdraw()
+      elif state == 'show':
+        self.initSettingsWindow.deiconify()
+    # if None state then toggle
+    elif self.initSettingsWindow.state() == 'normal':
+      self.initSettingsWindow.withdraw()
+    elif self.initSettingsWindow.state() == 'withdrawn':
+      self.initSettingsWindow.deiconify()
