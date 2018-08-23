@@ -35,6 +35,9 @@ class Wbuttons():
         self.secondaryWindow.VerticalSplitButton = tk.Button(self.frame, text="Select All", command=self.SelectAllPannel)
         self.secondaryWindow.VerticalSplitButton.pack(side="left",padx=20)
 
+        self.secondaryWindow.VerticalSplitButton = tk.Button(self.frame, text="Reset", command=self.Reset)
+        self.secondaryWindow.VerticalSplitButton.pack(side="left", padx=20)
+
 
     def HSplit(self):
         selcon.splitHorizontally()
@@ -58,4 +61,8 @@ class Wbuttons():
 
     def SelectAllPannel(self):
         selcon.allselect()
+        self.secondaryWindow.draw()
+
+    def Reset(self):
+        selcon.reset()
         self.secondaryWindow.draw()

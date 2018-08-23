@@ -65,13 +65,19 @@ class SelectionController:
     # TODO - make this work
     print('TODO - Join')
 
+  def reset(self):
+    self.allselect()
+    self.remove()
+    self.deselectAll()
+
   def remove(self):
     if self.window != None:
       for p in self.panels:
         p.screen.removePanel(p)
 
-      for s in self.screens:
-        self.window.screens.remove(s)
+      if len(self.screens) > 6:
+        for s in self.screens:
+          self.window.screens.remove(s)
 
       self.window.rePackScreens()
 
