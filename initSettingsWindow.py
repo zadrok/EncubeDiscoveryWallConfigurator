@@ -17,11 +17,11 @@ class InitSettingsWindow(tk.Toplevel):
 
     self.titleInformationLabel = tk.Label(self, text="Once this information is set it can't be changed")
 
-    self.numScreensRowsVar = tk.StringVar()
+    self.numScreensRowsVar = tk.StringVar(self, value='2')
     self.numScreensRowsLabel = tk.Label(self, text='Number of screen rows:')
     self.numScreensRowsEntry = tk.Entry(self, textvariable=self.numScreensRowsVar, width=30)
 
-    self.numScreensColumnsVar = tk.StringVar()
+    self.numScreensColumnsVar = tk.StringVar(self, value='6')
     self.numScreensColumnsLabel = tk.Label(self, text='Number of screen columns:')
     self.numScreensColumnsEntry = tk.Entry(self, textvariable=self.numScreensColumnsVar, width=30)
 
