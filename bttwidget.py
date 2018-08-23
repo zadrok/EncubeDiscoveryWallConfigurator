@@ -48,7 +48,7 @@ class Wbuttons():
         self.secondaryWindow.draw()
 
     def JoinPannel(self):
-        #selcon.splitHorizontally()
+        selcon.join()
         self.secondaryWindow.draw()
 
     def RemovePannel(self):
