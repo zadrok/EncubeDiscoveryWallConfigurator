@@ -40,7 +40,8 @@ class MBMain():
     self.optionMenu.add_command(label = "Fill Gap                    - Key: 8", command=self.doKeyEvent8)
     self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Set Panels as image", command = self.setPanelsImage)
-    self.optionMenu.add_command(label = "Set Panels as cube3d", command = self.setPanelsCube3D)
+    self.optionMenu.add_command(label = "Set Panels as cube", command = self.setPanelsCube)
+    self.optionMenu.add_command(label = "Set Panels as graph", command = self.setPanelsGraph)
     self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Options", command = self.master.gui.toggleOptionWindow)
     self.optionMenu.add_separator()
@@ -71,8 +72,11 @@ class MBMain():
   def setPanelsImage(self):
     selcon.setPanelsMode('image')
 
-  def setPanelsCube3D(self):
-    selcon.setPanelsMode('cube3d')
+  def setPanelsCube(self):
+    selcon.setPanelsMode('cube')
+
+  def setPanelsGraph(self):
+    selcon.setPanelsMode('graph')
 
 
   def doKeyEvent1(self): self.passKeyEvent('1')

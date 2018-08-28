@@ -18,6 +18,7 @@ class SelectionController:
   def setPanelsMode(self, mode):
     for p in self.panels:
       p.mode = mode
+    self.deselectAll()
     self.window.draw()
 
   def deselect(self,screen,panel):
@@ -301,14 +302,16 @@ class SelectionController:
   def rectOverlap(self, A, B):
     xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width);
     yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height);
-    print(xOverlap and yOverlap)
+    # print(xOverlap and yOverlap)
     return xOverlap and yOverlap;
 
 
   def rectIntersection(self, panel, panels):
     for p in panels:
       if p == panel: continue
-      if self.rectOverlap(panel, p): return True
+      if self.rectOverlap(panel, p):
+        # print('boop')
+        return True
     return False
 
 

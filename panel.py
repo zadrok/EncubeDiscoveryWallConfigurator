@@ -1,7 +1,7 @@
 from selectionController import selcon
 
 class Panel:
-  def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, ):
+  def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, mode='cube'):
     self.id = ident
     self.screen = screen
     self.canvas = canvas
@@ -11,14 +11,17 @@ class Panel:
     self.width = width
     self.height = height
 
-    # modes: cube3d, image
-    self.mode = "cube3d"
+    # modes: cube, image, graph
+    self.mode = mode
 
-    self.colorCube3dNormal = "#00FFFF"
-    self.colorCube3dSelected = '#00ff90'
+    self.colorCubeNormal = "#00FFFF"
+    self.colorCubeSelected = '#008080'
 
     self.colorImageNormal = "#e500ff"
-    self.colorImageSelected = '#ff00bb'
+    self.colorImageSelected = '#730080'
+
+    self.colorGraphNormal = "#f8ff47"
+    self.colorGraphSelected = '#7b8000'
 
     self.colorOther = None
 
@@ -69,15 +72,19 @@ class Panel:
     return count + 1
 
   def draw(self, color):
-      color = self.colorCube3dNormal
-      if self.mode == 'cube3d':
-        color = self.colorCube3dNormal
+      color = self.colorCubeNormal
+      if self.mode == 'cube':
+        color = self.colorCubeNormal
         if selcon.panelSelected(self):
-          color = self.colorCube3dSelected
+          color = self.colorCubeSelected
       elif self.mode == 'image':
         color = self.colorImageNormal
         if selcon.panelSelected(self):
           color = self.colorImageSelected
+      elif self.mode == 'graph':
+        color = self.colorGraphNormal
+        if selcon.panelSelected(self):
+          color = self.colorGraphSelected
 
       if self.colorOther != None:
         color = self.colorOther
@@ -117,7 +124,8 @@ class Panel:
         x=x,
         y=y + (h*n),
         width=w,
-        height=h
+        height=h,
+        mode=self.mode
       )
       self.screen.panels.append( p )
 
@@ -139,7 +147,8 @@ class Panel:
         x=x + (w*n),
         y=y,
         width=w,
-        height=h
+        height=h,
+        mode=self.mode
       )
       self.screen.panels.append( p )
 
