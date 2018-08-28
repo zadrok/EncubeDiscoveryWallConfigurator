@@ -25,6 +25,10 @@ class InitSettingsWindow(tk.Toplevel):
     self.numScreensColumnsLabel = tk.Label(self, text='Number of screen columns:')
     self.numScreensColumnsEntry = tk.Entry(self, textvariable=self.numScreensColumnsVar, width=30)
 
+    self.aspectRatioScreensVar = tk.StringVar(self, value='16x9')  # read AxB, 16x9
+    self.aspectRatioScreensLabel = tk.Label(self, text='Aspect ratio of screens:')
+    self.aspectRatioScreensEntry = tk.Entry(self, textvariable=self.aspectRatioScreensVar, width=30)
+
     self.commitBttn = tk.Button(self,text='Commit',command=self.commitSettings)
 
 
@@ -33,12 +37,16 @@ class InitSettingsWindow(tk.Toplevel):
     self.numScreensRowsEntry.grid(row=2, column=1, sticky=tk.W)
     self.numScreensColumnsLabel.grid(row=3, column=0, sticky=tk.W)
     self.numScreensColumnsEntry.grid(row=3, column=1, sticky=tk.W)
+    self.aspectRatioScreensLabel.grid(row=4, column=0, sticky=tk.W)
+    self.aspectRatioScreensEntry.grid(row=4, column=1, sticky=tk.W)
     self.commitBttn.grid(row=10,column=1)
 
 
   def commitSettings(self):
     numScreenRows = 0
     numScreenColumns = 0
+    aspectRatioScreensA = 16  # read AxB, 16x9
+    aspectRatioScreensB = 9
     try:
       numScreenRows = int(self.numScreensRowsVar.get())
       numScreenColumns = int(self.numScreensColumnsVar.get())
@@ -51,5 +59,14 @@ class InitSettingsWindow(tk.Toplevel):
       print("Number of screens needs to be a number")
       return
 
+    try:
+      parts = self.aspectRatioScreensVar.get().split('x')
+      aspectRatioScreensA = int( parts[0] )  # read AxB, 16x9
+      aspectRatioScreensB = int( parts[1] )
+
+    except ValueError:
+      print("Aspect ratio needs to follow the format 16x9")
+      return
+
     self.withdraw()
-    self.gui.mainWindow.createScreens(numScreenRows,numScreenColumns)
+    self.gui.mainWindow.createScreens(numScreenRows,numScreenColumns,aspectRatioScreensA,aspectRatioScreensB)

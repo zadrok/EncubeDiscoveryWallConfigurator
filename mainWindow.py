@@ -20,8 +20,10 @@ class MainWindow(tk.Frame):
     self.split_h = tk.IntVar()
     self.split_v = tk.IntVar()
     self.splitAmount = tk.StringVar()
-    self.canvas_w = 1080
-    self.canvas_h = 250
+
+    self.update()
+    self.canvas_w = self.root.winfo_width()
+    self.canvas_h = self.root.winfo_height()
 
     self.keyHandeler = KeyHandeler(self.root,self)
 
@@ -43,13 +45,13 @@ class MainWindow(tk.Frame):
     # menu bar
     # TODO - base this off of what is read in from options
     # TODO - update options when screens and/or panels are updated
-    for i in range(6):
-      if(i % 2 == 0):
-        color = "#4d94ff"
-      else:
-        color = "#3366FF"
-
-      self.create_screen(color)
+    # for i in range(6):
+    #   if(i % 2 == 0):
+    #     color = "#4d94ff"
+    #   else:
+    #     color = "#3366FF"
+    #
+    #   self.create_screen(color)
 
     self.menuBar.eventLock = True
 
@@ -97,14 +99,21 @@ class MainWindow(tk.Frame):
   def create_screen(self, color):
     self.screens.append(Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color))
 
-  def createScreens(self,numScreenRows,numScreenColumns):
+  def createScreens(self,numScreenRows,numScreenColumns,aspectRatioScreensA=16,aspectRatioScreensB=9):  # read AxB, 16x9
     self.numScreenRows = numScreenRows
     self.numScreenColumns = numScreenColumns
+    self.aspectRatioScreensA = aspectRatioScreensA # read AxB, 16x9
+    self.aspectRatioScreensB = aspectRatioScreensB
 
     x = 0
     y = 0
     w = int( self.canvas_w / self.numScreenColumns )
-    h = int( self.canvas_h / self.numScreenRows )
+    h = int( w / ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
+
+    if h*self.numScreenRows > self.canvas_h:
+      overflow = (h*self.numScreenRows) - self.canvas_h
+      h -= int( overflow/self.numScreenRows )
+      w = h*( ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
 
     for row in range(numScreenRows):
       for col in range(numScreenColumns):
