@@ -340,7 +340,7 @@ class SelectionController:
 
   def initialPanel(self):
     for s in self.screens:
-      s.divideVertically(1)
+      s.createPanel("C", s.get_x(), s.get_y(), s.width, s.height)
 
 
   def reset(self):
