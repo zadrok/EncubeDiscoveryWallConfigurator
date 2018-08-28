@@ -288,6 +288,7 @@ class SelectionController:
   def fillGap(self):
     # for each selected panel
     for p in self.panels:
+      print( 'x ' + str(p.get_x()) + ' y ' + str(p.get_y()) + ' w ' + str(p.get_width()) + ' h ' + str(p.get_height()) )
       # expand the panel in each direction until it collides with another panel or the side of the screen
       self.panelExpandUp(p)
       self.panelExpandDown(p)
@@ -296,7 +297,7 @@ class SelectionController:
 
 
   def valueInRange(self, value, min, max):
-    return (value >= min) and (value <= max)
+    return (value > min) and (value < max)
 
 
   def rectOverlap(self, A, B):
@@ -306,39 +307,65 @@ class SelectionController:
     return xOverlap and yOverlap;
 
 
-  def rectIntersection(self, panel, panels):
+  def panelIntersectionOtherPanels(self, pan, panels):
     for p in panels:
-      if p == panel: continue
-      if self.rectOverlap(panel, p):
-        # print('boop')
+      if p != pan and self.rectOverlap(pan, p):
+        # p.colorOther = "#333300"
+        print('panel Intersection')
         return True
+    print('no panel Intersection')
+    return False
+
+
+  def panelInScreen(self,panel,screen):
+    if panel.get_x() >= screen.get_x():
+      if panel.get_y() >= screen.get_y():
+        if panel.get_x()+panel.get_width() <= screen.get_x()+screen.get_width():
+          if panel.get_y()+panel.get_height() <= screen.get_y()+screen.get_height():
+            print('panel in screen')
+            return True
+    print('panel not in screen')
     return False
 
 
   def panelExpandUp(self, panel):
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while panel.get_y() >= panel.screen.get_y() and not self.rectIntersection(panel,panel.screen.panels):
+    print('Up')
+    while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.y -= 1
       panel.height += 1
+    # back off one pixel so panels arn't on top of each other
+    panel.y += 1
+    panel.height -= 1
 
 
   def panelExpandDown(self, panel):
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while ( panel.y + panel.height ) <= ( panel.screen.y + panel.screen.height ) and not self.rectIntersection(panel,panel.screen.panels):
+    print('Down')
+    while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.height += 1
+    # back off one pixel so panels arn't on top of each other
+    panel.height -= 1
 
 
   def panelExpandLeft(self, panel):
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while panel.get_x() >= panel.screen.get_x() and not self.rectIntersection(panel,panel.screen.panels):
+    print('Left')
+    while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.x -= 1
       panel.width += 1
+    # back off one pixel so panels arn't on top of each other
+    panel.x += 1
+    panel.width -= 1
 
 
   def panelExpandRight(self, panel):
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    while ( panel.x + panel.width ) <= ( panel.screen.x + panel.screen.width ) and not self.rectIntersection(panel,panel.screen.panels):
+    print('Right')
+    while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.width += 1
+    # back off one pixel so panels arn't on top of each other
+    panel.width -= 1
 
 
 
