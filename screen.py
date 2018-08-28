@@ -150,9 +150,9 @@ class Screen:
         p.removePanel(panel)
 
   def to_dimension_array(self):
-    panels = []
-    for p in self.panels:
-        panels.append(p.to_s2plot_dimensions())
+    panels = dict()
+    for (index, p) in enumerate(self.panels, start=1):
+        panels['p'+str(index)] = {"type": p.get_mode(), "dimensions": p.to_s2plot_dimensions()}
     return panels
 
   # def rePackPanels(self,pX,pY,pW,pH):

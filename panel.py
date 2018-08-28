@@ -62,6 +62,12 @@ class Panel:
   def get_rectangle(self):
     return self.x, self.y, self.width, self.height
 
+  def get_mode(self):
+    return self.mode
+
+  def set_mode(self, mode):
+    self.mode = mode
+
   def countPanels(self):
     count = 0
     for panel in self.panels:

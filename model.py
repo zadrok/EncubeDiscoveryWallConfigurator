@@ -1,6 +1,7 @@
 from jsonHandler import JsonHandler
 import sys
 import pprint
+import json
 import tkinter.messagebox
 
 class Model:
@@ -20,9 +21,9 @@ class Model:
     self.max_width = width
 
   def screens_to_array(self):
-    screens = []
-    for screen in self.screens:
-        screens.append(screen.to_dimension_array())
+    screens = dict()
+    for (index, screen) in enumerate(self.screens, start=1):
+        screens['n'+str(index)] = screen.to_dimension_array()
     return screens
 
   def addOption(self,key,value):
@@ -76,7 +77,7 @@ class Model:
         d = self.processVar( str(value) )
         data += '  "' + str(key) + '": ' + d + ',\n'
     try:
-      data += '  "screens":' + pprint.pformat(out_screens)
+      data += '  "screens":' + json.dumps(out_screens, sort_keys=False, indent=2)
     except TypeError:
       tkinter.messagebox.showerror(title='Configuration Error', message='No screens were added to this configuration')
     data += '\n}'
