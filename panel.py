@@ -10,10 +10,16 @@ class Panel:
     self.y = y
     self.width = width
     self.height = height
-    self.panels = []
 
-    self.colorNormal = "#00FFFF"
-    self.colorSelected = '#00ff90'
+    # modes: cube3d, image
+    self.mode = "cube3d"
+
+    self.colorCube3dNormal = "#00FFFF"
+    self.colorCube3dSelected = '#00ff90'
+
+    self.colorImageNormal = "#e500ff"
+    self.colorImageSelected = '#ff00bb'
+
     self.colorOther = None
 
 
@@ -63,13 +69,16 @@ class Panel:
     return count + 1
 
   def draw(self, color):
-    if len(self.panels) > 0:
-      for p in self.panels:
-        p.draw(color)
-    else:
-      color = self.colorNormal
-      if selcon.panelSelected(self):
-        color = self.colorSelected
+      color = self.colorCube3dNormal
+      if self.mode == 'cube3d':
+        color = self.colorCube3dNormal
+        if selcon.panelSelected(self):
+          color = self.colorCube3dSelected
+      elif self.mode == 'image':
+        color = self.colorImageNormal
+        if selcon.panelSelected(self):
+          color = self.colorImageSelected
+
       if self.colorOther != None:
         color = self.colorOther
 

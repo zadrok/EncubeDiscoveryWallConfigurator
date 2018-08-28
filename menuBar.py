@@ -1,6 +1,6 @@
 import tkinter as tk
 from jsonHandler import JsonHandler
-
+from selectionController import selcon
 from tkinter import filedialog
 
 class MBMain():
@@ -39,6 +39,9 @@ class MBMain():
     self.optionMenu.add_command(label = "Force redraw          - Key: 7", command=self.doKeyEvent7)
     self.optionMenu.add_command(label = "Fill Gap                    - Key: 8", command=self.doKeyEvent8)
     self.optionMenu.add_separator()
+    self.optionMenu.add_command(label = "Set Panels as image", command = self.setPanelsImage)
+    self.optionMenu.add_command(label = "Set Panels as cube3d", command = self.setPanelsCube3D)
+    self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Options", command = self.master.gui.toggleOptionWindow)
     self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Print Options", command = self.master.gui.model.printOptions)
@@ -64,6 +67,13 @@ class MBMain():
     ''' opens a file dialog and passes the file to the model '''
     fname = tk.filedialog.asksaveasfilename()
     self.master.gui.model.save(fname)
+
+  def setPanelsImage(self):
+    selcon.setPanelsMode('image')
+
+  def setPanelsCube3D(self):
+    selcon.setPanelsMode('cube3d')
+
 
   def doKeyEvent1(self): self.passKeyEvent('1')
   def doKeyEvent2(self): self.passKeyEvent('2')

@@ -132,16 +132,12 @@ class Screen:
 
   def get_panel_at_xy(self, x, y):
     for p in self.panels:
-      if len(p.panels) > 0:
-        pN = p.get_panel_at_xy(x,y)
-        if pN != None: return pN
-      else:
-        px = p.get_x()
-        py = p.get_y()
-        pw = px + p.get_width()
-        ph = py + p.get_height()
-        if (x >= px and x <= pw) and (y >= py and y <= ph):
-          return p
+      px = p.get_x()
+      py = p.get_y()
+      pw = px + p.get_width()
+      ph = py + p.get_height()
+      if (x >= px and x <= pw) and (y >= py and y <= ph):
+        return p
     return None
 
   def removePanel(self, panel):

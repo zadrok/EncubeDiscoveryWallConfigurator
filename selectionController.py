@@ -15,6 +15,11 @@ class SelectionController:
     self.window = w
     self.reset()
 
+  def setPanelsMode(self, mode):
+    for p in self.panels:
+      p.mode = mode
+    self.window.draw()
+
   def deselect(self,screen,panel):
     try:
       if panel != None:
