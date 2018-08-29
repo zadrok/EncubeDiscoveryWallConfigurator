@@ -4,6 +4,7 @@ import pprint
 import json
 import tkinter.messagebox
 import tkinter as tk
+import pprint
 
 class Model:
   def __init__(self):
@@ -15,6 +16,7 @@ class Model:
     # options
     self.defaultConfigFile = 'defaultConfig.json'
     self.options = JsonHandler().importFile( self.defaultConfigFile )
+    self.convertOptionsToStrings()
 
     self.gui = None
 
@@ -23,13 +25,41 @@ class Model:
     if fname != None:
       self.options = JsonHandler().importFile(fname.name)
       self.gui.toggleOptionWindow(state='hide') # hide the window
+      self.convertOptionsToStrings()
       self.gui.setupOptionsWindow() # remake the window, easiest thing to do
     else:
       print( 'file name was found to be null' )
 
   def save(self):
     fname = tk.filedialog.asksaveasfilename()
-    JsonHandler().exportFile( self, fname )
+    if fname != '':
+      JsonHandler().exportFile( self, fname )
+    else:
+      print( 'file needs a name to save' )
+
+
+  def convertOptionsToStrings(self):
+    for key,value in self.options.items():
+      if isinstance(value,str):
+        pass
+      elif isinstance(value,list):
+        self.options[key] = str(value)
+      elif isinstance(value,dict):
+        pass
+      elif isinstance(value,bool):
+        if value:
+          self.options[key] = 'true'
+        else:
+          self.options[key] = 'false'
+      elif isinstance(value,int):
+        pass
+        # self.options[key] = '"' + str(value) + '"'
+      elif isinstance(value,float):
+        pass
+        # self.options[key] = '"' + str(value) + '"'
+      elif isinstance(value,complex):
+        pass
+        # self.options[key] = '"' + str(value) + '"'
 
 
   def setScreens(self, screens, width, height):
@@ -82,8 +112,8 @@ class Model:
     data = '{\n'
     out_screens = self.screensToArray()
     for key,value in self.options.items():
-        d = self.processVar( str(value) )
-        data += '  "' + str(key) + '": ' + d + ',\n'
+      d = self.processVar( str(value) )
+      data += '  "' + str(key) + '": ' + d + ',\n'
     try:
       data += '  "screens":' + json.dumps(out_screens, sort_keys=False, indent=2)
     except TypeError:
@@ -97,6 +127,9 @@ class Model:
     if d == '': return '""'
     if d.startswith('['): return d
     if d.startswith('{'): return d
+    if d.startswith('('): return d
+    if d.lower() == 'false': return str(False).lower()
+    if d.lower() == 'true': return str(True).lower()
 
     if self.checkInt(d): return str(d)
 
