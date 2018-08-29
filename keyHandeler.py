@@ -10,9 +10,9 @@ keysyms = [ 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',
 
 
 class KeyHandeler:
-  def __init__(self,root,master):
+  def __init__(self,root,mainWindow):
     self.root = root
-    self.master = master
+    self.mainWindow = mainWindow
 
     self.scrollCount = 2
 
@@ -39,8 +39,8 @@ class KeyHandeler:
       self.scrollCount -= 1
 
     self.limitScrollCount()
-    self.master.menuBar.menuBar.entryconfig( self.master.menuBar.splitNumIndex, label=self.getScrollCountText() )
-    self.master.buttonWidget.scrollNum.set(self.getScrollCountText())
+    self.mainWindow.menuBar.menuBar.entryconfig( self.mainWindow.menuBar.splitNumIndex, label=self.getScrollCountText() )
+    self.mainWindow.buttonWidget.scrollNum.set(self.getScrollCountText())
 
   def onMouseWheel(self, event):
     if event.delta > 0:
@@ -49,8 +49,8 @@ class KeyHandeler:
       self.scrollCount -= 1
 
     self.limitScrollCount()
-    self.master.menuBar.menuBar.entryconfig(self.master.menuBar.splitNumIndex, label=self.getScrollCountText())
-    self.master.buttonWidget.scrollNum.set(self.getScrollCountText())
+    self.mainWindow.menuBar.menuBar.entryconfig(self.mainWindow.menuBar.splitNumIndex, label=self.getScrollCountText())
+    self.mainWindow.buttonWidget.scrollNum.set(self.getScrollCountText())
 
   # set limits on self.scrollCount
   def limitScrollCount(self):
@@ -70,7 +70,7 @@ class KeyHandeler:
 
   def doEventUp(self,keySym):
     # print('Doing up event ' + keySym)
-    self.master.draw()
+    self.mainWindow.draw()
 
   def doEventDown(self,keySym):
     # print('Doing down event ' + keySym)
@@ -95,9 +95,9 @@ class KeyHandeler:
     if keySym == '8':
       selcon.fillGap()
     if keySym == 'c':
-      self.master.countScreensPanels()
+      self.mainWindow.countScreensPanels()
 
-    self.master.draw()
+    self.mainWindow.draw()
 
 
   def keySafe(self,key):

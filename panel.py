@@ -1,7 +1,7 @@
 from selectionController import selcon
 
 class Panel:
-  def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, ):
+  def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, mode='cube'):
     self.id = ident
     self.screen = screen
     self.canvas = canvas
@@ -11,55 +11,58 @@ class Panel:
     self.width = width
     self.height = height
 
-    # modes: cube3d, image
-    self.mode = "cube3d"
+    # modes: cube, image, graph
+    self.mode = mode
 
-    self.colorCube3dNormal = "#00FFFF"
-    self.colorCube3dSelected = '#00ff90'
+    self.colorCubeNormal = "#00FFFF"
+    self.colorCubeSelected = '#008080'
 
     self.colorImageNormal = "#e500ff"
-    self.colorImageSelected = '#ff00bb'
+    self.colorImageSelected = '#730080'
+
+    self.colorGraphNormal = "#f8ff47"
+    self.colorGraphSelected = '#7b8000'
 
     self.colorOther = None
 
 
-  def set_position(self, x, y, w, h):
+  def setPosition(self, x, y, w, h):
     self.x = x
     self.y = y
     self.width = w
     self.height = h
 
-  def get_id(self):
+  def getId(self):
     return self.id
 
-  def set_id(self, ident):
+  def setId(self, ident):
     self.id = ident
 
-  def get_x(self):
+  def getX(self):
     return self.x
 
-  def set_x(self, x):
+  def setX(self, x):
     self.x = x
 
-  def get_y(self):
+  def getY(self):
     return self.y
 
-  def set_y(self, y):
+  def setY(self, y):
     self.y = y
 
-  def get_width(self):
+  def getWidth(self):
     return self.width
 
-  def set_width(self, width):
+  def setWidth(self, width):
     self.width = width
 
-  def get_height(self):
+  def getHeight(self):
     return self.height
 
-  def set_height(self, height):
+  def setHeight(self, height):
     self.height = height
 
-  def get_rectangle(self):
+  def getRectangle(self):
     return self.x, self.y, self.width, self.height
 
   def get_mode(self):
@@ -75,15 +78,19 @@ class Panel:
     return count + 1
 
   def draw(self, color):
-      color = self.colorCube3dNormal
-      if self.mode == 'cube3d':
-        color = self.colorCube3dNormal
+      color = self.colorCubeNormal
+      if self.mode == 'cube':
+        color = self.colorCubeNormal
         if selcon.panelSelected(self):
-          color = self.colorCube3dSelected
+          color = self.colorCubeSelected
       elif self.mode == 'image':
         color = self.colorImageNormal
         if selcon.panelSelected(self):
           color = self.colorImageSelected
+      elif self.mode == 'graph':
+        color = self.colorGraphNormal
+        if selcon.panelSelected(self):
+          color = self.colorGraphSelected
 
       if self.colorOther != None:
         color = self.colorOther
@@ -91,13 +98,13 @@ class Panel:
       bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
       self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
 
-  def to_s2plot_dimensions(self):
-    x1 = self.get_x()
-    y1 = self.get_y()
-    x2 = self.get_x() + self.get_width()
-    y2 = self.get_y() + self.get_height()
-    screen_width = self.screen.get_x() + self.screen.get_width()
-    screen_height = self.screen.get_y() + self.screen.get_height()
+  def toS2plotDimensions(self):
+    x1 = self.getX()
+    y1 = self.getY()
+    x2 = self.getX() + self.getWidth()
+    y2 = self.getY() + self.getHeight()
+    screen_width = self.screen.getX() + self.screen.getWidth()
+    screen_height = self.screen.getY() + self.screen.getHeight()
     nx1 = x1 / screen_width
     nx2 = x2 / screen_width
     # calculate then invert the Y coordinates (inversion for S2PLOT's xy system)
@@ -109,10 +116,10 @@ class Panel:
 
   def divideHorizontally(self,num=2):
     ''' create new panels '''
-    x = self.get_x()
-    y = self.get_y()
-    w = self.get_width()
-    h = (self.get_height() / num)
+    x = self.getX()
+    y = self.getY()
+    w = self.getWidth()
+    h = (self.getHeight() / num)
 
     for n in range(num):
       p = Panel(
@@ -123,7 +130,8 @@ class Panel:
         x=x,
         y=y + (h*n),
         width=w,
-        height=h
+        height=h,
+        mode=self.mode
       )
       self.screen.panels.append( p )
 
@@ -131,10 +139,10 @@ class Panel:
 
   def divideVertically(self,num=2):
     ''' create new panels '''
-    x = self.get_x()
-    y = self.get_y()
-    w = (self.get_width() / num)
-    h = self.get_height()
+    x = self.getX()
+    y = self.getY()
+    w = (self.getWidth() / num)
+    h = self.getHeight()
 
     for n in range(num):
       p = Panel(
@@ -145,23 +153,24 @@ class Panel:
         x=x + (w*n),
         y=y,
         width=w,
-        height=h
+        height=h,
+        mode=self.mode
       )
       self.screen.panels.append( p )
 
     self.screen.panels.remove(self)
 
 
-  def get_panel_at_xy(self, x, y):
+  def getPanelAtXY(self, x, y):
     for p in self.panels:
       if len(p.panels) > 0:
-        pN = p.get_panel_at_xy(x,y)
+        pN = p.getPanelAtXY(x,y)
         if pN != None: return pN
       else:
-        px = p.get_x()
-        py = p.get_y()
-        pw = px + p.get_width()
-        ph = py + p.get_height()
+        px = p.getX()
+        py = p.getY()
+        pw = px + p.getWidth()
+        ph = py + p.getHeight()
         if (x >= px and x <= pw) and (y >= py and y <= ph):
           return p
     return None
@@ -206,7 +215,7 @@ class Panel:
   #       h = int( pH/l )
   #
   #     # set panel to new position
-  #     p.set_position(x,y,w,h)
+  #     p.setPosition(x,y,w,h)
   #     # if this panel has panels, pass them the change in position
   #     if len(p.panels) > 0:
   #       p.rePackPanels(x,y,w,h)
