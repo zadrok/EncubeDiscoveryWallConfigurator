@@ -3,6 +3,7 @@ import sys
 import pprint
 import json
 import tkinter.messagebox
+import tkinter as tk
 
 class Model:
   def __init__(self):
@@ -13,11 +14,22 @@ class Model:
     self.n_panels   = 0
     # options
     self.defaultConfigFile = 'defaultConfig.json'
-    self.options = None
-    self.loadSettings(self.defaultConfigFile)
+    self.options = JsonHandler().importFile( self.defaultConfigFile )
 
-  def loadSettings(self,fileName):
-    self.options = JsonHandler().importFile(fileName)
+    self.gui = None
+
+  def load(self):
+    fname = tk.filedialog.askopenfile()
+    if fname != None:
+      self.options = JsonHandler().importFile(fname.name)
+      self.gui.toggleOptionWindow(state='hide') # hide the window
+      self.gui.setupOptionsWindow() # remake the window, easiest thing to do
+    else:
+      print( 'file name was found to be null' )
+
+  def save(self):
+    fname = tk.filedialog.asksaveasfilename()
+    JsonHandler().exportFile( self, fname )
 
 
   def setScreens(self, screens, width, height):
@@ -64,15 +76,6 @@ class Model:
     for k,v in self.options.items():
       print( 'K: ' + str(k) + ', v: ' + str(v) )
     print('---------------------')
-
-
-  def open(self,fname):
-    ''' calls jsonHandler.importFile and sets options to returned value '''
-    self.options = JsonHandler().importFile( fname )
-
-  def save(self,fname):
-    ''' calls jsonHandler.exportFile and passes it options to save '''
-    JsonHandler().exportFile( self, fname )
 
   def toJson(self):
     ''' creates a json sting to save to file '''

@@ -66,13 +66,10 @@ class MBMain():
     self.mainWindow.gui.optionsWindow.refreshValues()
 
   def save(self):
-    ''' opens a file dialog and passes the file to the model '''
-    fname = tk.filedialog.asksaveasfilename()
-    self.mainWindow.gui.model.save(fname)
+    self.mainWindow.gui.model.save()
 
   def load(self):
-    fname = tk.filedialog.askopenfile().name
-    self.mainWindow.gui.model.loadSettings(fname)
+    self.mainWindow.gui.model.load()
 
   def setPanelsImage(self):
     selcon.setPanelsMode('image')

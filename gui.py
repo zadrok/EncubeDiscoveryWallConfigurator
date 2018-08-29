@@ -9,9 +9,24 @@ class GUI():
   def __init__(self,model,jsonHandler):
     ''' creates a window handler for Tkinter windows '''
     self.model = model
+    self.model.gui = self
     self.jsonHandler = jsonHandler
 
     # setup main window
+    self.setupMainWindow()
+
+    # setup options window
+    # child of main window, will close when main does
+    # can be hidden/closed without affecting main window
+    self.setupOptionsWindow()
+
+    # setup initilization settings window
+    # child of main window, will close when main does
+    # can be hidden/closed without affecting main window
+    self.setupInitSettingsWindow()
+
+
+  def setupMainWindow(self):
     self.widthMain = 1280
     self.heightMain = 720
     self.root = tk.Tk()
@@ -19,9 +34,8 @@ class GUI():
     self.root.minsize(width=self.widthMain,height=self.heightMain)
     self.mainWindow = MainWindow(self,self.root)
 
-    # setup options window
-    # child of main window, will close when main does
-    # can be hidden/closed without affecting main window
+
+  def setupOptionsWindow(self):
     self.widthOptions = 650
     self.heightOptions = 800
     self.optionsWindow = OptionsWindow(self.root,self)
@@ -30,9 +44,8 @@ class GUI():
     # start with the options window hidden
     self.toggleOptionWindow(state='hide')
 
-    # setup initilization settings window
-    # child of main window, will close when main does
-    # can be hidden/closed without affecting main window
+
+  def setupInitSettingsWindow(self):
     self.widthInitSettings = 400
     self.heightInitSettings = 600
     self.initSettingsWindow = InitSettingsWindow(self.root,self)

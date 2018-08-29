@@ -46,10 +46,9 @@ class InitSettingsWindow(tk.Toplevel):
 
   def loadSettings(self):
     self.attributes('-topmost', 'false')
-    fname = tk.filedialog.askopenfile().name
-    print(fname)
+    self.gui.model.load()
     self.attributes('-topmost', 'true')
-    self.gui.model.loadSettings(fname)
+
 
 
   def commitSettings(self):
