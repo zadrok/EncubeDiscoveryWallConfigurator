@@ -14,6 +14,7 @@ class MBMain():
     # self.fileMenu.add_command(label = "New", command = self.doNothing)
     self.fileMenu.add_command(label = "Open", command = self.open)
     self.fileMenu.add_command(label = "Save", command = self.save)
+    self.fileMenu.add_command(label = "Load", command = self.load)
     # self.fileMenu.add_command(label = "Save as...", command = self.doNothing)
     self.fileMenu.add_separator()
     self.fileMenu.add_command(label = "Exit", command = mainWindow.quit)
@@ -68,6 +69,10 @@ class MBMain():
     ''' opens a file dialog and passes the file to the model '''
     fname = tk.filedialog.asksaveasfilename()
     self.mainWindow.gui.model.save(fname)
+
+  def load(self):
+    fname = tk.filedialog.askopenfile().name
+    self.mainWindow.gui.model.loadSettings(fname)
 
   def setPanelsImage(self):
     selcon.setPanelsMode('image')

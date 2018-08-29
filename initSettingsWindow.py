@@ -1,10 +1,10 @@
 import tkinter as tk
 
 class InitSettingsWindow(tk.Toplevel):
-  def __init__(self,master,gui):
+  def __init__(self,root,gui):
     ''' creates options window, all model options are displayed here '''
-    super().__init__(master)
-    self.master = master
+    super().__init__(root)
+    self.root = root
     self.protocol('WM_DELETE_WINDOW', self.withdraw)
     self.attributes('-topmost', 'true')
     self.gui = gui
@@ -29,6 +29,7 @@ class InitSettingsWindow(tk.Toplevel):
     self.aspectRatioScreensLabel = tk.Label(self, text='Aspect ratio of screens:')
     self.aspectRatioScreensEntry = tk.Entry(self, textvariable=self.aspectRatioScreensVar, width=30)
 
+    self.loadBttn = tk.Button(self,text='Load Settings',command=self.loadSettings)
     self.commitBttn = tk.Button(self,text='Commit',command=self.commitSettings)
 
 
@@ -39,7 +40,16 @@ class InitSettingsWindow(tk.Toplevel):
     self.numScreensColumnsEntry.grid(row=3, column=1, sticky=tk.W)
     self.aspectRatioScreensLabel.grid(row=4, column=0, sticky=tk.W)
     self.aspectRatioScreensEntry.grid(row=4, column=1, sticky=tk.W)
-    self.commitBttn.grid(row=10,column=1)
+    self.loadBttn.grid(row=10,column=1)
+    self.commitBttn.grid(row=11,column=1)
+
+
+  def loadSettings(self):
+    self.attributes('-topmost', 'false')
+    fname = tk.filedialog.askopenfile().name
+    print(fname)
+    self.attributes('-topmost', 'true')
+    self.gui.model.loadSettings(fname)
 
 
   def commitSettings(self):

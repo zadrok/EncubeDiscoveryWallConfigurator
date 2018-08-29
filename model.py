@@ -13,7 +13,12 @@ class Model:
     self.n_panels   = 0
     # options
     self.defaultConfigFile = 'defaultConfig.json'
-    self.options = JsonHandler().importFile(self.defaultConfigFile)
+    self.options = None
+    self.loadSettings(self.defaultConfigFile)
+
+  def loadSettings(self,fileName):
+    self.options = JsonHandler().importFile(fileName)
+
 
   def setScreens(self, screens, width, height):
     self.screens = screens
