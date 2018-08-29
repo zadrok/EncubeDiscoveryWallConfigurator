@@ -26,40 +26,40 @@ class Screen:
     for panel in self.panels:
       panel.draw(self.panel_color)
 
-  def set_position(self, x, y, w, h):
+  def setPosition(self, x, y, w, h):
     self.x = x
     self.y = y
     self.width = w
     self.height = h
 
-  def get_id(self):
+  def getId(self):
     return self.id
 
-  def set_id(self, ident):
+  def setId(self, ident):
     self.id = ident
 
-  def get_x(self):
+  def getX(self):
     return self.x
 
-  def set_x(self, x):
+  def setX(self, x):
     self.x = x
 
-  def get_y(self):
+  def getY(self):
     return self.y
 
-  def set_y(self, y):
+  def setY(self, y):
     self.y = y
 
-  def get_width(self):
+  def getWidth(self):
     return self.width
 
-  def set_width(self, width):
+  def setWidth(self, width):
     self.width = width
 
-  def get_height(self):
+  def getHeight(self):
     return self.height
 
-  def set_height(self, height):
+  def setHeight(self, height):
     self.height = height
 
   def get_canvas(self):
@@ -68,7 +68,7 @@ class Screen:
   def set_canvas(self, canvas):
     self.canvas = canvas
 
-  def get_rectangle(self):
+  def getRectangle(self):
     return self.x, self.y, self.width, self.height
 
   def countPanels(self):
@@ -92,10 +92,10 @@ class Screen:
 
   def divideHorizontally(self,num=2):
     ''' create new panels '''
-    x = self.get_x()
-    y = self.get_y()
-    w = self.get_width()
-    h = (self.get_height() / num)
+    x = self.getX()
+    y = self.getY()
+    w = self.getWidth()
+    h = (self.getHeight() / num)
 
     for n in range(num):
       p = Panel(
@@ -112,10 +112,10 @@ class Screen:
 
   def divideVertically(self,num=2):
     ''' create new panels '''
-    x = self.get_x()
-    y = self.get_y()
-    w = (self.get_width() / num)
-    h = self.get_height()
+    x = self.getX()
+    y = self.getY()
+    w = (self.getWidth() / num)
+    h = self.getHeight()
 
     for n in range(num):
       p = Panel(
@@ -130,12 +130,12 @@ class Screen:
       )
       self.panels.append( p )
 
-  def get_panel_at_xy(self, x, y):
+  def getPanelAtXY(self, x, y):
     for p in self.panels:
-      px = p.get_x()
-      py = p.get_y()
-      pw = px + p.get_width()
-      ph = py + p.get_height()
+      px = p.getX()
+      py = p.getY()
+      pw = px + p.getWidth()
+      ph = py + p.getHeight()
       if (x >= px and x <= pw) and (y >= py and y <= ph):
         return p
     return None
@@ -149,10 +149,10 @@ class Screen:
       for p in self.panels:
         p.removePanel(panel)
 
-  def to_dimension_array(self):
+  def toDimensionArray(self):
     panels = []
     for p in self.panels:
-        panels.append(p.to_s2plot_dimensions())
+        panels.append(p.toS2plotDimensions())
     return panels
 
   # def rePackPanels(self,pX,pY,pW,pH):
@@ -181,7 +181,7 @@ class Screen:
   #       h = int( pH/l )
   #
   #     # adjust panel to new position
-  #     p.set_position(x,y,w,h)
+  #     p.setPosition(x,y,w,h)
   #     # if this panel has panels, pass them the change in position
   #     if len(p.panels) > 0:
   #       p.rePackPanels(x,y,w,h)

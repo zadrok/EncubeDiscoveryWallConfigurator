@@ -38,7 +38,7 @@ class SelectionController:
     return False
 
   def screenClick(self,x,y,screen):
-    panel = screen.get_panel_at_xy(x,y)
+    panel = screen.getPanelAtXY(x,y)
 
     # if panel != None: print( 'x ' + str(panel.x) + ', y ' + str(panel.y) + ', w ' + str(panel.width) + ', h ' + str(panel.height) )
 
@@ -293,7 +293,7 @@ class SelectionController:
     while loop < maxLoop:
       loop += 1
       for p in self.panels:
-        # print( 'x ' + str(p.get_x()) + ' y ' + str(p.get_y()) + ' w ' + str(p.get_width()) + ' h ' + str(p.get_height()) )
+        # print( 'x ' + str(p.getX()) + ' y ' + str(p.getY()) + ' w ' + str(p.getWidth()) + ' h ' + str(p.getHeight()) )
         # expand the panel in each direction until it collides with another panel or the side of the screen
         self.panelExpandUp(p)
         self.panelExpandDown(p)
@@ -323,10 +323,10 @@ class SelectionController:
 
 
   def panelInScreen(self,panel,screen):
-    if panel.get_x() >= screen.get_x():
-      if panel.get_y() >= screen.get_y():
-        if panel.get_x()+panel.get_width() <= screen.get_x()+screen.get_width():
-          if panel.get_y()+panel.get_height() <= screen.get_y()+screen.get_height():
+    if panel.getX() >= screen.getX():
+      if panel.getY() >= screen.getY():
+        if panel.getX()+panel.getWidth() <= screen.getX()+screen.getWidth():
+          if panel.getY()+panel.getHeight() <= screen.getY()+screen.getHeight():
             # print('panel in screen')
             return True
     # print('panel not in screen')
@@ -380,7 +380,7 @@ class SelectionController:
 
   def initialPanel(self):
     for s in self.screens:
-      s.createPanel("C", s.get_x(), s.get_y(), s.width, s.height)
+      s.createPanel("C", s.getX(), s.getY(), s.width, s.height)
 
 
   def reset(self):

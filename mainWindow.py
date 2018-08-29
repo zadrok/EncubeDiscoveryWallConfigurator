@@ -17,13 +17,13 @@ class MainWindow(tk.Frame):
     self.add_screen = None
     self.canvas = None
     self.split_mode = None
-    self.split_h = tk.IntVar()
-    self.split_v = tk.IntVar()
+    self.splitH = tk.IntVar()
+    self.splitV = tk.IntVar()
     self.splitAmount = tk.StringVar()
 
     self.update()
-    self.canvas_w = self.root.winfo_width()
-    self.canvas_h = self.root.winfo_height()
+    self.canvasW = self.root.winfo_width()
+    self.canvasH = self.root.winfo_height()
 
     self.keyHandeler = KeyHandeler(self.root,self)
 
@@ -38,8 +38,8 @@ class MainWindow(tk.Frame):
     ''' sets up companents for user to interact with '''
     self.menuBar = MBMain(self)
     self.buttonWidget = Wbuttons(self)
-    self.canvas = tk.Canvas(self, width=self.canvas_w, height=self.canvas_h, bg="gray74")
-    self.canvas.bind('<Button-1>', self.canvas_clicked)
+    self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bg="gray74")
+    self.canvas.bind('<Button-1>', self.canvaslCicked)
     self.canvas.pack(side="left")
 
     # menu bar
@@ -51,17 +51,17 @@ class MainWindow(tk.Frame):
     #   else:
     #     color = "#3366FF"
     #
-    #   self.create_screen(color)
+    #   self.createScreen(color)
 
     self.menuBar.eventLock = True
 
-  def canvas_clicked(self, event):
+  def canvaslCicked(self, event):
     for s in self.screens:
-      sx = s.get_x()
-      sw = sx + s.get_width()
+      sx = s.getX()
+      sw = sx + s.getWidth()
 
-      sy = s.get_y()
-      sh = sy + s.get_height()
+      sy = s.getY()
+      sh = sy + s.getHeight()
 
       ex = event.x
       ey = event.y
@@ -77,14 +77,14 @@ class MainWindow(tk.Frame):
   #   self.canvas.delete("all")
   #   cScreens = len(self.screens)
   #   if cScreens == 0: return
-  #   width = self.canvas_w / cScreens
+  #   width = self.canvasW / cScreens
   #   for i, s in enumerate(self.screens):
   #     x = width * i
   #     y = 0
   #     w = width
   #     h = 720
   #
-  #     s.set_position( x,y,w,h )
+  #     s.setPosition( x,y,w,h )
   #     # s.rePackPanels( x,y,w,h )
   #
   #   self.draw()
@@ -94,9 +94,9 @@ class MainWindow(tk.Frame):
     for s in self.screens:
       s.draw()
 
-    self.gui.model.set_screens(self.screens, width=self.canvas_w, height=self.canvas_h)
+    self.gui.model.setScreens(self.screens, width=self.canvasW, height=self.canvasH)
 
-  def create_screen(self, color):
+  def createScreen(self, color):
     self.screens.append(Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color))
 
   def createScreens(self,numScreenRows,numScreenColumns,aspectRatioScreensA=16,aspectRatioScreensB=9):  # read AxB, 16x9
@@ -107,11 +107,11 @@ class MainWindow(tk.Frame):
 
     x = 0
     y = 0
-    w = int( self.canvas_w / self.numScreenColumns )
+    w = int( self.canvasW / self.numScreenColumns )
     h = int( w / ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
 
-    if h*self.numScreenRows > self.canvas_h:
-      overflow = (h*self.numScreenRows) - self.canvas_h
+    if h*self.numScreenRows > self.canvasH:
+      overflow = (h*self.numScreenRows) - self.canvasH
       h -= int( overflow/self.numScreenRows )
       w = h*( ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
 

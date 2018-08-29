@@ -4,11 +4,11 @@ from selectionController import selcon
 from tkinter import filedialog
 
 class MBMain():
-  def __init__(self,master):
+  def __init__(self,mainWindow):
     ''' creates the menu bar for a window '''
     self.eventLock = False
-    self.master = master
-    self.menuBar = tk.Menu(master.root)
+    self.mainWindow = mainWindow
+    self.menuBar = tk.Menu(mainWindow.root)
 # ------------------------------------------------------------------------------
     self.fileMenu = tk.Menu(self.menuBar,tearoff=0)
     # self.fileMenu.add_command(label = "New", command = self.doNothing)
@@ -16,7 +16,7 @@ class MBMain():
     self.fileMenu.add_command(label = "Save", command = self.save)
     # self.fileMenu.add_command(label = "Save as...", command = self.doNothing)
     self.fileMenu.add_separator()
-    self.fileMenu.add_command(label = "Exit", command = master.quit)
+    self.fileMenu.add_command(label = "Exit", command = mainWindow.quit)
     self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
 # ------------------------------------------------------------------------------
     # self.editMenu = tk.Menu(self.menuBar, tearoff=0)
@@ -43,9 +43,9 @@ class MBMain():
     self.optionMenu.add_command(label = "Set Panels as cube", command = self.setPanelsCube)
     self.optionMenu.add_command(label = "Set Panels as graph", command = self.setPanelsGraph)
     self.optionMenu.add_separator()
-    self.optionMenu.add_command(label = "Options", command = self.master.gui.toggleOptionWindow)
+    self.optionMenu.add_command(label = "Options", command = self.mainWindow.gui.toggleOptionWindow)
     self.optionMenu.add_separator()
-    self.optionMenu.add_command(label = "Print Options", command = self.master.gui.model.printOptions)
+    self.optionMenu.add_command(label = "Print Options", command = self.mainWindow.gui.model.printOptions)
     self.menuBar.add_cascade(label = "Options", menu = self.optionMenu)
 # ------------------------------------------------------------------------------
     # self.helpMenu = tk.Menu(self.menuBar, tearoff=0)
@@ -54,20 +54,20 @@ class MBMain():
     # self.menuBar.add_cascade(label = "Help", menu = self.helpMenu)
 # ------------------------------------------------------------------------------
     self.splitNumIndex = 3 # if adding something before this +1 to index !!!!!!!
-    self.menuBar.add_cascade(label=self.master.keyHandeler.getScrollCountText())
+    self.menuBar.add_cascade(label=self.mainWindow.keyHandeler.getScrollCountText())
 
-    master.root.config(menu=self.menuBar)
+    mainWindow.root.config(menu=self.menuBar)
 
   def open(self):
     ''' opens a file dialog and passes the file to the model '''
     fname = tk.filedialog.askopenfilename()
-    self.master.gui.model.open(fname)
-    self.master.gui.optionsWindow.refreshValues()
+    self.mainWindow.gui.model.open(fname)
+    self.mainWindow.gui.optionsWindow.refreshValues()
 
   def save(self):
     ''' opens a file dialog and passes the file to the model '''
     fname = tk.filedialog.asksaveasfilename()
-    self.master.gui.model.save(fname)
+    self.mainWindow.gui.model.save(fname)
 
   def setPanelsImage(self):
     selcon.setPanelsMode('image')
@@ -92,7 +92,7 @@ class MBMain():
 
   def passKeyEvent(self,event):
     if self.eventLock:
-      self.master.keyHandeler.doEventDown(event)
+      self.mainWindow.keyHandeler.doEventDown(event)
 
   def doNothing(self):
     ''' used for menu items that are not implemented yet '''
@@ -101,15 +101,15 @@ class MBMain():
 
 
 class MBOptions():
-  def __init__(self,master):
+  def __init__(self,optionsWindow):
     ''' creates the menu bar for a window '''
-    self.master = master
-    self.menuBar = tk.Menu(master)
+    self.optionsWindow = optionsWindow
+    self.menuBar = tk.Menu(optionsWindow)
 # ------------------------------------------------------------------------------
     self.fileMenu = tk.Menu(self.menuBar,tearoff=0)
-    self.fileMenu.add_command(label = "Add Option", command = self.master.toggleAddOptionWindow)
+    self.fileMenu.add_command(label = "Add Option", command = self.optionsWindow.toggleAddOptionWindow)
     self.fileMenu.add_separator()
-    self.fileMenu.add_command(label = "Close", command = master.withdraw)
+    self.fileMenu.add_command(label = "Close", command = optionsWindow.withdraw)
     self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
 # ------------------------------------------------------------------------------
     # self.editMenu = tk.Menu(self.menuBar, tearoff=0)
@@ -120,7 +120,7 @@ class MBOptions():
     # self.helpMenu.add_command(label = "None", command = self.doNothing)
     # self.menuBar.add_cascade(label = "Help", menu = self.helpMenu)
 # ------------------------------------------------------------------------------
-    master.config(menu=self.menuBar)
+    optionsWindow.config(menu=self.menuBar)
 
   def doNothing(self):
     ''' used for menu items that are not implemented yet '''
