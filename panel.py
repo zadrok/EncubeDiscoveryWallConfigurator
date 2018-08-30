@@ -10,6 +10,8 @@ class Panel:
     self.y = y
     self.width = width
     self.height = height
+    #required for reset for now
+    self.panels = []
 
     # modes: cube, image, graph
     self.mode = mode
