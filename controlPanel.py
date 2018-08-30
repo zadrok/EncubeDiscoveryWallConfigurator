@@ -63,7 +63,10 @@ class controlPanel():
         # Remove panel Button
         self.secondaryWindow.RemovePannelButton = tk.Button(self.splitButtonFrame, text="Remove", command=self.RemovePannel)
         self.secondaryWindow.RemovePannelButton.pack(side="left", padx=10)
-        # Delete panel button
+        # Filling gap panel Button
+        self.secondaryWindow.FillingGapPannelButton = tk.Button(self.splitButtonFrame, text="Filling Gap", command=self.FillingGap)
+        self.secondaryWindow.FillingGapPannelButton.pack(side="left", padx=10)
+        # Deselect panel button
         self.secondaryWindow.DeselectPannelButton = tk.Button(self.splitButtonFrame, text="Deselect", command=self.DeselectPannel)
         self.secondaryWindow.DeselectPannelButton.pack(side="left", padx=10)
         # Select All panel button
@@ -139,6 +142,10 @@ class controlPanel():
 
     def RemovePannel(self):
         selcon.remove()
+        self.secondaryWindow.draw()
+
+    def FillingGap(self):
+        selcon.fillGap()
         self.secondaryWindow.draw()
 
     def DeselectPannel(self):
