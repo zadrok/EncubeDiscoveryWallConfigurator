@@ -1,7 +1,6 @@
 import tkinter as tk
 import platform
 from selectionController import selcon
-from bttwidget import *
 
 # all keysyms that need to be tracked
 keysyms = [ 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',

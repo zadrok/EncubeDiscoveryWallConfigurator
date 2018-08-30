@@ -3,7 +3,7 @@ from menuBar import MBMain
 from screen import Screen
 from keyHandeler import KeyHandeler
 from selectionController import selcon
-from bttwidget import Wbuttons
+from controlPanel import controlPanel
 
 
 class MainWindow(tk.Frame):
@@ -37,7 +37,7 @@ class MainWindow(tk.Frame):
   def createWidgets(self):
     ''' sets up companents for user to interact with '''
     self.menuBar = MBMain(self)
-    self.buttonWidget = Wbuttons(self)
+    self.controlPanel = controlPanel(self)
     self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bg="gray74")
     self.canvas.bind('<Button-1>', self.canvaslCicked)
     self.canvas.pack(side="left")

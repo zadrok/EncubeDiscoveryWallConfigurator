@@ -6,7 +6,7 @@ from keyHandeler import *
 
 
 
-class Wbuttons():
+class controlPanel():
     def __init__(self, secondaryWindow):
 
         self.secondaryWindow = secondaryWindow

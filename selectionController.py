@@ -60,17 +60,17 @@ class SelectionController:
 
   def splitHorizontally(self):
     for s in self.screens:
-      s.divideHorizontally(num=self.window.buttonWidget.splitNumber)
+      s.divideHorizontally(num=self.window.controlPanel.splitNumber)
     for p in self.panels:
-      p.divideHorizontally(num=self.window.buttonWidget.splitNumber)
+      p.divideHorizontally(num=self.window.controlPanel.splitNumber)
     self.clearAll()
 
 
   def splitVertically(self):
     for s in self.screens:
-      s.divideVertically(num=self.window.buttonWidget.splitNumber)
+      s.divideVertically(num=self.window.controlPanel.splitNumber)
     for p in self.panels:
-      p.divideVertically(num=self.window.buttonWidget.splitNumber)
+      p.divideVertically(num=self.window.controlPanel.splitNumber)
     self.clearAll()
 
 
@@ -283,10 +283,6 @@ class SelectionController:
     return False
 
 
-
-
-
-
   def fillGap(self):
     # for each selected panel
     keepLooping = True
@@ -373,11 +369,6 @@ class SelectionController:
       panel.width += 1
     # back off one pixel so panels arn't on top of each other
     panel.width -= 1
-
-
-
-
-
 
 
   def initialPanel(self):
