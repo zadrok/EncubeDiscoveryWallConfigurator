@@ -63,6 +63,7 @@ class SelectionController:
       s.divideHorizontally(num=self.window.buttonWidget.splitNumber)
     for p in self.panels:
       p.divideHorizontally(num=self.window.buttonWidget.splitNumber)
+    self.clearAll()
 
 
   def splitVertically(self):
@@ -70,6 +71,7 @@ class SelectionController:
       s.divideVertically(num=self.window.buttonWidget.splitNumber)
     for p in self.panels:
       p.divideVertically(num=self.window.buttonWidget.splitNumber)
+    self.clearAll()
 
 
 
@@ -399,6 +401,7 @@ class SelectionController:
     self.clearAll()
 
   def allselect(self):
+    self.clearAll()
     if self.window != None:
       for s in self.window.screens:
         if len(s.panels) <= 0:

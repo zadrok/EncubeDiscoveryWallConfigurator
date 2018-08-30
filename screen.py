@@ -96,19 +96,19 @@ class Screen:
     y = self.getY()
     w = self.getWidth()
     h = (self.getHeight() / num)
-
-    for n in range(num):
-      p = Panel(
-        screen=self,
-        canvas=self.canvas,
-        ident="0",
-        method='h',
-        x=x,
-        y=y + (h*n),
-        width=w,
-        height=h
-      )
-      self.panels.append( p )
+    if len(self.panels) < 1:
+      for n in range(num):
+        p = Panel(
+          screen=self,
+          canvas=self.canvas,
+          ident="0",
+          method='h',
+          x=x,
+          y=y + (h*n),
+          width=w,
+          height=h
+        )
+        self.panels.append( p )
 
   def divideVertically(self,num=2):
     ''' create new panels '''
@@ -116,19 +116,19 @@ class Screen:
     y = self.getY()
     w = (self.getWidth() / num)
     h = self.getHeight()
-
-    for n in range(num):
-      p = Panel(
-        screen=self,
-        canvas=self.canvas,
-        ident="0",
-        method='v',
-        x=x + (w*n),
-        y=y,
-        width=w,
-        height=h
-      )
-      self.panels.append( p )
+    if len(self.panels) < 1:
+      for n in range(num):
+        p = Panel(
+          screen=self,
+          canvas=self.canvas,
+          ident="0",
+          method='v',
+          x=x + (w*n),
+          y=y,
+          width=w,
+          height=h
+        )
+        self.panels.append( p )
 
   def getPanelAtXY(self, x, y):
     for p in self.panels:
