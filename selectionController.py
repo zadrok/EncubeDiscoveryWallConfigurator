@@ -2,26 +2,31 @@
 
 class SelectionController:
   def __init__(self):
+    # selected screens and panels
     self.screens = []
     self.panels = []
 
     self.keyHandeler = None
-    self.window = None
+    self.mainWindow = None
 
   def setKeyHandeler(self,kh):
+    '''give the SelectionController a reference to a keyHandeler'''
     self.keyHandeler = kh
 
-  def setWindow(self,w):
-    self.window = w
+  def setMainWindow(self,w):
+    '''give the SelectionController a reference to a mainWindow'''
+    self.mainWindow = w
     self.reset()
 
   def setPanelsMode(self, mode):
+    '''for all of the selected panels set their mode to "mode"'''
     for p in self.panels:
       p.mode = mode
     self.deselectAll()
-    self.window.draw()
+    self.mainWindow.draw()
 
   def deselect(self,screen,panel):
+    '''remove the "screen" and/or "panel" from the selected list'''
     try:
       if panel != None:
         # this is a panel and try to deselect it
@@ -31,17 +36,20 @@ class SelectionController:
         # this is a screen and try to deselect it
         self.screens.remove(screen)
         return True
-
     except ValueError:
       return False
-
     return False
 
+
   def screenClick(self,x,y,screen):
+    '''
+      decides on actions to take when a screen is clicked, if a panel is clicked
+      and to select the screen or panel or to deselect
+      - x : click event x locatoin
+      - y : click event y locatoin
+      - screen : the screen that was clicked on
+    '''
     panel = screen.getPanelAtXY(x,y)
-
-    # if panel != None: print( 'x ' + str(panel.x) + ', y ' + str(panel.y) + ', w ' + str(panel.width) + ', h ' + str(panel.height) )
-
     # check if this is a deselect
     if not self.deselect(screen,panel):
       # select it
@@ -58,7 +66,9 @@ class SelectionController:
           self.clearAll()
           self.screens.append( screen )
 
+
   def splitHorizontally(self):
+    '''splits selected screen/panels a number of times horizontally set by the split amount'''
     for s in self.screens:
       s.divideHorizontally(num=self.window.controlPanel.splitNumber)
     for p in self.panels:
@@ -67,6 +77,7 @@ class SelectionController:
 
 
   def splitVertically(self):
+    '''splits selected screen/panels a number of times vertically set by the split amount'''
     for s in self.screens:
       s.divideVertically(num=self.window.controlPanel.splitNumber)
     for p in self.panels:
@@ -79,11 +90,9 @@ class SelectionController:
 
 
   def join(self):
-    # TODO - make this work
-    # print('TODO - Join')
-
+    '''for the selected panels, join ones that make a rectangle/square'''
     # go through all screens
-    for aScreen in self.window.screens:
+    for aScreen in self.mainWindow.screens:
       # make a list of panels in the same screen to join together
       jPanels = []
       # go through each panel in the screen
@@ -98,13 +107,9 @@ class SelectionController:
 
       # if there are no panels to join continue
       if len(jPanels) < 1: continue
-
-      # TODO - Split panels into 'zones'/'groups' within each screen
       # only join panels that are next together and make a rectangle/square
       # jPanels <- all panels in this screen that want to join
-
       panelGroups = []
-
       while len(jPanels) > 1:
         curPanel = jPanels.pop()
         curGroup = []
@@ -140,19 +145,8 @@ class SelectionController:
               join = True
               break
 
-
       if loop >= maxLoop:
         print('exit due to loop max')
-
-      # cI = 0
-      # for group in panelGroups:
-      #   colors = ['gold', 'hot pink', 'khaki1', 'tomato2', 'magenta3', 'SeaGreen1', 'slate blue', 'ivory2', 'OrangeRed2', 'plum2', 'DarkOliveGreen2', 'purple', 'pink1', 'forest green', 'navy']
-      #   color = colors[cI]
-      #   cI += 1
-      #   if cI >= len(colors): cI = 0
-      #   for panel in group:
-      #     panel.colorOther = color
-
 
       for group in panelGroups:
         # find the bounding box for join panels
@@ -166,9 +160,6 @@ class SelectionController:
         wMax =  wMax.x + wMax.width - xMin
         hMax =  hMax.y + hMax.height - yMin
 
-        # print('xMin ' + str(int(xMin)) + ', yMin ' + str(int(yMin)) + ', wMax ' + str(int(wMax)) + ', hMax ' + str(int(hMax)))
-        # print('xMin ' + str(xMin) + ', yMin ' + str(yMin) + ', wMax ' + str(wMax) + ', hMax ' + str(hMax))
-
         # go through all panels marked as join (in the join list)
         for panel in group:
           # remove the panel
@@ -178,22 +169,11 @@ class SelectionController:
         aScreen.createPanel(method='n', x=xMin, y=yMin, width=wMax, height=hMax)
 
 
-
-
   def panelShareEdge(self,panelA,panelB):
+    '''return true if panelA and panelB share a edge'''
     # create vertices
     verticesA = self.getPanelVertices(panelA)
     verticesB = self.getPanelVertices(panelB)
-
-    # print( 'verticesA: 0 ' + str(verticesA[0][0]) + ', ' + str(verticesA[0][1]) +
-    #        '     1 ' + str(verticesA[1][0]) + ', ' + str(verticesA[1][1]) +
-    #        '     2 ' + str(verticesA[2][0]) + ', ' + str(verticesA[2][1]) +
-    #        '     3 ' + str(verticesA[3][0]) + ', ' + str(verticesA[3][1]) )
-    #
-    # print( 'verticesB: 0 ' + str(verticesB[0][0]) + ', ' + str(verticesB[0][1]) +
-    #        '     1 ' + str(verticesB[1][0]) + ', ' + str(verticesB[1][1]) +
-    #        '     2 ' + str(verticesB[2][0]) + ', ' + str(verticesB[2][1]) +
-    #        '     3 ' + str(verticesB[3][0]) + ', ' + str(verticesB[3][1]) )
 
     sameCount = 0
     for verA in verticesA:
@@ -207,9 +187,8 @@ class SelectionController:
     return False
 
 
-
-
   def panelShareVertex(self,panelA,panelB):
+    '''return true if panelA and panelB share a corner(vertex)'''
     # create vertices
     verticesA = self.getPanelVertices(panelA)
     verticesB = self.getPanelVertices(panelB)
@@ -222,8 +201,8 @@ class SelectionController:
     return False
 
 
-
   def getPanelVertices(self,panel):
+    '''returns an array/list of x,y points from each corner'''
     vertices = []
     vertices.append( [panel.x, panel.y] )
     vertices.append( [panel.x + panel.width, panel.y] )
@@ -233,8 +212,8 @@ class SelectionController:
 
 
   def getGroupVertices(self,group):
+    '''returns an array/list of x,y points for a group of panels'''
     vertices = []
-
     # find the bounding box for join panels
     xMin = min( group, key=lambda p: p.x )
     yMin = min( group, key=lambda p: p.y )
@@ -246,8 +225,6 @@ class SelectionController:
     wMax =  wMax.x + wMax.width - xMin
     hMax =  hMax.y + hMax.height - yMin
 
-    # print('xMin ' + str(xMin) + ', yMin ' + str(yMin) + ', wMax ' + str(wMax) + ', hMax ' + str(hMax))
-
     vertices.append( [xMin, yMin] )
     vertices.append( [xMin + wMax, yMin] )
     vertices.append( [xMin, yMin + hMax] )
@@ -255,21 +232,11 @@ class SelectionController:
     return vertices
 
 
-
   def groupShareEdge(self,groupA,groupB):
+    '''returns true if a group of panels share an edge with another group'''
     # create vertices
     verticesA = self.getGroupVertices(groupA)
     verticesB = self.getGroupVertices(groupB)
-
-    # print( 'verticesA: 0 ' + str(verticesA[0][0]) + ', ' + str(verticesA[0][1]) +
-    #        '     1 ' + str(verticesA[1][0]) + ', ' + str(verticesA[1][1]) +
-    #        '     2 ' + str(verticesA[2][0]) + ', ' + str(verticesA[2][1]) +
-    #        '     3 ' + str(verticesA[3][0]) + ', ' + str(verticesA[3][1]) )
-    #
-    # print( 'verticesB: 0 ' + str(verticesB[0][0]) + ', ' + str(verticesB[0][1]) +
-    #        '     1 ' + str(verticesB[1][0]) + ', ' + str(verticesB[1][1]) +
-    #        '     2 ' + str(verticesB[2][0]) + ', ' + str(verticesB[2][1]) +
-    #        '     3 ' + str(verticesB[3][0]) + ', ' + str(verticesB[3][1]) )
 
     sameCount = 0
     for verA in verticesA:
@@ -284,6 +251,7 @@ class SelectionController:
 
 
   def fillGap(self):
+    '''for each selected panel, checks to see if it can expand in any direction to fill a gap'''
     # for each selected panel
     keepLooping = True
     loop = 0
@@ -291,7 +259,6 @@ class SelectionController:
     while loop < maxLoop:
       loop += 1
       for p in self.panels:
-        # print( 'x ' + str(p.getX()) + ' y ' + str(p.getY()) + ' w ' + str(p.getWidth()) + ' h ' + str(p.getHeight()) )
         # expand the panel in each direction until it collides with another panel or the side of the screen
         self.panelExpandUp(p)
         self.panelExpandDown(p)
@@ -300,40 +267,38 @@ class SelectionController:
 
 
   def valueInRange(self, value, min, max):
+    '''returns true if value is >= min and value is <= max'''
     return (value >= min) and (value <= max)
 
 
   def rectOverlap(self, A, B):
+    '''returns true if the rectangle of A and B overlap'''
     xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width);
     yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height);
-    # print(xOverlap and yOverlap)
     return xOverlap and yOverlap;
 
 
   def panelIntersectionOtherPanels(self, pan, panels):
+    '''returns true 'pan' overlaps and panel in 'panels''''
     for p in panels:
       if p != pan and self.rectOverlap(pan, p):
-        # p.colorOther = "#333300"
-        # print('panel Intersection')
         return True
-    # print('no panel Intersection')
     return False
 
 
   def panelInScreen(self,panel,screen):
+    '''returns true if 'panel' is in 'screen''''
     if panel.getX() >= screen.getX():
       if panel.getY() >= screen.getY():
         if panel.getX()+panel.getWidth() <= screen.getX()+screen.getWidth():
           if panel.getY()+panel.getHeight() <= screen.getY()+screen.getHeight():
-            # print('panel in screen')
             return True
-    # print('panel not in screen')
     return False
 
 
   def panelExpandUp(self, panel):
+    '''trys to expand a panel up'''
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    # print('Up')
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.y -= 1
       panel.height += 1
@@ -343,8 +308,8 @@ class SelectionController:
 
 
   def panelExpandDown(self, panel):
+    '''trys to expand a panel down'''
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    # print('Down')
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.height += 1
     # back off one pixel so panels arn't on top of each other
@@ -352,8 +317,8 @@ class SelectionController:
 
 
   def panelExpandLeft(self, panel):
+    '''trys to expand a panel left'''
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    # print('Left')
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.x -= 1
       panel.width += 1
@@ -363,8 +328,8 @@ class SelectionController:
 
 
   def panelExpandRight(self, panel):
+    '''trys to expand a panel right'''
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
-    # print('Right')
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
       panel.width += 1
     # back off one pixel so panels arn't on top of each other
@@ -372,11 +337,13 @@ class SelectionController:
 
 
   def initialPanel(self):
+    '''creates a single panel in each screen'''
     for s in self.screens:
       s.createPanel("C", s.getX(), s.getY(), s.width, s.height)
 
 
   def reset(self):
+    '''removes all panels from all screens and gives each screen one panel'''
     self.allselect()
     self.remove()
     self.deselectAll()
@@ -384,14 +351,17 @@ class SelectionController:
     self.initialPanel()
 
   def remove(self):
-    if self.window != None:
+    '''remove all selected panels'''
+    if self.mainWindow != None:
       for p in self.panels:
         p.screen.removePanel(p)
 
   def deselectAll(self):
+    '''clear selected screens and panels lists'''
     self.clearAll()
 
   def allselect(self):
+    '''add all screens and panels to selected lists'''
     self.clearAll()
     if self.window != None:
       for s in self.window.screens:
@@ -402,25 +372,30 @@ class SelectionController:
             self.panels.append( p )
 
   def panelSelected(self,panel):
+    '''returns true if panel is in selected list'''
     for p in self.panels:
       if p == panel:
         return True
     return False
 
   def screenSelected(self,screen):
+    '''returns true if screen is in selected list'''
     for s in self.screens:
       if s == screen:
         return True
     return False
 
   def clearAll(self):
+    '''clear selected screens and panels lists'''
     self.clearPanels()
     self.clearScreens()
 
   def clearPanels(self):
+    '''clear selected panels list'''
     self.panels = []
 
   def clearScreens(self):
+    '''clear selected screens list'''
     self.screens = []
 
 selcon = SelectionController()

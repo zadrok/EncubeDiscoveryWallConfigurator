@@ -30,7 +30,7 @@ class MainWindow(tk.Frame):
     self.createWidgets()
     self.focus_set()
 
-    selcon.setWindow(self)
+    selcon.setMainWindow(self)
     self.draw()
 
 
