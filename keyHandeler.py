@@ -18,11 +18,6 @@ class KeyHandeler:
 
     self.root.bind("<KeyRelease>", self.keyUp)
     self.root.bind("<KeyPress>", self.keyDown)
-    if platform.system() == "Linux":
-        self.root.bind("<Button-4>", self.onMouseWheelLinux)
-        self.root.bind("<Button-5>", self.onMouseWheelLinux)
-    else:
-        self.root.bind('<MouseWheel>', self.onMouseWheel)
 
     # needed to make sure key events only happen once
     self.keyMemory = {}
@@ -32,41 +27,6 @@ class KeyHandeler:
     # tell selcon about this
     selcon.setKeyHandeler(self)
 
-  def onMouseWheelLinux(self, event):
-    if event.num == 4:
-      self.scrollCount += 1
-    elif event.num == 5:
-      self.scrollCount -= 1
-
-    self.limitScrollCount()
-    self.mainWindow.menuBar.menuBar.entryconfig( self.mainWindow.menuBar.splitNumIndex, label=self.getScrollCountText() )
-    self.mainWindow.buttonWidget.scrollNum.set(self.getScrollCountText())
-
-  def onMouseWheel(self, event):
-    if event.delta > 0:
-      self.scrollCount += 1
-    elif event.delta < 0:
-      self.scrollCount -= 1
-
-    self.limitScrollCount()
-    self.mainWindow.menuBar.menuBar.entryconfig(self.mainWindow.menuBar.splitNumIndex, label=self.getScrollCountText())
-    self.mainWindow.buttonWidget.scrollNum.set(self.getScrollCountText())
-
-  # set limits on self.scrollCount
-  def limitScrollCount(self):
-    limitMin = 1
-    limitMax = 10
-    if self.scrollCount < limitMin:
-      self.scrollCount = limitMin
-    if self.scrollCount > limitMax:
-      self.scrollCount = limitMax
-
-
-  def getScrollCountText(self):
-    return 'Split num: ' + str(self.scrollCount)
-
-  def getScrollCount(self):
-    return self.scrollCount
 
   def doEventUp(self,keySym):
     # print('Doing up event ' + keySym)
