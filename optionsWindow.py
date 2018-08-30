@@ -154,7 +154,7 @@ class Item:
 class AddOptionsWindow(tk.Toplevel):
   def __init__(self,optionsWindow):
     ''' creates add options window, allows new options to be created here '''
-    super().__init__(optionsWindow.mainWindow)
+    super().__init__(optionsWindow.root)
     self.optionsWindow = optionsWindow
     self.title("Add Option")
     self.protocol('WM_DELETE_WINDOW', self.withdraw)
