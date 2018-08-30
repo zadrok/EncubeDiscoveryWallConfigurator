@@ -54,8 +54,6 @@ class MBMain():
     # self.helpMenu.add_command(label = "About...", command = self.doNothing)
     # self.menuBar.add_cascade(label = "Help", menu = self.helpMenu)
 # ------------------------------------------------------------------------------
-    self.splitNumIndex = 3 # if adding something before this +1 to index !!!!!!!
-    self.menuBar.add_cascade(label=self.mainWindow.keyHandeler.getScrollCountText())
 
     mainWindow.root.config(menu=self.menuBar)
 
