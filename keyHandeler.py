@@ -24,9 +24,6 @@ class KeyHandeler:
     # tell selcon about this
     selcon.setKeyHandeler(self)
 
-
-
-
   def doEventUp(self,keySym):
     # print('Doing up event ' + keySym)
     self.mainWindow.draw()
