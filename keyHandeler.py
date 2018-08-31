@@ -15,6 +15,12 @@ class KeyHandeler:
     self.root.bind("<KeyRelease>", self.keyUp)
     self.root.bind("<KeyPress>", self.keyDown)
 
+    if platform.system() == "Linux":
+        self.root.bind("<Button-4>", self.onMouseWheelLinux)
+        self.root.bind("<Button-5>", self.onMouseWheelLinux)
+    else:
+        self.root.bind('<MouseWheel>', self.onMouseWheel)
+
     # needed to make sure key events only happen once
     self.keyMemory = {}
     for k in keysyms:
@@ -22,6 +28,20 @@ class KeyHandeler:
 
     # tell selcon about this
     selcon.setKeyHandeler(self)
+
+
+  def onMouseWheelLinux(self, event):
+    if event.num == 4:
+      self.mainWindow.controlPanel.IncreaseSplitNum()
+    elif event.num == 5:
+      self.mainWindow.controlPanel.DecreaseSplitNum()
+
+  def onMouseWheel(self, event):
+    if event.delta > 0:
+      self.mainWindow.controlPanel.IncreaseSplitNum()
+    elif event.delta < 0:
+      self.mainWindow.controlPanel.DecreaseSplitNum()
+
 
   def doEventUp(self,keySym):
     # print('Doing up event ' + keySym)

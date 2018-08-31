@@ -70,18 +70,18 @@ class SelectionController:
   def splitHorizontally(self):
     '''splits selected screen/panels a number of times horizontally set by the split amount'''
     for s in self.screens:
-      s.divideHorizontally(num=self.window.controlPanel.splitNumber)
+      s.divideHorizontally(num=self.mainWindow.controlPanel.splitNumber)
     for p in self.panels:
-      p.divideHorizontally(num=self.window.controlPanel.splitNumber)
+      p.divideHorizontally(num=self.mainWindow.controlPanel.splitNumber)
     self.clearAll()
 
 
   def splitVertically(self):
     '''splits selected screen/panels a number of times vertically set by the split amount'''
     for s in self.screens:
-      s.divideVertically(num=self.window.controlPanel.splitNumber)
+      s.divideVertically(num=self.mainWindow.controlPanel.splitNumber)
     for p in self.panels:
-      p.divideVertically(num=self.window.controlPanel.splitNumber)
+      p.divideVertically(num=self.mainWindow.controlPanel.splitNumber)
     self.clearAll()
 
 
