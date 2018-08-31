@@ -4,31 +4,35 @@ import pprint
 import json
 import tkinter.messagebox
 import tkinter as tk
-import pprint
+from panel import Panel
 
 class Model:
-  def __init__(self):
-    self.screens = []
-    self.panels = []
+  def __init__(self,gui):
+    # self.screens = []
+    # self.panels = []
     self.max_width = 0
     self.max_height = 0
     self.n_panels   = 0
+    self.gui = gui
+
     # options
     self.defaultConfigFile = 'defaultConfig.json'
     self.options = JsonHandler().importFile( self.defaultConfigFile )
     self.convertOptionsToStrings()
 
-    self.gui = None
 
   def load(self):
     fname = tk.filedialog.askopenfile()
     if fname != None:
       self.options = JsonHandler().importFile(fname.name)
       self.gui.toggleOptionWindow(state='hide') # hide the window
+      self.setupScreensFromFile()
       self.convertOptionsToStrings()
       self.gui.setupOptionsWindow() # remake the window, easiest thing to do
+      self.gui.mainWindow.draw()
     else:
       print( 'file name was found to be null' )
+
 
   def save(self):
     fname = tk.filedialog.asksaveasfilename()
@@ -36,6 +40,52 @@ class Model:
       JsonHandler().exportFile( self, fname )
     else:
       print( 'file needs a name to save' )
+
+
+  def setupScreensFromFile(self):
+    try:
+      if self.options['screens'] != None:
+        data = self.options['screens']
+        n_per_slave = int( self.options['n_per_slave'] )
+        n_rows = int( self.options['n_rows'] )
+        n_cols = int( self.options['n_cols'] )
+        self.gui.mainWindow.createScreens(n_rows,n_cols)
+        i = 0 # current screen index
+        for nKey,nValue in data.items():
+          # print( 'nKey: ' + str(nKey) + ', nValue: ' + str(nValue) ) # for each screen in the file
+          screen = self.screens[i] # current screen
+          for pKey,pValue in nValue.items():
+            # print('x ' + str( pValue['dimensions'][0] ) + ' y ' + str( pValue['dimensions'][1] ) + ' w ' + str( pValue['dimensions'][2] ) + ' h ' + str( pValue['dimensions'][3] ))
+
+            x1 = screen.getX() + ( screen.getWidth() * pValue['dimensions'][0] )
+            y1 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * pValue['dimensions'][1] ) )
+            x2 = screen.getX() + ( screen.getWidth() * pValue['dimensions'][2] )
+            y2 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * pValue['dimensions'][3] ) )
+
+            x = x1
+            y = y1
+            w = x2 - x1
+            h = y2 - y1
+
+            # print('x ' + str(x) + ' y ' + str(y) + ' w ' + str(w) + ' h ' + str(h))
+
+            p = Panel(
+              screen=screen,
+              canvas=screen.canvas,
+              ident="0",
+              method='c',
+              x=x,
+              y=y,
+              width=w,
+              height=h,
+              mode=pValue['type']
+            )
+            screen.panels.append( p )
+          i += 1
+
+    except Exception as e:
+      print(e)
+      # pass
 
 
   def convertOptionsToStrings(self):
@@ -112,8 +162,9 @@ class Model:
     data = '{\n'
     out_screens = self.screensToArray()
     for key,value in self.options.items():
-      d = self.processVar( str(value) )
-      data += '  "' + str(key) + '": ' + d + ',\n'
+      if key != 'screens':
+        d = self.processVar( str(value) )
+        data += '  "' + str(key) + '": ' + d + ',\n'
     try:
       data += '  "screens":' + json.dumps(out_screens, sort_keys=False, indent=2)
     except TypeError:

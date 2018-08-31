@@ -100,6 +100,7 @@ class MainWindow(tk.Frame):
     self.screens.append(Screen(self, self.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color))
 
   def createScreens(self,numScreenRows,numScreenColumns,aspectRatioScreensA=16,aspectRatioScreensB=9):  # read AxB, 16x9
+    self.screens = []
     self.numScreenRows = numScreenRows
     self.numScreenColumns = numScreenColumns
     self.aspectRatioScreensA = aspectRatioScreensA # read AxB, 16x9

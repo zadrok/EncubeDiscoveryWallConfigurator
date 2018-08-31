@@ -1,16 +1,16 @@
 import tkinter as tk
-
+from model import Model
+from jsonHandler import JsonHandler
 from mainWindow import MainWindow
 from optionsWindow import OptionsWindow
 from initSettingsWindow import InitSettingsWindow
 
 
 class GUI():
-  def __init__(self,model,jsonHandler):
+  def __init__(self):
     ''' creates a window handler for Tkinter windows '''
-    self.model = model
-    self.model.gui = self
-    self.jsonHandler = jsonHandler
+    self.model = Model(self)
+    self.jsonHandler = JsonHandler()
 
     # setup main window
     self.setupMainWindow()

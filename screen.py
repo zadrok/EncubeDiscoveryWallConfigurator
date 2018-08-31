@@ -13,7 +13,7 @@ class Screen:
     self.color = color
     self.panel_color = panel_color
     self.panels = []
-    self.createPanel("C", x, y, width, height)
+    # self.createPanel("C", x, y, width, height)
 
 
   def draw(self):

@@ -47,7 +47,8 @@ class InitSettingsWindow(tk.Toplevel):
   def loadSettings(self):
     self.attributes('-topmost', 'false')
     self.gui.model.load()
-    self.attributes('-topmost', 'true')
+    self.withdraw()
+    # self.attributes('-topmost', 'true')
 
 
 

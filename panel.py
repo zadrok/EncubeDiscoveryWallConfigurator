@@ -1,5 +1,6 @@
 from selectionController import selcon
 
+
 class Panel:
   def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, mode='cube'):
     self.id = ident
@@ -101,18 +102,18 @@ class Panel:
       self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
 
   def toS2plotDimensions(self):
-    x1 = self.getX()
-    y1 = self.getY()
-    x2 = self.getX() + self.getWidth()
-    y2 = self.getY() + self.getHeight()
-    screen_width = self.screen.getX() + self.screen.getWidth()
-    screen_height = self.screen.getY() + self.screen.getHeight()
-    nx1 = x1 / screen_width
-    nx2 = x2 / screen_width
+    x1 = self.getX() - self.screen.getX()
+    y1 = self.getY() - self.screen.getY()
+    x2 = x1 + self.getWidth()
+    y2 = y1 + self.getHeight()
+    # screen_width = self.screen.getX() + self.screen.getWidth()
+    # screen_height = self.screen.getY() + self.screen.getHeight()
+    nx1 = x1 / self.screen.getWidth()
+    nx2 = x2 / self.screen.getWidth()
     # calculate then invert the Y coordinates (inversion for S2PLOT's xy system)
-    ny1 = y1 / screen_height
+    ny1 = y1 / self.screen.getHeight()
     ny1 = abs((ny1 - 1) * 1)
-    ny2 = y2 / screen_height
+    ny2 = y2 / self.screen.getHeight()
     ny2 = abs((ny2 - 1) * 1)
     return [nx1, ny1, nx2, ny2]
 
