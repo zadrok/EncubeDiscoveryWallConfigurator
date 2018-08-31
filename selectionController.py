@@ -279,7 +279,7 @@ class SelectionController:
 
 
   def panelIntersectionOtherPanels(self, pan, panels):
-    '''returns true 'pan' overlaps and panel in 'panels''''
+    '''returns true 'pan' overlaps and panel in 'panels'''
     for p in panels:
       if p != pan and self.rectOverlap(pan, p):
         return True
@@ -287,7 +287,7 @@ class SelectionController:
 
 
   def panelInScreen(self,panel,screen):
-    '''returns true if 'panel' is in 'screen''''
+    '''returns true if 'panel' is in 'screen'''
     if panel.getX() >= screen.getX():
       if panel.getY() >= screen.getY():
         if panel.getX()+panel.getWidth() <= screen.getX()+screen.getWidth():
@@ -363,8 +363,8 @@ class SelectionController:
   def allselect(self):
     '''add all screens and panels to selected lists'''
     self.clearAll()
-    if self.window != None:
-      for s in self.window.screens:
+    if self.mainWindow != None:
+      for s in self.mainWindow.screens:
         if len(s.panels) <= 0:
           self.screens.append( s )
         else:
