@@ -31,7 +31,7 @@ class MainWindow(tk.Frame):
     self.update()
     self.canvasW = self.root.winfo_width()
     self.canvasH = self.root.winfo_height()
-
+  
     self.keyHandeler = KeyHandeler(self.root,self)
 
     self.createWidgets()
@@ -47,7 +47,7 @@ class MainWindow(tk.Frame):
     self.controlPanel = controlPanel(self)
     self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bg="gray74")
     self.canvas.bind('<Button-1>', self.canvaslCicked)
-    self.canvas.bind('<B1-Motion>', self.drawRectangle)
+    self.canvas.bind('<B1-Motion>', self.selectionArea)
     self.canvas.bind('<ButtonRelease-1>', self.onMouseRelease)
     self.canvas.pack(side="left")
 
@@ -64,33 +64,19 @@ class MainWindow(tk.Frame):
 
     self.menuBar.eventLock = True
 
-  def drawRectangle(self, event):
+  def selectionArea(self, event):
     self.endX = event.x
     self.endY = event.y
-
-    #refresh the canvas
-    self.draw()
-    self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY)
+    '''restrict the selection rectangle to the canvas'''
+    if self.endX <= self.canvasW and self.endY <= self.canvasH:
+       #refresh the canvas
+      self.draw()
+      self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY)
     
   #confirmation of screens selected
   def onMouseRelease(self, event):
     if self.endX or self.endY is not None:
-      screenRange = []
-      for s in self.screens:
-        sx = s.getX()
-        sw = sx + s.getWidth()
-
-        sy = s.getY()
-        sh = sy + s.getHeight()
-
-        if self.startX >= sx and self.endX <= sw:
-          if self.startY >= sy and self.endY <= sh:
-            print('startX:'+str(self.startX)+' startY:'+str(self.startY)+' endX:'+str(self.endX)+' endY:'+str(self.endY))
-            #the screen/panel is within the selected area, add to selection 
-            #screenRange.append(s)
-      #selcon.highlighted(screenRange)
-
-      #refresh the canvas
+      #selcon.selectedArea(self.rect)
       self.draw()
 
   def canvaslCicked(self, event):
