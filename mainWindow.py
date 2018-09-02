@@ -67,15 +67,21 @@ class MainWindow(tk.Frame):
   def selectionArea(self, event):
     self.endX = event.x
     self.endY = event.y
-    '''restrict the selection rectangle to the canvas'''
+    #restrict the selection rectangle to the canvas
     if self.endX <= self.canvasW and self.endY <= self.canvasH:
        #refresh the canvas
       self.draw()
       self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY)
     
-  #confirmation of screens selected
   def onMouseRelease(self, event):
+    '''confirmation of screens selected'''
     if self.endX or self.endY is not None:
+      for s in self.screens:
+        for p in s.panels:
+          #panel to be compared against
+          panelRect = self.canvas.create_rectangle(p.getX(), p.getY(), p.getWidth(), p.getHeight())
+          #resultx = selcon.rectOverlap(self.rect, panelRect)[0]
+          #print(str(resultx))
       #selcon.selectedArea(self.rect)
       self.draw()
 

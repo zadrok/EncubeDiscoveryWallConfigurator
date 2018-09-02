@@ -1,4 +1,4 @@
-from tkinter import *
+
 
 class SelectionController:
   def __init__(self):
@@ -273,9 +273,9 @@ class SelectionController:
 
   def rectOverlap(self, A, B):
     '''returns true if the rectangle of A and B overlap'''
-    xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width);
-    yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height);
-    return xOverlap and yOverlap;
+    xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width)
+    yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height)
+    return xOverlap and yOverlap
 
 
   def panelIntersectionOtherPanels(self, pan, panels):
@@ -371,8 +371,10 @@ class SelectionController:
           for p in s.panels:
             self.panels.append( p )
 
-  def selectedArea(self, x1, y1, x2, y2):
-    print('hello world')
+  def selectedArea(self, selectedRect):
+    for p in self.panels:
+      print('Height:'+ str(p.getHeight()) + ' Width:'+str(p.getWidth())) 
+      #self.rectOverlap(selectedRect, p)
 
 
   def panelSelected(self,panel):
