@@ -17,9 +17,14 @@ class MainWindow(tk.Frame):
     self.add_screen = None
     self.canvas = None
     self.split_mode = None
+    
     self.splitH = tk.IntVar()
     self.splitV = tk.IntVar()
     self.splitAmount = tk.StringVar()
+
+    self.rect = None
+    self.startX = None
+    self.startY = None
 
     self.update()
     self.canvasW = self.root.winfo_width()
@@ -40,6 +45,7 @@ class MainWindow(tk.Frame):
     self.controlPanel = controlPanel(self)
     self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bg="gray74")
     self.canvas.bind('<Button-1>', self.canvaslCicked)
+    self.canvas.bind('<B1-Motion>', self.drawRectangle)
     self.canvas.pack(side="left")
 
     # menu bar
@@ -55,6 +61,29 @@ class MainWindow(tk.Frame):
 
     self.menuBar.eventLock = True
 
+  def drawRectangle(self, event):
+    ex1 = event.x
+    ey1 = event.y
+
+    #refresh the canvas
+    self.draw()
+    self.rect = self.canvas.create_rectangle(self.startX,self.startY,ex1,ey1)
+    self.canvasHighlighted(ex1,ey1)
+
+  #get the range of screens inside the selection area
+  def canvasHighlighted(self, ex1, ey1):
+    for s in self.screens:
+      sx = s.getX()
+      sw = sx + s.getWidth()
+
+      sy = s.getY()
+      sh = sy + s.getHeight()
+
+      if self.startX >= sx and ex1 <= sw:
+        if self.startY >= sy and ey1 <= sh:
+          selcon.screenClick(self.startX,self.startY,s)
+
+
   def canvaslCicked(self, event):
     for s in self.screens:
       sx = s.getX()
@@ -65,6 +94,9 @@ class MainWindow(tk.Frame):
 
       ex = event.x
       ey = event.y
+
+      self.startX = ex
+      self.startY = ey
       if ex >= sx and ex <= sw:
         if ey >= sy and ey <= sh:
           # found clicked screen
