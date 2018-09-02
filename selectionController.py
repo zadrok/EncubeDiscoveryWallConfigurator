@@ -371,6 +371,15 @@ class SelectionController:
           for p in s.panels:
             self.panels.append( p )
 
+  def highlighted(self, screenRange):
+      '''add range of screens to screens'''
+      for s in screenRange:
+        if len(s.panels) <= 0:
+          self.screens.append(s)
+        else:
+          for p in s.panels:
+            self.panels.append(p)
+
   def panelSelected(self,panel):
     '''returns true if panel is in selected list'''
     for p in self.panels:

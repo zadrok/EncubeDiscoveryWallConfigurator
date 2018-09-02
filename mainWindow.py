@@ -25,6 +25,8 @@ class MainWindow(tk.Frame):
     self.rect = None
     self.startX = None
     self.startY = None
+    self.endX = None
+    self.endY = None
 
     self.update()
     self.canvasW = self.root.winfo_width()
@@ -46,6 +48,7 @@ class MainWindow(tk.Frame):
     self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bg="gray74")
     self.canvas.bind('<Button-1>', self.canvaslCicked)
     self.canvas.bind('<B1-Motion>', self.drawRectangle)
+    self.canvas.bind('<ButtonRelease-1>', self.onMouseRelease)
     self.canvas.pack(side="left")
 
     # menu bar
@@ -62,27 +65,33 @@ class MainWindow(tk.Frame):
     self.menuBar.eventLock = True
 
   def drawRectangle(self, event):
-    ex1 = event.x
-    ey1 = event.y
+    self.endX = event.x
+    self.endY = event.y
 
     #refresh the canvas
     self.draw()
-    self.rect = self.canvas.create_rectangle(self.startX,self.startY,ex1,ey1)
-    self.canvasHighlighted(ex1,ey1)
+    self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY)
+    
+  #confirmation of screens selected
+  def onMouseRelease(self, event):
+    if self.endX or self.endY is not None:
+      screenRange = []
+      for s in self.screens:
+        sx = s.getX()
+        sw = sx + s.getWidth()
 
-  #get the range of screens inside the selection area
-  def canvasHighlighted(self, ex1, ey1):
-    for s in self.screens:
-      sx = s.getX()
-      sw = sx + s.getWidth()
+        sy = s.getY()
+        sh = sy + s.getHeight()
 
-      sy = s.getY()
-      sh = sy + s.getHeight()
+        if self.startX >= sx and self.endX <= sw:
+          if self.startY >= sy and self.endY <= sh:
+            print('startX:'+str(self.startX)+' startY:'+str(self.startY)+' endX:'+str(self.endX)+' endY:'+str(self.endY))
+            #the screen/panel is within the selected area, add to selection 
+            #screenRange.append(s)
+      #selcon.highlighted(screenRange)
 
-      if self.startX >= sx and ex1 <= sw:
-        if self.startY >= sy and ey1 <= sh:
-          selcon.screenClick(self.startX,self.startY,s)
-
+      #refresh the canvas
+      self.draw()
 
   def canvaslCicked(self, event):
     for s in self.screens:
