@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from model import Model
 from jsonHandler import JsonHandler
 from mainWindow import MainWindow
@@ -33,6 +34,8 @@ class GUI():
     self.root.title("Encube Discovery Wall Configurator")
     self.root.minsize(width=self.widthMain,height=self.heightMain)
     self.mainWindow = MainWindow(self,self.root)
+    # create listener event, delete window to call closeEvent
+    self.root.protocol("WM_DELETE_WINDOW", self.closeEvent)
 
 
   def setupOptionsWindow(self):
@@ -90,3 +93,11 @@ class GUI():
       self.initSettingsWindow.withdraw()
     elif self.initSettingsWindow.state() == 'withdrawn':
       self.initSettingsWindow.deiconify()
+
+
+  def closeEvent(self):
+    exitMsg = "Are you sure you wish to exit?"
+    mExit = messagebox.askyesno(title="Quit", message=exitMsg)
+    if mExit is True:
+      print('Exiting')
+      self.root.destroy()

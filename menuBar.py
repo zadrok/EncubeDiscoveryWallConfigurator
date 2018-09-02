@@ -17,7 +17,7 @@ class MBMain():
     self.fileMenu.add_command(label = "Load", command = self.load)
     # self.fileMenu.add_command(label = "Save as...", command = self.doNothing)
     self.fileMenu.add_separator()
-    self.fileMenu.add_command(label = "Exit", command = mainWindow.quit)
+    self.fileMenu.add_command(label = "Exit", command = self.mainWindow.gui.closeEvent)
     self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
 # ------------------------------------------------------------------------------
     # self.editMenu = tk.Menu(self.menuBar, tearoff=0)
