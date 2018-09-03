@@ -80,3 +80,8 @@ class InitSettingsWindow(tk.Toplevel):
 
     self.withdraw()
     self.gui.mainWindow.createScreens(numScreenRows,numScreenColumns,aspectRatioScreensA,aspectRatioScreensB)
+    # self.gui.model.printOptions()
+    self.gui.model.updateOption( "n_rows", numScreenRows )
+    self.gui.model.updateOption( "n_cols", numScreenColumns )
+    self.gui.optionsWindow.refreshValues()
+    # self.gui.model.printOptions()

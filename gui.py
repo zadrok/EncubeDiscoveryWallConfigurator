@@ -40,7 +40,7 @@ class GUI():
 
   def setupOptionsWindow(self):
     self.widthOptions = 650
-    self.heightOptions = 800
+    self.heightOptions = 400
     self.optionsWindow = OptionsWindow(self.root,self)
     self.optionsWindow.title("Options")
     self.optionsWindow.minsize(width=self.widthOptions,height=self.heightOptions)
@@ -50,7 +50,7 @@ class GUI():
 
   def setupInitSettingsWindow(self):
     self.widthInitSettings = 400
-    self.heightInitSettings = 600
+    self.heightInitSettings = 400
     self.initSettingsWindow = InitSettingsWindow(self.root,self)
     self.initSettingsWindow.title("Init Settings")
     self.initSettingsWindow.minsize(width=self.widthInitSettings,height=self.heightInitSettings)
@@ -99,5 +99,5 @@ class GUI():
     exitMsg = "Are you sure you wish to exit?"
     mExit = messagebox.askyesno(title="Quit", message=exitMsg)
     if mExit is True:
-      print('Exiting')
+      # print('Exiting')
       self.root.destroy()

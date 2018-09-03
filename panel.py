@@ -187,39 +187,3 @@ class Panel:
       # if error pass down panel chain
       for p in self.panels:
         p.removePanel(panel)
-
-  # def rePackPanels(self,pX,pY,pW,pH):
-  #   ''' pack panels within the screen, passing in the change in position '''
-  #   # make sure this instance has panels to replace
-  #   if len(self.panels) <= 0: return
-  #
-  #   # if this panel only has one panel in it, take any panels it has, move them to this panel and remove the panel
-  #   if len(self.panels) == 1:
-  #     self.panels = self.panels[0].panels
-  #     if len(self.panels) <= 0: return
-  #
-  #   # check method of how panels were divided
-  #   m = self.panels[0].method # will be 'h' or 'v'
-  #
-  #   # apply position change and pass down panel chain
-  #   for i,p in enumerate(self.panels):
-  #     # work out the new position for each panel
-  #     x = pX
-  #     y = pY
-  #     w = pW
-  #     h = pH
-  #     l = len(self.panels)
-  #
-  #     # adjust for method
-  #     if m == 'v':
-  #       x = pX + int( i*(pW/l) )
-  #       w = int( (pW/l) )
-  #     elif m == 'h':
-  #       y = pY + int( i*(pH/l) )
-  #       h = int( pH/l )
-  #
-  #     # set panel to new position
-  #     p.setPosition(x,y,w,h)
-  #     # if this panel has panels, pass them the change in position
-  #     if len(p.panels) > 0:
-  #       p.rePackPanels(x,y,w,h)

@@ -20,7 +20,7 @@ class OptionsWindow(tk.Toplevel):
     self.items = []
     self.i = 0
     self.j = 0
-    self.max = 30
+    self.max = 20
     self.side = 11
     for key,value in self.gui.model.options.items():
       if self.i > self.max:
@@ -89,7 +89,7 @@ class OptionsWindow(tk.Toplevel):
     ''' all items are placed in the grid '''
     self.i = 0
     self.j = 0
-    self.max = 30
+    self.max = 20
     self.side = 11
     for item in self.items:
       if self.i > self.max:

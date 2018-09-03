@@ -8,8 +8,7 @@ from panel import Panel
 
 class Model:
   def __init__(self,gui):
-    # self.screens = []
-    # self.panels = []
+    self.screens = []
     self.max_width = 0
     self.max_height = 0
     self.n_panels   = 0
@@ -132,9 +131,11 @@ class Model:
     # print('update called')
     for key,value in self.options.items():
       if key == uKey:
-        # print( str(key) + ' == ' + str(uKey) )
         self.options[key] = uValue
+        # print( str(key) + ' == ' + str(uKey) )
+        # print( 'updating to ' + str(uValue) )
         # value = uValue
+
 
   def removeOption(self,key):
     ''' finds matching key and removes it from options '''

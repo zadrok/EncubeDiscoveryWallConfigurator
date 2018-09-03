@@ -85,14 +85,10 @@ class SelectionController:
     self.clearAll()
 
 
-
-
-
-
   def join(self):
     '''for the selected panels, join ones that make a rectangle/square'''
     # go through all screens
-    for aScreen in self.mainWindow.screens:
+    for aScreen in self.mainWindow.gui.model.screens:
       # make a list of panels in the same screen to join together
       jPanels = []
       # go through each panel in the screen
@@ -364,7 +360,7 @@ class SelectionController:
     '''add all screens and panels to selected lists'''
     self.clearAll()
     if self.mainWindow != None:
-      for s in self.mainWindow.screens:
+      for s in self.mainWindow.gui.model.screens:
         if len(s.panels) <= 0:
           self.screens.append( s )
         else:
