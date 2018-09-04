@@ -66,6 +66,23 @@ class SelectionController:
           self.clearAll()
           self.screens.append( screen )
 
+  def screenHighlighted(self,x,y,screen):
+    '''
+      decides on actions to take when a screen is clicked, if a panel is clicked
+      and to select the screen or panel or to deselect
+      - x : click event x locatoin
+      - y : click event y locatoin
+      - screen : the screen that was clicked on
+    '''
+    panel = screen.getPanelAtXY(x,y)
+    # check if this is a deselect
+    if not self.deselect(screen,panel):
+      # select it
+        if panel != None:
+          self.panels.append( panel )
+        else:
+          self.screens.append( screen )
+
 
   def splitHorizontally(self):
     '''splits selected screen/panels a number of times horizontally set by the split amount'''
@@ -269,9 +286,9 @@ class SelectionController:
 
   def rectOverlap(self, A, B):
     '''returns true if the rectangle of A and B overlap'''
-    xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width);
-    yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height);
-    return xOverlap and yOverlap;
+    xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width)
+    yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height)
+    return xOverlap and yOverlap
 
 
   def panelIntersectionOtherPanels(self, pan, panels):
@@ -367,6 +384,12 @@ class SelectionController:
           for p in s.panels:
             self.panels.append( p )
 
+  def selectedArea(self, selectedRect):
+    for p in self.panels:
+      print('Height:'+ str(p.getHeight()) + ' Width:'+str(p.getWidth())) 
+      #self.rectOverlap(selectedRect, p)
+
+
   def panelSelected(self,panel):
     '''returns true if panel is in selected list'''
     for p in self.panels:
@@ -393,5 +416,9 @@ class SelectionController:
   def clearScreens(self):
     '''clear selected screens list'''
     self.screens = []
+
+  def appendPanel(self, p):
+    '''add a passed in panel, p to the panels list'''
+    self.panels.append(p)
 
 selcon = SelectionController()
