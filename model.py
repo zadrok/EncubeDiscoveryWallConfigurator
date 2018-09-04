@@ -4,6 +4,7 @@ import pprint
 import json
 import tkinter.messagebox
 import tkinter as tk
+from screen import Screen
 from panel import Panel
 
 class Model:
@@ -48,7 +49,8 @@ class Model:
         n_per_slave = int( self.options['n_per_slave'] )
         n_rows = int( self.options['n_rows'] )
         n_cols = int( self.options['n_cols'] )
-        self.gui.mainWindow.createScreens(n_rows,n_cols)
+        numNodes = len( data )
+        self.createScreens(numNodes,n_rows,n_cols)
         i = 0 # current screen index
         for nKey,nValue in data.items():
           # print( 'nKey: ' + str(nKey) + ', nValue: ' + str(nValue) ) # for each screen in the file
@@ -192,3 +194,46 @@ class Model:
     if s[0] in ('-', '+'):
         return s[1:].isdigit()
     return s.isdigit()
+
+
+  def createScreen(self, color):
+    self.screens.append( Screen(self, self.gui.mainWindow.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color) )
+
+
+  def createScreens(self,numNodes,numScreenRows,numScreenColumns,aspectRatioScreensA=16,aspectRatioScreensB=9):  # read AxB, 16x9
+    self.screens = []
+    self.numNodes = numNodes
+    self.numScreenRows = numScreenRows
+    self.numScreenColumns = numScreenColumns
+    self.aspectRatioScreensA = aspectRatioScreensA # read AxB, 16x9
+    self.aspectRatioScreensB = aspectRatioScreensB
+
+    x = 0
+    y = 0
+    w = int( self.gui.mainWindow.canvasW / self.numScreenColumns )
+    h = int( w / ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
+
+    if h*self.numScreenRows > self.gui.mainWindow.canvasH:
+      overflow = (h*self.numScreenRows) - self.gui.mainWindow.canvasH
+      h -= int( overflow/self.numScreenRows )
+      w = h*( ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
+
+    for n in range(numScreenRows):
+      for col in range(numScreenColumns):
+        self.screens.append( Screen(self, self.gui.mainWindow.canvas, "Screen", x, y, w, h, "#3d3d3d", "#3366FF") )
+        x += w
+      x = 0
+      y += h
+
+    self.gui.mainWindow.draw()
+
+  def countScreensPanels(self):
+    cS = 0
+    cP = 0
+
+    for screen in self.screens:
+      cS += 1
+      cP += screen.countPanels()
+
+    print('Screens: ' + str(cS))
+    print('Panels: ' + str(cP))

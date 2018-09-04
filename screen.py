@@ -2,8 +2,8 @@ from panel import Panel
 from selectionController import selcon
 
 class Screen:
-  def __init__(self, master, canvas, ident, x, y, width, height, color, panel_color):
-    self.master = master
+  def __init__(self, model, canvas, ident, x, y, width, height, color, panel_color):
+    self.model = model
     self.canvas = canvas
     self.id = ident
     self.x = x
