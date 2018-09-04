@@ -54,11 +54,11 @@ class MainWindow(tk.Frame):
 
   def drawRectangle(self, event):
     '''Draws a rectangle on screen to highlight the user's selection box'''
-    self.endX = event.x
-    self.endY = event.y
-    #restrict the selection rectangle to the canvas
-    if self.endX <= self.canvasW and self.endY <= self.canvasH:
-       #refresh the canvas
+    #ensure there are screens on the canvas
+    if self.gui.model.screens:
+      self.endX = event.x
+      self.endY = event.y
+      #refresh the canvas
       self.draw()
       self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY, dash=(6, 4))
 
