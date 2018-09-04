@@ -1,6 +1,7 @@
 import tkinter as tk
 from menuBar import MBMain
 from screen import Screen
+from panel import Panel
 from keyHandeler import KeyHandeler
 from selectionController import selcon
 from controlPanel import controlPanel
@@ -47,7 +48,7 @@ class MainWindow(tk.Frame):
     self.controlPanel = controlPanel(self)
     self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bg="gray74")
     self.canvas.bind('<Button-1>', self.canvaslCicked)
-    self.canvas.bind('<B1-Motion>', self.selectionArea)
+    self.canvas.bind('<B1-Motion>', self.drawRectangle)
     self.canvas.bind('<ButtonRelease-1>', self.onMouseRelease)
     self.canvas.pack(side="left")
 
@@ -64,26 +65,53 @@ class MainWindow(tk.Frame):
 
     self.menuBar.eventLock = True
 
-  def selectionArea(self, event):
+  def drawRectangle(self, event):
+    '''Draws a rectangle on screen to highlight the user's selection box'''
     self.endX = event.x
     self.endY = event.y
     #restrict the selection rectangle to the canvas
     if self.endX <= self.canvasW and self.endY <= self.canvasH:
        #refresh the canvas
       self.draw()
-      self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY)
+      self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY, dash=(6, 4))
+      
     
   def onMouseRelease(self, event):
     '''confirmation of screens selected'''
-    if self.endX or self.endY is not None:
+    #don't run if you come into this with a 'half' click or a selection box hasn't been drawn
+    if (self.endX or self.endY is not None) and self.rect is not None:
+      #create the selection area
+      width = self.endX - self.startX
+      height = self.endY - self.startY
+
+      #check the direction of the selection box, update starting position (allows hightlighting box in any drag direction)
+      if width < 0:
+        x = self.endX
+      else:
+        x = self.startX
+      if height < 0:
+        y = self.endY
+      else:
+        y = self.startY
+
+      selectionArea = Panel(screen=None, canvas=None, ident="0", method=None, x=x, y=y, width=abs(width), height=abs(height))
+      selectedPanels = []
       for s in self.screens:
         for p in s.panels:
-          #panel to be compared against
-          panelRect = self.canvas.create_rectangle(p.getX(), p.getY(), p.getWidth(), p.getHeight())
-          #resultx = selcon.rectOverlap(self.rect, panelRect)[0]
-          #print(str(resultx))
-      #selcon.selectedArea(self.rect)
+          #find if panel is within the selection area
+          withinArea = selcon.rectOverlap(selectionArea,p)
+          if withinArea:
+            # add to selected group
+            selectedPanels.append(p)
+
+      #check if selected
+      for p in selectedPanels:
+        if not selcon.panelSelected(p):
+          selcon.appendPanel(p)      
+      
+      #refresh screen with new selected panels
       self.draw()
+      self.rect = None
 
   def canvaslCicked(self, event):
     for s in self.screens:

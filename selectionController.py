@@ -66,6 +66,23 @@ class SelectionController:
           self.clearAll()
           self.screens.append( screen )
 
+  def screenHighlighted(self,x,y,screen):
+    '''
+      decides on actions to take when a screen is clicked, if a panel is clicked
+      and to select the screen or panel or to deselect
+      - x : click event x locatoin
+      - y : click event y locatoin
+      - screen : the screen that was clicked on
+    '''
+    panel = screen.getPanelAtXY(x,y)
+    # check if this is a deselect
+    if not self.deselect(screen,panel):
+      # select it
+        if panel != None:
+          self.panels.append( panel )
+        else:
+          self.screens.append( screen )
+
 
   def splitHorizontally(self):
     '''splits selected screen/panels a number of times horizontally set by the split amount'''
@@ -403,5 +420,9 @@ class SelectionController:
   def clearScreens(self):
     '''clear selected screens list'''
     self.screens = []
+
+  def appendPanel(self, p):
+    '''add a passed in panel, p to the panels list'''
+    self.panels.append(p)
 
 selcon = SelectionController()
