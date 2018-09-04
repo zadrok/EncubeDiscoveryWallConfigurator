@@ -17,7 +17,7 @@ class MainWindow(tk.Frame):
     self.add_screen = None
     self.canvas = None
     self.split_mode = None
-    
+
     self.splitH = tk.IntVar()
     self.splitV = tk.IntVar()
     self.splitAmount = tk.StringVar()
@@ -31,7 +31,7 @@ class MainWindow(tk.Frame):
     self.update()
     self.canvasW = self.root.winfo_width()
     self.canvasH = self.root.winfo_height()
-  
+
     self.keyHandeler = KeyHandeler(self.root,self)
 
     self.createWidgets()
@@ -61,8 +61,8 @@ class MainWindow(tk.Frame):
        #refresh the canvas
       self.draw()
       self.rect = self.canvas.create_rectangle(self.startX, self.startY, self.endX, self.endY, dash=(6, 4))
-      
-    
+
+
   def onMouseRelease(self, event):
     '''confirmation of screens selected'''
     #don't run if you come into this with a 'half' click or a selection box hasn't been drawn
@@ -83,7 +83,7 @@ class MainWindow(tk.Frame):
 
       selectionArea = Panel(screen=None, canvas=None, ident="0", method=None, x=x, y=y, width=abs(width), height=abs(height))
       selectedPanels = []
-      for s in self.screens:
+      for s in self.gui.model.screens:
         for p in s.panels:
           #find if panel is within the selection area
           withinArea = selcon.rectOverlap(selectionArea,p)
@@ -94,8 +94,8 @@ class MainWindow(tk.Frame):
       #check if selected
       for p in selectedPanels:
         if not selcon.panelSelected(p):
-          selcon.appendPanel(p)      
-      
+          selcon.appendPanel(p)
+
       #refresh screen with new selected panels
       self.draw()
       self.rect = None
