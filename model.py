@@ -205,12 +205,15 @@ class Model:
     self.numNodes = numNodes
     self.numScreenRows = numScreenRows
     self.numScreenColumns = numScreenColumns
-    self.aspectRatioScreensA = aspectRatioScreensA # read AxB, 16x9
-    self.aspectRatioScreensB = aspectRatioScreensB
+
+    # read AxB, 16x9
+    self.aspectRatioScreensA = aspectRatioScreensA * numScreenColumns
+    self.aspectRatioScreensB = aspectRatioScreensB * numScreenRows
 
     x = 0
     y = 0
-    w = int( self.gui.mainWindow.canvasW / self.numScreenColumns )
+    # w = int( self.gui.mainWindow.canvasW / ( self.numNodes*self.numScreenColumns ) )
+    w = int( self.gui.mainWindow.canvasW / self.numNodes )
     h = int( w / ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
 
     if h*self.numScreenRows > self.gui.mainWindow.canvasH:
@@ -218,12 +221,24 @@ class Model:
       h -= int( overflow/self.numScreenRows )
       w = h*( ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
 
-    for n in range(numScreenRows):
-      for col in range(numScreenColumns):
-        self.screens.append( Screen(self, self.gui.mainWindow.canvas, "Screen", x, y, w, h, "#3d3d3d", "#3366FF") )
-        x += w
-      x = 0
-      y += h
+    for node in range( self.numNodes ):
+      # make screen for each node
+      screen = Screen(self, self.gui.mainWindow.canvas, "Screen", x, y, w, h, "#3d3d3d", "#3366FF")
+      # make panel for each self.numScreenRows
+      screen.divideHorizontally(self.numScreenRows)
+
+      # make panel for each self.numScreenColumns
+      # panel removes itself from screen when dividing so can't loop through that
+      pans = []
+      for col in screen.panels:
+        pans.append(col)
+
+      for col in pans:
+        col.divideVertically( self.numScreenColumns )
+
+
+      self.screens.append( screen )
+      x += w
 
     self.gui.mainWindow.draw()
 

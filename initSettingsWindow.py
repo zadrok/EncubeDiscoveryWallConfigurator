@@ -29,7 +29,7 @@ class InitSettingsWindow(tk.Toplevel):
 
     # number of rows per node
     self.numScreensRowsVar = tk.StringVar(self, value='2')
-    self.numScreensRowsLabel = tk.Label(self, text='Number of screen in Node:')
+    self.numScreensRowsLabel = tk.Label(self, text='Number of rows in Node:')
     self.numScreensRowsEntry = tk.Entry(self, textvariable=self.numScreensRowsVar, width=30)
 
     # aspect ratio of each screen

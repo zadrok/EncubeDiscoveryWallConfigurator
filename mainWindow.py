@@ -3,7 +3,7 @@ from menuBar import MBMain
 from keyHandeler import KeyHandeler
 from selectionController import selcon
 from controlPanel import controlPanel
-
+from panel import Panel
 
 class MainWindow(tk.Frame):
   def __init__(self, gui, root):
