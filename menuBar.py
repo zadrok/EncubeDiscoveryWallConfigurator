@@ -13,6 +13,7 @@ class MBMain():
     self.fileMenu = tk.Menu(self.menuBar,tearoff=0)
     self.fileMenu.add_command(label = "Save", command = self.save)
     self.fileMenu.add_command(label = "Load", command = self.load)
+    self.fileMenu.add_command(label = "Init Settings", command = self.initWindow)
     self.fileMenu.add_separator()
     self.fileMenu.add_command(label = "Exit", command = self.mainWindow.gui.closeEvent)
     self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
@@ -43,6 +44,9 @@ class MBMain():
 
   def load(self):
     self.mainWindow.gui.model.load()
+
+  def initWindow(self):
+    self.mainWindow.gui.setupInitSettingsWindow()
 
   def setPanelsImage(self):
     selcon.setPanelsMode('image')
