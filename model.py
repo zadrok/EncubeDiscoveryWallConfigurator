@@ -120,7 +120,7 @@ class Model:
 
   def screensToArray(self):
     screens = dict()
-    for (index, screen) in enumerate(self.screens, start=1):
+    for (index, screen) in enumerate(self.screens, start=0):
         screens['n'+str(index)] = screen.toDimensionArray()
     return screens
 

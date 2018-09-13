@@ -115,7 +115,7 @@ class Panel:
     ny1 = abs((ny1 - 1) * 1)
     ny2 = y2 / self.screen.getHeight()
     ny2 = abs((ny2 - 1) * 1)
-    return [nx1, ny1, nx2, ny2]
+    return [nx1, ny2, nx2, ny1]
 
   def divideHorizontally(self,num=2):
     ''' create new panels '''
