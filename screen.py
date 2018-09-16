@@ -150,6 +150,12 @@ class Screen:
 
   def toDimensionArray(self):
     panels = dict()
+<<<<<<< HEAD
     for (index, p) in enumerate(self.panels, start=0):
         panels['p'+str(index)] = {"type": p.get_mode(), "dimensions": p.toS2plotDimensions()}
+=======
+    for (index, p) in enumerate(self.panels):
+        dim = p.toS2plotDimensions()
+        panels['p'+str(index)] = {"type": p.get_mode(), "dimensions": str(dim)}
+>>>>>>> outputFix
     return panels
