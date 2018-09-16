@@ -57,11 +57,18 @@ class Model:
           screen = self.screens[i] # current screen
           for pKey,pValue in nValue.items():
             # print('x ' + str( pValue['dimensions'][0] ) + ' y ' + str( pValue['dimensions'][1] ) + ' w ' + str( pValue['dimensions'][2] ) + ' h ' + str( pValue['dimensions'][3] ))
-
-            x1 = screen.getX() + ( screen.getWidth() * pValue['dimensions'][0] )
-            y1 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * pValue['dimensions'][1] ) )
-            x2 = screen.getX() + ( screen.getWidth() * pValue['dimensions'][2] )
-            y2 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * pValue['dimensions'][3] ) )
+            dim = pValue['dimensions']
+            dim = dim[1:]
+            dim = dim[:-1]
+            dim = dim.split(',')
+            dim2 = []
+            for d in dim:
+              dim2.append( float(d) )
+            # print(dim2)
+            x1 = screen.getX() + ( screen.getWidth() * dim2[0] )
+            y1 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * dim2[3] ) )
+            x2 = screen.getX() + ( screen.getWidth() * dim2[2] )
+            y2 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * dim2[1] ) )
 
             x = x1
             y = y1
@@ -120,7 +127,7 @@ class Model:
 
   def screensToArray(self):
     screens = dict()
-    for (index, screen) in enumerate(self.screens, start=1):
+    for (index, screen) in enumerate(self.screens):
         screens['n'+str(index)] = screen.toDimensionArray()
     return screens
 
@@ -184,9 +191,7 @@ class Model:
     if d.startswith('('): return d
     if d.lower() == 'false': return str(False).lower()
     if d.lower() == 'true': return str(True).lower()
-
     if self.checkInt(d): return str(d)
-
     return '"' + str(d) + '"'
 
   def checkInt(self,s):
