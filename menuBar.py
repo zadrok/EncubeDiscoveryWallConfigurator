@@ -32,6 +32,9 @@ class MBMain():
     self.optionMenu.add_command(label = "Set Panels as cube", command = self.setPanelsCube)
     self.optionMenu.add_command(label = "Set Panels as graph", command = self.setPanelsGraph)
     self.optionMenu.add_separator()
+    self.optionMenu.add_command(label = "Join panels between nodes", command = self.joinBetweenNodes)
+    self.optionMenu.add_command(label = "Remove links between panels", command = self.removeLinks)
+    self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Options", command = self.mainWindow.gui.toggleOptionWindow)
     self.optionMenu.add_separator()
     self.optionMenu.add_command(label = "Print Options", command = self.mainWindow.gui.model.printOptions)
@@ -57,6 +60,11 @@ class MBMain():
   def setPanelsGraph(self):
     selcon.setPanelsMode('graph')
 
+  def removeLinks(self):
+    selcon.removelinksbetweenPanelsInDifferentNodes()
+
+  def joinBetweenNodes(self):
+    selcon.joinWithOtherScreens()
 
   def doKeyEvent1(self): self.passKeyEvent('1')
   def doKeyEvent2(self): self.passKeyEvent('2')
