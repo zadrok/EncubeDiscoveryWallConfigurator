@@ -1,5 +1,6 @@
 from panel import Panel
 from selectionController import selcon
+from jsonHandler import NoIndent
 
 class Screen:
   def __init__(self, model, canvas, ident, x, y, width, height, color, panel_color):
@@ -154,8 +155,9 @@ class Screen:
     panels = dict()
     for (index, p) in enumerate(self.panels):
         dim = p.toS2plotDimensions()
+        print( dim )
         if len( p.sharePanels ) > 0:
-          panels['p'+str(index)] = {"type": p.get_mode(), "shareID": p.getShareID(),"dimensions": str(dim)}
+          panels['p'+str(index)] = {"type": p.get_mode(), "shareID": p.getShareID(),"dimensions": NoIndent(dim)}
         else:
-          panels['p'+str(index)] = {"type": p.get_mode(),"dimensions": str(dim)}
+          panels['p'+str(index)] = {"type": p.get_mode(),"dimensions": NoIndent(dim)}
     return panels

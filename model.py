@@ -1,4 +1,4 @@
-from jsonHandler import JsonHandler
+from jsonHandler import JsonHandler, MyEncoder
 import sys
 import pprint
 import json
@@ -183,7 +183,7 @@ class Model:
         d = self.processVar( str(value) )
         data += '  "' + str(key) + '": ' + d + ',\n'
     try:
-      data += '  "screens":' + json.dumps(out_screens, sort_keys=False, indent=2)
+      data += '  "screens":' + json.dumps(out_screens, cls=MyEncoder, sort_keys=False, indent=2)
     except TypeError:
       tkinter.messagebox.showerror(title='Configuration Error', message='No screens were added to this configuration')
     data += '\n}'
