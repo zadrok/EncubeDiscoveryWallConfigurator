@@ -155,7 +155,6 @@ class Screen:
     panels = dict()
     for (index, p) in enumerate(self.panels):
         dim = p.toS2plotDimensions()
-        print( dim )
         if len( p.sharePanels ) > 0:
           panels['p'+str(index)] = {"type": p.get_mode(), "shareID": p.getShareID(),"dimensions": NoIndent(dim)}
         else:
