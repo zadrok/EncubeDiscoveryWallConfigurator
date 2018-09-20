@@ -46,61 +46,61 @@
   "n0": {
     "p0": {
       "type": "cube",
-      "dimensions": "[0.0, 0.5, 1.0, 1.0]"
+      "dimensions": [0.0, 0.5, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": "[0.0, 0.0, 1.0, 0.5]"
+      "dimensions": [0.0, 0.0, 1.0, 0.5]
     }
   },
   "n1": {
     "p0": {
       "type": "cube",
-      "dimensions": "[0.0, 0.5, 1.0, 1.0]"
+      "dimensions": [0.0, 0.5, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": "[0.0, 0.0, 1.0, 0.5]"
+      "dimensions": [0.0, 0.0, 1.0, 0.5]
     }
   },
   "n2": {
     "p0": {
       "type": "cube",
-      "dimensions": "[0.0, 0.5, 1.0, 1.0]"
+      "dimensions": [0.0, 0.5, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": "[0.0, 0.0, 1.0, 0.5]"
+      "dimensions": [0.0, 0.0, 1.0, 0.5]
     }
   },
   "n3": {
     "p0": {
       "type": "cube",
-      "dimensions": "[0.0, 0.5, 1.0, 1.0]"
+      "dimensions": [0.0, 0.5, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": "[0.0, 0.0, 1.0, 0.5]"
+      "dimensions": [0.0, 0.0, 1.0, 0.5]
     }
   },
   "n4": {
     "p0": {
       "type": "cube",
-      "dimensions": "[0.0, 0.5, 1.0, 1.0]"
+      "dimensions": [0.0, 0.5, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": "[0.0, 0.0, 1.0, 0.5]"
+      "dimensions": [0.0, 0.0, 1.0, 0.5]
     }
   },
   "n5": {
     "p0": {
       "type": "cube",
-      "dimensions": "[0.0, 0.5, 1.0, 1.0]"
+      "dimensions": [0.0, 0.5, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": "[0.0, 0.0, 1.0, 0.5]"
+      "dimensions": [0.0, 0.0, 1.0, 0.5]
     }
   }
 }
