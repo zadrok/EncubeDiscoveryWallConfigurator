@@ -8,7 +8,7 @@ from keyHandeler import *
 
 class controlPanel():
     def __init__(self, secondaryWindow):
-
+        ''' creates buttons to manage configuration tool'''
         self.secondaryWindow = secondaryWindow
 
         #Create root frame to store all children frames
@@ -40,7 +40,7 @@ class controlPanel():
         self.splitNumberLabel = tk.Label(self.splitButtonLabelFrame, text="Split Panel", font =2, background = "#8583D7")
         self.splitNumberLabel.pack(side="left", fill="both", padx = (4,6))
         # Decrease button
-        self.secondaryWindow.DecreaseSplitNumberButton = tk.Button(self.splitButtonFrame, text=u"\u21e6", command=self.DecreaseSplitNum, activebackground="white")
+        self.secondaryWindow.DecreaseSplitNumberButton = tk.Button(self.splitButtonFrame, text=u"\u21e6", command=self.decreaseSplitNum, activebackground="white")
         self.secondaryWindow.DecreaseSplitNumberButton.pack(side="left")
         # Display split number
         self.splitNumberString = tk.StringVar()
@@ -49,7 +49,7 @@ class controlPanel():
         self.splitNumberLabel.pack(side="left")
         self.splitNumberString.set("Split Number : " + str(self.splitNumber))
         # Increase button
-        self.secondaryWindow.IncreaseSplitNumberButton = tk.Button(self.splitButtonFrame, text=u"\u21e8", command=self.IncreaseSplitNum, activebackground="white")
+        self.secondaryWindow.IncreaseSplitNumberButton = tk.Button(self.splitButtonFrame, text=u"\u21e8", command=self.increaseSplitNum, activebackground="white")
         self.secondaryWindow.IncreaseSplitNumberButton.pack(side="left")
         # Horizon Split button
         self.secondaryWindow.HorizonSplitButton = tk.Button(self.splitButtonFrame, text="H-split", command=self.HSplit, activebackground="white")
@@ -58,22 +58,22 @@ class controlPanel():
         self.secondaryWindow.VerticalSplitButton = tk.Button(self.splitButtonFrame, text="V-split", command=self.VSplit)
         self.secondaryWindow.VerticalSplitButton.pack(side="left", padx=10)
         # Join panel Button
-        self.secondaryWindow.JoinPannelButton = tk.Button(self.splitButtonFrame, text="Join", command=self.JoinPannel)
+        self.secondaryWindow.JoinPannelButton = tk.Button(self.splitButtonFrame, text="Join", command=self.joinPanel)
         self.secondaryWindow.JoinPannelButton.pack(side="left", padx=10)
         # Remove panel Button
-        self.secondaryWindow.RemovePannelButton = tk.Button(self.splitButtonFrame, text="Remove", command=self.RemovePannel)
+        self.secondaryWindow.RemovePannelButton = tk.Button(self.splitButtonFrame, text="Remove", command=self.removePanel)
         self.secondaryWindow.RemovePannelButton.pack(side="left", padx=10)
         # Filling gap panel Button
-        self.secondaryWindow.FillingGapPannelButton = tk.Button(self.splitButtonFrame, text="Filling Gap", command=self.FillingGap)
+        self.secondaryWindow.FillingGapPannelButton = tk.Button(self.splitButtonFrame, text="Filling Gap", command=self.fillingGap)
         self.secondaryWindow.FillingGapPannelButton.pack(side="left", padx=10)
         # Deselect panel button
-        self.secondaryWindow.DeselectPannelButton = tk.Button(self.splitButtonFrame, text="Deselect", command=self.DeselectPannel)
+        self.secondaryWindow.DeselectPannelButton = tk.Button(self.splitButtonFrame, text="Deselect", command=self.deselectPanel)
         self.secondaryWindow.DeselectPannelButton.pack(side="left", padx=10)
         # Select All panel button
-        self.secondaryWindow.SelectAllPannelButton = tk.Button(self.splitButtonFrame, text="Select All", command=self.SelectAllPannel)
+        self.secondaryWindow.SelectAllPannelButton = tk.Button(self.splitButtonFrame, text="Select All", command=self.selectAllPanel)
         self.secondaryWindow.SelectAllPannelButton.pack(side="left", padx=10)
         # Reset panel button
-        self.secondaryWindow.ResetPannelButton = tk.Button(self.splitButtonFrame, text="Reset", command=self.Reset)
+        self.secondaryWindow.ResetPannelButton = tk.Button(self.splitButtonFrame, text="Reset", command=self.resetPanel)
         self.secondaryWindow.ResetPannelButton.pack(side="left", padx=10)
 
 
@@ -103,59 +103,74 @@ class controlPanel():
         self.secondaryWindow.ChangePannelModeGraph.pack(side="left",padx=(0,20))
 
     def saveWithButton(self):
+        '''Save configuration'''
         self.secondaryWindow.gui.model.save()
 
     def loadWithButton(self):
+        '''Load configuration'''
         self.secondaryWindow.gui.model.load()
 
     def setPanelsImageButton(self):
+        '''Set panel as image'''
         selcon.setPanelsMode('image')
 
     def setPanelsCubeButton(self):
+        '''Set panel as cube'''
         selcon.setPanelsMode('cube')
 
     def setPanelsGraphButton(self):
+        '''Set panel as graph'''
         selcon.setPanelsMode('graph')
 
-    def DecreaseSplitNum(self):
+    def decreaseSplitNum(self):
+        '''Decrease number of splitting panel'''
         if self.splitNumber > 2:
             self.splitNumber -= 1
             self.splitNumberString.set("Split Number : "+ str(self.splitNumber))
 
 
-    def IncreaseSplitNum(self):
+    def increaseSplitNum(self):
+        '''Increase number of splitting panel'''
         if self.splitNumber < 8:
             self.splitNumber += 1
             self.splitNumberString.set("Split Number : "+ str(self.splitNumber))
 
     def HSplit(self):
+        '''Horizontal Split'''
         selcon.splitHorizontally()
         self.secondaryWindow.draw()
 
     def VSplit(self):
+        '''Vertical Split'''
         selcon.splitVertically()
         self.secondaryWindow.draw()
 
-    def JoinPannel(self):
+    def joinPanel(self):
+        '''Join multiple panels'''
         selcon.join()
         self.secondaryWindow.draw()
 
-    def RemovePannel(self):
+    def removePanel(self):
+        '''Remove selected panels'''
         selcon.remove()
         self.secondaryWindow.draw()
 
-    def FillingGap(self):
+    def fillingGap(self):
+        '''Filling empty panel '''
         selcon.fillGap()
         self.secondaryWindow.draw()
 
-    def DeselectPannel(self):
+    def deselectPanel(self):
+        '''Deselect panels'''
         selcon.deselectAll()
         self.secondaryWindow.draw()
 
-    def SelectAllPannel(self):
+    def selectAllPanel(self):
+        '''Select all panels'''
         selcon.allselect()
         self.secondaryWindow.draw()
 
-    def Reset(self):
+    def resetPanel(self):
+        '''Reset configuration'''
         selcon.reset()
         self.secondaryWindow.draw()

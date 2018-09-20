@@ -10,6 +10,7 @@ keysyms = [ 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',
 
 class KeyHandeler:
   def __init__(self,root,mainWindow):
+    '''key handeler for user interface configuration tool'''
     self.root = root
     self.mainWindow = mainWindow
     self.root.bind("<KeyRelease>", self.keyUp)

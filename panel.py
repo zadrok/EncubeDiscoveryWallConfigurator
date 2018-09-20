@@ -3,6 +3,7 @@ from selectionController import selcon
 
 class Panel:
   def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, mode='cube'):
+    '''initialize panel objjects'''
     self.id = ident
     self.screen = screen
     self.canvas = canvas
