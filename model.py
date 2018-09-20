@@ -15,6 +15,8 @@ class Model:
     self.n_panels   = 0
     self.gui = gui
 
+    self.currentPanelShareID = 0;
+
     # options
     self.defaultConfigFile = 'defaultConfig.json'
     self.options = JsonHandler().importFile( self.defaultConfigFile )
@@ -22,7 +24,7 @@ class Model:
 
 
   def load(self):
-    fname = tk.filedialog.askopenfile()
+    fname = tk.filedialog.askopenfile( filetypes = (("json files","*.json"),("all files","*.*")) )
     if fname != None:
       self.options = JsonHandler().importFile(fname.name)
       self.gui.toggleOptionWindow(state='hide') # hide the window
@@ -35,11 +37,16 @@ class Model:
 
 
   def save(self):
-    fname = tk.filedialog.asksaveasfilename()
+    fname = tk.filedialog.asksaveasfilename( filetypes = (("json files","*.json"),("all files","*.*")) )
     if fname != '':
       JsonHandler().exportFile( self, fname )
     else:
       print( 'file needs a name to save' )
+
+
+  def getNextPanelShareID(self):
+    self.currentPanelShareID += 1
+    return self.currentPanelShareID
 
 
   def setupScreensFromFile(self):

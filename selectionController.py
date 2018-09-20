@@ -1,4 +1,4 @@
-
+import random
 
 class SelectionController:
   def __init__(self):
@@ -62,6 +62,7 @@ class SelectionController:
         if panel != None:
           self.clearAll()
           self.panels.append( panel )
+          # print( "x " + str(panel.getX()) + ", y " + str(panel.getY()) + ", w " + str(panel.getWidth()) + ", h " + str(panel.getHeight()) )
         else:
           self.clearAll()
           self.screens.append( screen )
@@ -100,6 +101,40 @@ class SelectionController:
     for p in self.panels:
       p.divideVertically(num=self.mainWindow.controlPanel.splitNumber)
     self.clearAll()
+
+
+
+  def removelinksbetweenPanelsInDifferentNodes(self):
+    for panel in self.panels:
+      for p in panel.sharePanels:
+        p.sharePanels.remove( panel )
+      panel.sharePanels = []
+
+    self.clearAll()
+    self.mainWindow.draw()
+
+
+
+  def joinWithOtherScreens(self):
+    maxLoop = 100
+    loop = 0
+    while len(self.panels) > 1 and loop < maxLoop:
+      loop += 1
+      # primary panel
+      for pPanel in self.panels:
+        # secondary panel
+        for sPanel in self.panels:
+          # skip if same panel
+          if pPanel == sPanel: continue
+          # share edge?
+          if self.panelShareEdge(pPanel,sPanel):
+            if pPanel.screen != sPanel.screen:
+              pPanel.addSharePanel( sPanel )
+              sPanel.addSharePanel( pPanel )
+
+    self.clearAll()
+    self.mainWindow.draw()
+
 
 
   def join(self):
@@ -198,7 +233,6 @@ class SelectionController:
           return True
 
     return False
-
 
   def panelShareVertex(self,panelA,panelB):
     '''return true if panelA and panelB share a corner(vertex)'''
@@ -386,7 +420,7 @@ class SelectionController:
 
   def selectedArea(self, selectedRect):
     for p in self.panels:
-      print('Height:'+ str(p.getHeight()) + ' Width:'+str(p.getWidth())) 
+      print('Height:'+ str(p.getHeight()) + ' Width:'+str(p.getWidth()))
       #self.rectOverlap(selectedRect, p)
 
 

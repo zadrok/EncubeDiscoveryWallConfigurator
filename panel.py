@@ -1,5 +1,5 @@
 from selectionController import selcon
-
+import random
 
 class Panel:
   def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, mode='cube'):
@@ -12,8 +12,10 @@ class Panel:
     self.y = y
     self.width = width
     self.height = height
-    #required for reset for now
-    self.panels = []
+
+    # panels in other screens
+    self.sharePanels = []
+    self.shareID = None
 
     # modes: cube, image, graph
     self.mode = mode
@@ -28,6 +30,29 @@ class Panel:
     self.colorGraphSelected = '#7b8000'
 
     self.colorOther = None
+
+  def getShareID(self):
+    if self.shareID == None and len(self.sharePanels) > 0:
+      # see if any of the shared panels have an id
+      for sp in self.sharePanels:
+        self.shareID = sp.shareID
+        if self.shareID != None:
+          break
+      if self.shareID == None:
+        # if still none generate an id
+        self.shareID = self.screen.model.getNextPanelShareID()
+    return self.shareID
+
+  def addSharePanel(self, aPanel):
+    if self != aPanel and not self.sharePanelsContains(aPanel):
+      self.sharePanels.append(aPanel)
+
+
+  def sharePanelsContains(self, aPanel):
+    for p in self.sharePanels:
+      if aPanel == p:
+        return True
+    return False
 
 
   def setPosition(self, x, y, w, h):
@@ -75,32 +100,36 @@ class Panel:
   def set_mode(self, mode):
     self.mode = mode
 
-  def countPanels(self):
-    count = 0
-    for panel in self.panels:
-      count += panel.countPanels()
-    return count + 1
-
   def draw(self, color):
+    color = self.colorCubeNormal
+    if self.mode == 'cube':
       color = self.colorCubeNormal
-      if self.mode == 'cube':
-        color = self.colorCubeNormal
-        if selcon.panelSelected(self):
-          color = self.colorCubeSelected
-      elif self.mode == 'image':
-        color = self.colorImageNormal
-        if selcon.panelSelected(self):
-          color = self.colorImageSelected
-      elif self.mode == 'graph':
-        color = self.colorGraphNormal
-        if selcon.panelSelected(self):
-          color = self.colorGraphSelected
+      if selcon.panelSelected(self):
+        color = self.colorCubeSelected
+    elif self.mode == 'image':
+      color = self.colorImageNormal
+      if selcon.panelSelected(self):
+        color = self.colorImageSelected
+    elif self.mode == 'graph':
+      color = self.colorGraphNormal
+      if selcon.panelSelected(self):
+        color = self.colorGraphSelected
 
-      if self.colorOther != None:
-        color = self.colorOther
+    if self.colorOther != None:
+      color = self.colorOther
 
-      bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
-      self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
+    bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
+    self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
+
+    for p in self.sharePanels:
+      x1 = self.x + ( self.width / 2 )
+      y1 = self.y + ( self.height / 2 )
+
+      x2 = p.x + ( p.width / 2 )
+      y2 = p.y + ( p.height / 2 )
+
+      self.canvas.create_line(x1,y1,x2,y2,fill="white",width=4)
+
 
   def toS2plotDimensions(self):
     x1 = self.getX() - self.screen.getX()
@@ -163,28 +192,3 @@ class Panel:
       self.screen.panels.append( p )
 
     self.screen.panels.remove(self)
-
-
-
-  def getPanelAtXY(self, x, y):
-    for p in self.panels:
-      if len(p.panels) > 0:
-        pN = p.getPanelAtXY(x,y)
-        if pN != None: return pN
-      else:
-        px = p.getX()
-        py = p.getY()
-        pw = px + p.getWidth()
-        ph = py + p.getHeight()
-        if (x >= px and x <= pw) and (y >= py and y <= ph):
-          return p
-    return None
-
-  def removePanel(self,panel):
-    # try and remove this panel from self.panels list
-    try:
-      self.panels.remove(panel)
-    except ValueError:
-      # if error pass down panel chain
-      for p in self.panels:
-        p.removePanel(panel)

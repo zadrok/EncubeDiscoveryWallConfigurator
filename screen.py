@@ -78,7 +78,7 @@ class Screen:
     return count
 
   def createPanel(self, method, x, y, width, height):
-    self.panels.append( Panel(
+    p = Panel(
       screen=self,
       canvas=self.canvas,
       ident="0",
@@ -88,7 +88,8 @@ class Screen:
       width=width,
       height=height
       )
-    )
+    self.panels.append( p )
+    return p
 
   def divideHorizontally(self,num=2):
     ''' create new panels '''
@@ -153,5 +154,8 @@ class Screen:
     panels = dict()
     for (index, p) in enumerate(self.panels):
         dim = p.toS2plotDimensions()
-        panels['p'+str(index)] = {"type": p.get_mode(), "dimensions": str(dim)}
+        if len( p.sharePanels ) > 0:
+          panels['p'+str(index)] = {"type": p.get_mode(), "shareID": p.getShareID(),"dimensions": str(dim)}
+        else:
+          panels['p'+str(index)] = {"type": p.get_mode(),"dimensions": str(dim)}
     return panels
