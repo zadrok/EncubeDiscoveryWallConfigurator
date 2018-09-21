@@ -17,6 +17,21 @@ class Screen:
     self.panels = []
 
 
+  def removePanel(self,aPanel):
+    # remove and share panels
+    for scr in self.model.screens:
+      for pan in scr.panels:
+        try:
+          pan.sharePanels.remove(aPanel)
+        except:
+          pass
+    # remove panel
+    try:
+      self.panels.remove(aPanel)
+    except:
+      pass
+
+
   def draw(self):
     color = self.color
     if selcon.screenSelected(self):
@@ -141,15 +156,6 @@ class Screen:
       if (x >= px and x <= pw) and (y >= py and y <= ph):
         return p
     return None
-
-  def removePanel(self, panel):
-    # try and remove this panel from self.panels list
-    try:
-      self.panels.remove(panel)
-    except ValueError:
-      # if error pass down panel chain
-      for p in self.panels:
-        p.removePanel(panel)
 
   def toDimensionArray(self):
     panels = dict()

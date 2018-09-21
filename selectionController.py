@@ -211,7 +211,7 @@ class SelectionController:
         # go through all panels marked as join (in the join list)
         for panel in group:
           # remove the panel
-          aScreen.panels.remove(panel)
+          aScreen.removePanel(panel)
 
         # create the new panel
         aScreen.createPanel(method='n', x=xMin, y=yMin, width=wMax, height=hMax)

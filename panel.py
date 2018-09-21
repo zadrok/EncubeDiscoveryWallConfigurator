@@ -168,7 +168,7 @@ class Panel:
       )
       self.screen.panels.append( p )
 
-    self.screen.panels.remove(self)
+    self.screen.removePanel(self)
 
   def divideVertically(self,num=2):
     ''' create new panels '''
@@ -191,4 +191,4 @@ class Panel:
       )
       self.screen.panels.append( p )
 
-    self.screen.panels.remove(self)
+    self.screen.removePanel(self)
