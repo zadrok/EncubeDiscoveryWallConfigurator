@@ -96,3 +96,4 @@ class InitSettingsWindow(tk.Toplevel):
     self.gui.model.updateOption( "n_cols", numScreenColumns )
     self.gui.optionsWindow.refreshValues()
     # self.gui.model.printOptions()
+    self.gui.mainWindow.updateLock = False

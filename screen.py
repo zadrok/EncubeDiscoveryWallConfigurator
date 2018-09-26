@@ -109,10 +109,11 @@ class Screen:
 
   def divideHorizontally(self,num=2):
     ''' create new panels '''
-    x = self.getX()
-    y = self.getY()
-    w = self.getWidth()
-    h = (self.getHeight() / num)
+    x = 0
+    y = 0
+    w = 1
+    h = (self.getHeight() / num) / self.getHeight()
+
     if len(self.panels) < 1:
       for n in range(num):
         p = Panel(
@@ -129,10 +130,11 @@ class Screen:
 
   def divideVertically(self,num=2):
     ''' create new panels '''
-    x = self.getX()
-    y = self.getY()
-    w = (self.getWidth() / num)
-    h = self.getHeight()
+    x = 0
+    y = 0
+    w = (self.getWidth() / num) / self.getWidth()
+    h = 1
+
     if len(self.panels) < 1:
       for n in range(num):
         p = Panel(
@@ -149,10 +151,9 @@ class Screen:
 
   def getPanelAtXY(self, x, y):
     for p in self.panels:
-      px = p.getX()
-      py = p.getY()
-      pw = px + p.getWidth()
-      ph = py + p.getHeight()
+      px,py,pw,ph = p.getRect()
+      pw += px
+      ph += py
       if (x >= px and x <= pw) and (y >= py and y <= ph):
         return p
     return None

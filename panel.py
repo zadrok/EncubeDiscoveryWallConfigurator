@@ -2,7 +2,7 @@ from selectionController import selcon
 import random
 
 class Panel:
-  def __init__(self, screen, canvas, ident, method, x=10, y=10, width=100, height=100, mode='cube'):
+  def __init__(self, screen, canvas, ident, method, x=1, y=1, width=1, height=1, mode='cube'):
     '''initialize panel objjects'''
     self.id = ident
     self.screen = screen
@@ -118,24 +118,35 @@ class Panel:
     if self.colorOther != None:
       color = self.colorOther
 
-    bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
+    x,y,w,h = self.getRect()
+    bbox = ( x, y, x+w, y+h )
     self.canvas.create_rectangle( bbox, width=2, fill=color, tags="panel" )
 
     for p in self.sharePanels:
-      x1 = self.x + ( self.width / 2 )
-      y1 = self.y + ( self.height / 2 )
-
-      x2 = p.x + ( p.width / 2 )
-      y2 = p.y + ( p.height / 2 )
-
+      # other panel
+      xP,yP,wP,hP = p.getRect()
+      x1 = x + ( w / 2 )
+      y1 = y + ( h / 2 )
+      x2 = xP + ( wP / 2 )
+      y2 = yP + ( hP / 2 )
       self.canvas.create_line(x1,y1,x2,y2,fill="white",width=4)
 
 
+  def getRect(self):
+    ''' returns pixel location for panel '''
+    x = ( self.screen.getWidth() * self.getX() ) + self.screen.getX()
+    y = ( self.screen.getHeight() * self.getY() ) + self.screen.getY()
+    w = self.screen.getWidth() * self.getWidth()
+    h = self.screen.getHeight() * self.getHeight()
+    return x,y,w,h
+
+
   def toS2plotDimensions(self):
-    x1 = self.getX() - self.screen.getX()
-    y1 = self.getY() - self.screen.getY()
-    x2 = x1 + self.getWidth()
-    y2 = y1 + self.getHeight()
+    x,y,w,h = self.getRect()
+    x1 = x - self.screen.getX()
+    y1 = y - self.screen.getY()
+    x2 = x1 + w
+    y2 = y1 + h
     # screen_width = self.screen.getX() + self.screen.getWidth()
     # screen_height = self.screen.getY() + self.screen.getHeight()
     nx1 = x1 / self.screen.getWidth()
@@ -146,6 +157,8 @@ class Panel:
     ny2 = y2 / self.screen.getHeight()
     ny2 = abs((ny2 - 1) * 1)
     return [nx1, ny2, nx2, ny1]
+
+
 
   def divideHorizontally(self,num=2):
     ''' create new panels '''

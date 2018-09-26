@@ -12,9 +12,8 @@ class MainWindow(tk.Frame):
     self.root = root
     self.gui = gui
     self.pack()
-    self.add_screen = None
+
     self.canvas = None
-    self.split_mode = None
 
     self.splitH = tk.IntVar()
     self.splitV = tk.IntVar()
@@ -27,8 +26,8 @@ class MainWindow(tk.Frame):
     self.endY = None
 
     self.update()
-    self.canvasW = self.root.winfo_width()
-    self.canvasH = self.root.winfo_height()
+    self.canvasW = max( self.root.winfo_width(), self.gui.widthMain )
+    self.canvasH = max( self.root.winfo_height(), self.gui.heightMain )
 
     self.keyHandeler = KeyHandeler(self.root,self)
 
@@ -36,6 +35,11 @@ class MainWindow(tk.Frame):
     self.focus_set()
 
     selcon.setMainWindow(self)
+
+    # window changes size
+    self.updateLock = True
+    self.root.bind("<Configure>", self.configure)
+
     self.draw()
 
 
@@ -43,12 +47,24 @@ class MainWindow(tk.Frame):
     ''' sets up companents for user to interact with '''
     self.menuBar = MBMain(self)
     self.controlPanel = controlPanel(self)
-    self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bg="gray74")
+    self.canvas = tk.Canvas(self, width=self.canvasW, height=self.canvasH, bd=0, bg='gray74', highlightthickness=0)
+    self.canvas.pack(fill=tk.BOTH, expand=1)
     self.canvas.bind('<Button-1>', self.canvaslCicked)
     self.canvas.bind('<B1-Motion>', self.drawRectangle)
     self.canvas.bind('<ButtonRelease-1>', self.onMouseRelease)
-    self.canvas.pack(side="left")
     self.menuBar.eventLock = True
+
+
+  def configure(self,event):
+    if event.widget != self or self.updateLock: return
+    self.update()
+    if self.canvasW != self.root.winfo_width() or self.canvasH != self.root.winfo_height():
+      self.canvasW = self.root.winfo_width()
+      self.canvasH = self.root.winfo_height()
+      self.canvas.config(width=self.canvasW, height=self.canvasH)
+      self.gui.model.updateScreenSize(self.canvasW,self.canvasH)
+      self.draw()
+
 
   def drawRectangle(self, event):
     '''Draws a rectangle on screen to highlight the user's selection box'''

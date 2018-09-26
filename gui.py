@@ -27,15 +27,18 @@ class GUI():
     self.setupInitSettingsWindow()
 
 
+
+
   def setupMainWindow(self):
     self.widthMain = 1280
     self.heightMain = 720
     self.root = tk.Tk()
     self.root.title("Encube Discovery Wall Configurator")
-    self.root.minsize(width=self.widthMain,height=self.heightMain)
+    # self.root.minsize(width=self.widthMain,height=self.heightMain)
     self.mainWindow = MainWindow(self,self.root)
     # create listener event, delete window to call closeEvent
     self.root.protocol("WM_DELETE_WINDOW", self.closeEvent)
+
 
 
   def setupOptionsWindow(self):

@@ -49,6 +49,29 @@ class Model:
     return self.currentPanelShareID
 
 
+  def updateScreenSize(self,width,height):
+    if len(self.screens) < 1:
+      return
+
+    x = 0
+    y = 0
+    # w = int( self.gui.mainWindow.canvasW / ( self.numNodes*self.numScreenColumns ) )
+    w = int( width / len(self.screens) )
+    h = int( w / ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
+
+    if h*self.numScreenRows > height:
+      overflow = (h*self.numScreenRows) - height
+      h -= int( overflow/self.numScreenRows )
+      w = h*( ( self.aspectRatioScreensA / self.aspectRatioScreensB ) )
+
+    for screen in self.screens:
+      screen.x = x
+      screen.y = y
+      screen.width = w
+      screen.height = h
+      x += w
+
+
   def setupScreensFromFile(self):
     try:
       if self.options['screens'] != None:

@@ -386,7 +386,8 @@ class SelectionController:
   def initialPanel(self):
     '''creates a single panel in each screen'''
     for s in self.screens:
-      s.createPanel("C", s.getX(), s.getY(), s.width, s.height)
+      # s.createPanel("C", s.getX(), s.getY(), s.width, s.height)
+      s.divideHorizontally(num=2)
 
 
   def reset(self):
