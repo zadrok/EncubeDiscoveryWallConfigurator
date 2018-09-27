@@ -1,5 +1,6 @@
 from selectionController import selcon
 import random
+import math
 
 class Panel:
   def __init__(self, screen, canvas, ident, method, x=1, y=1, width=1, height=1, mode='cube'):
@@ -134,10 +135,10 @@ class Panel:
 
   def getRect(self):
     ''' returns pixel location for panel '''
-    x = ( self.screen.getWidth() * self.getX() ) + self.screen.getX()
-    y = ( self.screen.getHeight() * self.getY() ) + self.screen.getY()
-    w = self.screen.getWidth() * self.getWidth()
-    h = self.screen.getHeight() * self.getHeight()
+    x = math.floor( ( self.screen.getWidth() * self.getX() ) + self.screen.getX() )
+    y = math.floor( ( self.screen.getHeight() * self.getY() ) + self.screen.getY() )
+    w = math.floor( self.screen.getWidth() * self.getWidth() )
+    h = math.floor( self.screen.getHeight() * self.getHeight() )
     return x,y,w,h
 
 

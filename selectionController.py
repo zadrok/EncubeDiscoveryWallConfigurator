@@ -1,4 +1,5 @@
 import random
+import math
 
 class SelectionController:
   def __init__(self):
@@ -344,52 +345,65 @@ class SelectionController:
 
   def panelInScreen(self,panel,screen):
     '''returns true if 'panel' is in 'screen'''
-    if panel.getX() >= screen.getX():
-      if panel.getY() >= screen.getY():
-        if panel.getX()+panel.getWidth() <= screen.getX()+screen.getWidth():
-          if panel.getY()+panel.getHeight() <= screen.getY()+screen.getHeight():
+    x,y,w,h = panel.getRect()
+    if x >= screen.getX():
+      if y >= screen.getY():
+        if x+w <= screen.getX()+screen.getWidth():
+          if y+h <= screen.getY()+screen.getHeight():
             return True
     return False
 
 
   def panelExpandUp(self, panel):
     '''trys to expand a panel up'''
+    # expaned by one pixel per loop, workout what one pixel equals to in this screen
+    # pixel = math.floor( 1 / panel.screen.getHeight() )
+    pixel = 1 / panel.screen.getHeight()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
-      panel.y -= 1
-      panel.height += 1
+      panel.y -= pixel
+      panel.height += pixel
     # back off one pixel so panels arn't on top of each other
-    panel.y += 1
-    panel.height -= 1
+    panel.y += pixel
+    panel.height -= pixel
 
 
   def panelExpandDown(self, panel):
     '''trys to expand a panel down'''
+    # expaned by one pixel per loop, workout what one pixel equals to in this screen
+    # pixel = math.floor( 1 / panel.screen.getHeight() )
+    pixel = 1 / panel.screen.getHeight()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
-      panel.height += 1
+      panel.height += pixel
     # back off one pixel so panels arn't on top of each other
-    panel.height -= 1
+    panel.height -= pixel
 
 
   def panelExpandLeft(self, panel):
     '''trys to expand a panel left'''
+    # expaned by one pixel per loop, workout what one pixel equals to in this screen
+    # pixel = math.floor( 1 / panel.screen.getWidth() )
+    pixel = 1 / panel.screen.getWidth()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
-      panel.x -= 1
-      panel.width += 1
+      panel.x -= pixel
+      panel.width += pixel
     # back off one pixel so panels arn't on top of each other
-    panel.x += 1
-    panel.width -= 1
+    panel.x += pixel
+    panel.width -= pixel
 
 
   def panelExpandRight(self, panel):
     '''trys to expand a panel right'''
+    # expaned by one pixel per loop, workout what one pixel equals to in this screen
+    # pixel = math.floor( 1 / panel.screen.getWidth() )
+    pixel = 1 / panel.screen.getWidth()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
-      panel.width += 1
+      panel.width += pixel
     # back off one pixel so panels arn't on top of each other
-    panel.width -= 1
+    panel.width -= pixel
 
 
   def initialPanel(self):
