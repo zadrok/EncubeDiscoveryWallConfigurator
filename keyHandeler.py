@@ -16,11 +16,11 @@ class KeyHandeler:
     self.root.bind("<KeyRelease>", self.keyUp)
     self.root.bind("<KeyPress>", self.keyDown)
 
-    if platform.system() == "Linux":
-        self.root.bind("<Button-4>", self.onMouseWheelLinux)
-        self.root.bind("<Button-5>", self.onMouseWheelLinux)
-    else:
-        self.root.bind('<MouseWheel>', self.onMouseWheel)
+    #if platform.system() == "Linux":
+    #   self.root.bind("<Button-4>", self.onMouseWheelLinux)
+    #    self.root.bind("<Button-5>", self.onMouseWheelLinux)
+    #else:
+    #    self.root.bind('<MouseWheel>', self.onMouseWheel)
 
     # needed to make sure key events only happen once
     self.keyMemory = {}
