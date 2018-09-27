@@ -357,7 +357,6 @@ class SelectionController:
   def panelExpandUp(self, panel):
     '''trys to expand a panel up'''
     # expaned by one pixel per loop, workout what one pixel equals to in this screen
-    # pixel = math.floor( 1 / panel.screen.getHeight() )
     pixel = 1 / panel.screen.getHeight()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
@@ -371,7 +370,6 @@ class SelectionController:
   def panelExpandDown(self, panel):
     '''trys to expand a panel down'''
     # expaned by one pixel per loop, workout what one pixel equals to in this screen
-    # pixel = math.floor( 1 / panel.screen.getHeight() )
     pixel = 1 / panel.screen.getHeight()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
@@ -383,7 +381,6 @@ class SelectionController:
   def panelExpandLeft(self, panel):
     '''trys to expand a panel left'''
     # expaned by one pixel per loop, workout what one pixel equals to in this screen
-    # pixel = math.floor( 1 / panel.screen.getWidth() )
     pixel = 1 / panel.screen.getWidth()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
@@ -397,7 +394,6 @@ class SelectionController:
   def panelExpandRight(self, panel):
     '''trys to expand a panel right'''
     # expaned by one pixel per loop, workout what one pixel equals to in this screen
-    # pixel = math.floor( 1 / panel.screen.getWidth() )
     pixel = 1 / panel.screen.getWidth()
     # while panel doesn't go out of th screen and, while the panel doesn't overlap another panel
     while self.panelInScreen( panel, panel.screen ) and not self.panelIntersectionOtherPanels(panel,panel.screen.panels):
