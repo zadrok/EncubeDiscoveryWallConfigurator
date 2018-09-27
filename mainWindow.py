@@ -95,12 +95,12 @@ class MainWindow(tk.Frame):
       else:
         y = self.startY
 
-      selectionArea = Panel(screen=None, canvas=None, ident="0", method=None, x=x, y=y, width=abs(width), height=abs(height))
+      selectionArea = (x, y, abs(width), abs(height))
       selectedPanels = []
       for s in self.gui.model.screens:
         for p in s.panels:
           #find if panel is within the selection area
-          withinArea = selcon.rectOverlap(selectionArea,p)
+          withinArea = selcon.selectionOverlap(selectionArea,p.getRect())
           if withinArea:
             # add to selected group
             selectedPanels.append(p)

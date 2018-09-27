@@ -320,10 +320,19 @@ class SelectionController:
 
   def rectOverlap(self, A, B):
     '''returns true if the rectangle of A and B overlap'''
-    xOverlap = self.valueInRange(A.x, B.x, B.x + B.width) or self.valueInRange(B.x, A.x, A.x + A.width)
-    yOverlap = self.valueInRange(A.y, B.y, B.y + B.height) or self.valueInRange(B.y, A.y, A.y + A.height)
+    x1, y1, w1, h1 = A.getRect()
+    x2, y2, w2, h2 = B.getRect()
+    xOverlap = self.valueInRange(x1, x2, x2 + w2) or self.valueInRange(x2, x1, x1 + w1)
+    yOverlap = self.valueInRange(y1, y2, y2 + h2) or self.valueInRange(y2, y1, y1 + h1)
     return xOverlap and yOverlap
 
+  def selectionOverlap(self, A, B):
+    '''returns true if the rectangle of A and B overlap'''
+    x1, y1, w1, h1 = A
+    x2, y2, w2, h2 = B
+    xOverlap = self.valueInRange(x1, x2, x2 + w2) or self.valueInRange(x2, x1, x1 + w1)
+    yOverlap = self.valueInRange(y1, y2, y2 + h2) or self.valueInRange(y2, y1, y1 + h1)
+    return xOverlap and yOverlap
 
   def panelIntersectionOtherPanels(self, pan, panels):
     '''returns true 'pan' overlaps and panel in 'panels'''
