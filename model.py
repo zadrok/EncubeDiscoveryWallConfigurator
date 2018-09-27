@@ -88,10 +88,10 @@ class Model:
           for pKey,pValue in nValue.items():
             # print('x ' + str( pValue['dimensions'][0] ) + ' y ' + str( pValue['dimensions'][1] ) + ' w ' + str( pValue['dimensions'][2] ) + ' h ' + str( pValue['dimensions'][3] ))
             dim = pValue['dimensions']
-            x1 = screen.getX() + ( screen.getWidth() * dim[0] )
-            y1 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * dim[3] ) )
-            x2 = screen.getX() + ( screen.getWidth() * dim[2] )
-            y2 = screen.getY() + ( screen.getHeight() - ( screen.getHeight() * dim[1] ) )
+            x1 = dim[0]
+            y1 = dim[3]
+            x2 = dim[2]
+            y2 = dim[1]
 
             x = x1
             y = y1
