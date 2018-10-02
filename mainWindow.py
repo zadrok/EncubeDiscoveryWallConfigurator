@@ -67,7 +67,8 @@ class MainWindow(tk.Frame):
 
 
   def drawRectangle(self, event):
-    '''Draws a rectangle on screen to highlight the user's selection box'''
+    ''' Draws a rectangle on screen to highlight the user's selection box
+        event=<B1-Motion>'''
     #ensure there are screens on the canvas
     if self.gui.model.screens:
       self.endX = event.x
@@ -78,7 +79,8 @@ class MainWindow(tk.Frame):
 
 
   def onMouseRelease(self, event):
-    '''confirmation of screens selected'''
+    ''' confirmation of screens selected
+        event=<ButtonRelease-1>'''
     #don't run if you come into this with a 'half' click or a selection box hasn't been drawn
     if (self.endX or self.endY is not None) and self.rect is not None:
       #create the selection area
@@ -115,6 +117,8 @@ class MainWindow(tk.Frame):
       self.rect = None
 
   def canvaslCicked(self, event):
+    ''' event handler for left click on the canvas screen
+        event=<Button-1> '''
     for s in self.gui.model.screens:
       sx = s.getX()
       sw = sx + s.getWidth()
@@ -136,6 +140,7 @@ class MainWindow(tk.Frame):
 
 
   def draw(self):
+    ''' mainWindow call for drawing of the screens '''
     self.canvas.delete("all")
     for s in self.gui.model.screens:
       s.draw()
