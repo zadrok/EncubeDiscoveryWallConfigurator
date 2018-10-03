@@ -15,16 +15,13 @@ class MainWindow(tk.Frame):
 
     self.canvas = None
 
-    self.splitH = tk.IntVar()
-    self.splitV = tk.IntVar()
-    self.splitAmount = tk.StringVar()
-
     self.rect = None
     self.startX = None
     self.startY = None
     self.endX = None
     self.endY = None
 
+    # update needed to be called so tk has a chance to update winfo_width() and winfo_height()
     self.update()
     self.canvasW = max( self.root.winfo_width(), self.gui.widthMain )
     self.canvasH = max( self.root.winfo_height(), self.gui.heightMain )
@@ -34,6 +31,7 @@ class MainWindow(tk.Frame):
     self.createWidgets()
     self.focus_set()
 
+    # pass selectionController reference to main window
     selcon.setMainWindow(self)
 
     # window changes size
@@ -56,8 +54,13 @@ class MainWindow(tk.Frame):
 
 
   def configure(self,event):
+    ''' after this is binded this will be called when somehing in the binded object is changed '''
+    # bind to root
+    # if not mainwindow changing then exit
     if event.widget != self or self.updateLock: return
+    # make sure all tk variables are updated
     self.update()
+    # if needed update the size of the canvas to fill the screen
     if self.canvasW != self.root.winfo_width() or self.canvasH != self.root.winfo_height():
       self.canvasW = self.root.winfo_width()
       self.canvasH = self.root.winfo_height()
@@ -115,6 +118,7 @@ class MainWindow(tk.Frame):
       self.rect = None
 
   def canvaslCicked(self, event):
+    ''' checks what screen (node) is clicked then what panel '''
     for s in self.gui.model.screens:
       sx = s.getX()
       sw = sx + s.getWidth()
@@ -136,6 +140,7 @@ class MainWindow(tk.Frame):
 
 
   def draw(self):
+    ''' draws all screens (nodes) then all panels '''
     self.canvas.delete("all")
     for s in self.gui.model.screens:
       s.draw()

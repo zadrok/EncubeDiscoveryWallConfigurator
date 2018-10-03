@@ -2,6 +2,8 @@ from panel import Panel
 from selectionController import selcon
 from jsonHandler import NoIndent
 
+# this should probably be changed to 'Node'
+
 class Screen:
   def __init__(self, model, canvas, ident, x, y, width, height, color, panel_color):
     '''initialize screen objjects'''

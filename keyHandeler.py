@@ -32,12 +32,14 @@ class KeyHandeler:
 
 
   def onMouseWheelLinux(self, event):
+    ''' what sould happen when mouse wheel is used on linux '''
     if event.num == 4:
       self.mainWindow.controlPanel.IncreaseSplitNum()
     elif event.num == 5:
       self.mainWindow.controlPanel.DecreaseSplitNum()
 
   def onMouseWheel(self, event):
+    ''' what sould happen when mouse wheel is used '''
     if event.delta > 0:
       self.mainWindow.controlPanel.IncreaseSplitNum()
     elif event.delta < 0:
@@ -45,11 +47,14 @@ class KeyHandeler:
 
 
   def doEventUp(self,keySym):
+    ''' do this when a key is released '''
     # print('Doing up event ' + keySym)
     self.mainWindow.draw()
 
   def doEventDown(self,keySym):
+    ''' do this when a key is pressed '''
     # print('Doing down event ' + keySym)
+    # pick and action
     if keySym == '1':
       selcon.splitHorizontally()
       selcon.deselectAll()
@@ -77,14 +82,18 @@ class KeyHandeler:
 
 
   def keySafe(self,key):
+    ''' return true if key in key menory '''
     for k,v in self.keyMemory.items():
       if k == key: return True
     return False
 
   def keyUp(self,e):
+    ''' do this when a key is released '''
     # print('up ' + str(e.keysym))
+    # exit if key not in memory
     if not self.keySafe(str(e.keysym)): return
 
+    # do key action and remove from memory
     if self.keyMemory[ str(e.keysym) ]:
       # key let go
       # do event
@@ -95,9 +104,12 @@ class KeyHandeler:
       pass
 
   def keyDown(self,e):
+    ''' do this when a key is pressed '''
     # print('down ' + str(e.keysym))
+    # exit if key not in memory
     if not self.keySafe(str(e.keysym)): return
 
+    # do key action and add to memory
     if self.keyMemory[ str(e.keysym) ]:
       # key is alreay down
       pass

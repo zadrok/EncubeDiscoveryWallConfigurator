@@ -22,6 +22,15 @@ class JsonHandler:
 
 
 
+
+
+# this entire next part is to allow arrays to be printed on the same line when saving (json.dumps()) options to file
+# needed for panel dimensions
+# without this each element of the array would be on a new line making it harder to use is c
+# saving with this here make it easier
+
+# this was also copied from a stackoverflow thread
+
 # see https://stackoverflow.com/questions/13249415
 class NoIndent(object):
   """ Value wrapper. """

@@ -43,29 +43,38 @@ class MBMain():
     mainWindow.root.config(menu=self.menuBar)
 
   def save(self):
+    ''' calls model.save() '''
     self.mainWindow.gui.model.save()
 
   def load(self):
+    ''' calls model.load() '''
     self.mainWindow.gui.model.load()
 
   def initWindow(self):
+    ''' calls gui.setupInitSettingsWindow() '''
     self.mainWindow.gui.setupInitSettingsWindow()
 
   def setPanelsImage(self):
+    ''' sets selected panels mode to image '''
     selcon.setPanelsMode('image')
 
   def setPanelsCube(self):
+    ''' sets selected panels mode to cube '''
     selcon.setPanelsMode('cube')
 
   def setPanelsGraph(self):
+    ''' sets selected panels mode to graph '''
     selcon.setPanelsMode('graph')
 
   def removeLinks(self):
+    ''' removes any links panels have between nodes '''
     selcon.removelinksbetweenPanelsInDifferentNodes()
 
   def joinBetweenNodes(self):
+    ''' creates links between selected panels in different nodes '''
     selcon.joinWithOtherScreens()
 
+  # short hand to call passKeyEvent function
   def doKeyEvent1(self): self.passKeyEvent('1')
   def doKeyEvent2(self): self.passKeyEvent('2')
   def doKeyEvent3(self): self.passKeyEvent('3')
@@ -78,6 +87,7 @@ class MBMain():
   def doKeyEvent0(self): self.passKeyEvent('0')
 
   def passKeyEvent(self,event):
+    ''' pass the key event to the key handeler '''
     if self.eventLock:
       self.mainWindow.keyHandeler.doEventDown(event)
 

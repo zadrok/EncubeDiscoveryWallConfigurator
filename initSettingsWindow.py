@@ -14,7 +14,6 @@ class InitSettingsWindow(tk.Toplevel):
 
   def createWidgets(self):
     ''' sets up companents for user to interact with '''
-
     self.titleInformationLabel = tk.Label(self, text="Once this information is set it can't be changed")
 
     # number of nodes
@@ -54,19 +53,22 @@ class InitSettingsWindow(tk.Toplevel):
 
 
   def loadSettings(self):
+    ''' calles the load function in the model, opening a open file dialog '''
     self.attributes('-topmost', 'false')
     self.gui.model.load()
     self.withdraw()
-    # self.attributes('-topmost', 'true')
-
 
 
   def commitSettings(self):
+    ''' takes all settings the user could give in the init window and sets up the model with the number of nodes and panels specified '''
+    # basic variables
     numNodes = 0
     numScreenRows = 0
     numScreenColumns = 0
     aspectRatioScreensA = 16  # read AxB, 16x9
     aspectRatioScreensB = 9
+
+    # try and grab variables from GUI elements
     try:
       numNodes = int( self.numNodesVar.get() )
       numScreenRows = int( self.numScreensRowsVar.get() )
@@ -80,6 +82,7 @@ class InitSettingsWindow(tk.Toplevel):
       print("Number of Nodes, Rows and columns needs to be an int greater then or equal to 1")
       return
 
+    # try and convert string to int
     try:
       parts = self.aspectRatioScreensVar.get().split('x')
       aspectRatioScreensA = int( parts[0] )  # read AxB, 16x9
@@ -89,11 +92,15 @@ class InitSettingsWindow(tk.Toplevel):
       print("Aspect ratio needs to follow the format 16x9")
       return
 
+    # hide window
     self.withdraw()
+    # create number of screens (nodes) at size, with number of panels
     self.gui.model.createScreens(numNodes,numScreenRows,numScreenColumns,aspectRatioScreensA,aspectRatioScreensB)
     # self.gui.model.printOptions()
+    # update some options (although these might not be used?)
     self.gui.model.updateOption( "n_rows", numScreenRows )
     self.gui.model.updateOption( "n_cols", numScreenColumns )
     self.gui.optionsWindow.refreshValues()
     # self.gui.model.printOptions()
+    # allow menuaber to do things, command functions in menubar options call function when made (really annoying)
     self.gui.mainWindow.updateLock = False

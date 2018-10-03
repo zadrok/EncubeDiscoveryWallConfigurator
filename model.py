@@ -14,9 +14,7 @@ class Model:
     self.max_height = 0
     self.n_panels   = 0
     self.gui = gui
-
     self.currentPanelShareID = 0;
-
     # options
     self.defaultConfigFile = 'defaultConfig.json'
     self.options = JsonHandler().importFile( self.defaultConfigFile )
@@ -24,6 +22,7 @@ class Model:
 
 
   def load(self):
+    ''' opens a file dialog and loads it into the model '''
     fname = tk.filedialog.askopenfile( filetypes = (("json files","*.json"),("all files","*.*")) )
     if fname != None:
       self.options = JsonHandler().importFile(fname.name)
@@ -37,6 +36,7 @@ class Model:
 
 
   def save(self):
+    ''' opens a file dialog and saves the model to a file '''
     fname = tk.filedialog.asksaveasfilename( filetypes = (("json files","*.json"),("all files","*.*")) )
     if fname != '':
       JsonHandler().exportFile( self, fname )
@@ -45,11 +45,14 @@ class Model:
 
 
   def getNextPanelShareID(self):
+    ''' if panels are shared between nodes they need an id so they know who to share with,
+    call this to get a new share id if the panel doesn't have one and the shared panels also don't have one '''
     self.currentPanelShareID += 1
     return self.currentPanelShareID
 
 
   def updateScreenSize(self,width,height):
+    ''' sets all of the screens in the model to have a new size '''
     if len(self.screens) < 1:
       return
 
@@ -120,6 +123,7 @@ class Model:
 
 
   def convertOptionsToStrings(self):
+    ''' convert all options to a string (clean) so they can be put into a text area for user to edit '''
     for key,value in self.options.items():
       if isinstance(value,str):
         pass
@@ -143,12 +147,8 @@ class Model:
         # self.options[key] = '"' + str(value) + '"'
 
 
-  def setScreens(self, screens, width, height):
-    self.screens = screens
-    self.max_height = height
-    self.max_width = width
-
   def screensToArray(self):
+    ''' returns screen data as a dictionary '''
     screens = dict()
     for (index, screen) in enumerate(self.screens):
         screens['n'+str(index)] = screen.toDimensionArray()

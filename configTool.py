@@ -11,5 +11,6 @@ class Application:
     self.gui.mainloop()
 
 if __name__ == '__main__':
+  ''' main entry point into the tool '''
   app = Application()
   app.run()

@@ -26,10 +26,8 @@ class GUI():
     # can be hidden/closed without affecting main window
     self.setupInitSettingsWindow()
 
-
-
-
   def setupMainWindow(self):
+    ''' create the main window with title'''
     self.widthMain = 1280
     self.heightMain = 720
     self.root = tk.Tk()
@@ -40,8 +38,8 @@ class GUI():
     self.root.protocol("WM_DELETE_WINDOW", self.closeEvent)
 
 
-
   def setupOptionsWindow(self):
+    ''' create the options window '''
     self.widthOptions = 650
     self.heightOptions = 400
     self.optionsWindow = OptionsWindow(self.root,self)
@@ -52,6 +50,7 @@ class GUI():
 
 
   def setupInitSettingsWindow(self):
+    ''' create the initilization window '''
     self.widthInitSettings = 400
     self.heightInitSettings = 400
     self.initSettingsWindow = InitSettingsWindow(self.root,self)
@@ -99,6 +98,7 @@ class GUI():
 
 
   def closeEvent(self):
+    ''' query user if they trully do wish to close the window '''
     exitMsg = "Are you sure you wish to exit?"
     mExit = messagebox.askyesno(title="Quit", message=exitMsg)
     if mExit is True:
