@@ -9,7 +9,7 @@ class Application:
   def run(self):
     ''' starts the GUI '''
     self.gui.mainloop()
-    
+
 if __name__ == '__main__':
   app = Application()
   app.run()
