@@ -21,7 +21,7 @@ class Panel:
     # modes: cube, image, graph
     self.mode = mode
 
-    self.colorCubeNormal = "#00FFFF"
+    self.colorCubeNormal = "#2FA1D6"
     self.colorCubeSelected = '#008080'
 
     self.colorImageNormal = "#e500ff"

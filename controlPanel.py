@@ -87,7 +87,7 @@ class controlPanel():
         self.ChangePanelModeLabel = tk.Label(self.ChangePannelModeLabelFrame, text="Panel mode", font =2, background = "#8583D7")
         self.ChangePanelModeLabel.pack(side="left", padx = (4,6))
         # Change panel mode to Encube button
-        self.mainWindow.ChangePannelModeCubeLabel = tk.Label(self.ChangePannelModeFrame, text = "", width= 5, background="#00FFFF")
+        self.mainWindow.ChangePannelModeCubeLabel = tk.Label(self.ChangePannelModeFrame, text = "", width= 5, background="#2FA1D6")
         self.mainWindow.ChangePannelModeCubeLabel.pack(side="left",padx=(20,0))
         self.mainWindow.ChangePannelModeCube = tk.Button(self.ChangePannelModeFrame, text="Cube", command=self.setPanelsCubeButton)
         self.mainWindow.ChangePannelModeCube.pack(side="left", padx=(0,20))
