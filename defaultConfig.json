@@ -19,7 +19,7 @@
   "slave_y": 2160,
   "localhost": 1,
   "n_per_slave": 1,
-  "n_rows": 1,
+  "n_rows": 2,
   "n_cols": 1,
   "slaves": ["keckdisplay-1", "keckdisplay-2", "keckdisplay-3", "keckdisplay-4", "keckdisplay-5", "keckdisplay-6"],
   "slave_ports": [],
@@ -29,7 +29,7 @@
   "show_volume": 1,
   "show_track": 0,
   "use_processed_track": 0,
-  "columns_to_ignore":[],
+  "columns_to_ignore": [],
   "save_time": false,
   "time_log_dir_filename": "/home/encube_user/encube-dev/encube_discovery_wall-master/encube/timing_astro_log.txt",
   "framerate_log_dir_filename": "/home/encube_user/encube-dev/encube_discovery_wall-master/encube/framerate_astro_log.txt",
@@ -41,66 +41,66 @@
   "workflow_data_dir": "/home/encube_user/encube-dev/encube_discovery_wall-master/encube/control/workflow_data",
   "db": "/home/encube_user/encube-dev/encube_discovery_wall-master/encube/control/workflow_data/db.csv",
   "shareVol_json": "/home/encube_user/encube-dev/encube_discovery_wall-master/encube/control/default.json",
-  "colours": {"Controls":"#39bf39", "SympHD":"#dd842c", "PreHD":"#4c4cff"},
+  "colours": {"Controls": "#39bf39", "SympHD": "#dd842c", "PreHD": "#4c4cff"},
   "screens":{
   "n0": {
     "p0": {
       "type": "cube",
-      "dimensions": [0.0, 0.5, 1.0, 1.0]
+      "dimensions": [0.0, 0.502092050209205, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": [0.0, 0.0, 1.0, 0.5]
+      "dimensions": [0.0, 0.004184100418409997, 1.0, 0.502092050209205]
     }
   },
   "n1": {
     "p0": {
       "type": "cube",
-      "dimensions": [0.0, 0.5, 1.0, 1.0]
+      "dimensions": [0.0, 0.502092050209205, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": [0.0, 0.0, 1.0, 0.5]
+      "dimensions": [0.0, 0.004184100418409997, 1.0, 0.502092050209205]
     }
   },
   "n2": {
     "p0": {
       "type": "cube",
-      "dimensions": [0.0, 0.5, 1.0, 1.0]
+      "dimensions": [0.0, 0.502092050209205, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": [0.0, 0.0, 1.0, 0.5]
+      "dimensions": [0.0, 0.004184100418409997, 1.0, 0.502092050209205]
     }
   },
   "n3": {
     "p0": {
       "type": "cube",
-      "dimensions": [0.0, 0.5, 1.0, 1.0]
+      "dimensions": [0.0, 0.502092050209205, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": [0.0, 0.0, 1.0, 0.5]
+      "dimensions": [0.0, 0.004184100418409997, 1.0, 0.502092050209205]
     }
   },
   "n4": {
     "p0": {
       "type": "cube",
-      "dimensions": [0.0, 0.5, 1.0, 1.0]
+      "dimensions": [0.0, 0.502092050209205, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": [0.0, 0.0, 1.0, 0.5]
+      "dimensions": [0.0, 0.004184100418409997, 1.0, 0.502092050209205]
     }
   },
   "n5": {
     "p0": {
       "type": "cube",
-      "dimensions": [0.0, 0.5, 1.0, 1.0]
+      "dimensions": [0.0, 0.502092050209205, 1.0, 1.0]
     },
     "p1": {
       "type": "cube",
-      "dimensions": [0.0, 0.0, 1.0, 0.5]
+      "dimensions": [0.0, 0.004184100418409997, 1.0, 0.502092050209205]
     }
   }
 }
