@@ -2,10 +2,10 @@ import tkinter as tk
 from menuBar import MBOptions
 
 class OptionsWindow(tk.Toplevel):
-  def __init__(self,master,gui):
+  def __init__(self,root,gui):
     ''' creates options window, all model options are displayed here '''
-    super().__init__(master)
-    self.master = master
+    super().__init__(root)
+    self.root = root
     self.protocol('WM_DELETE_WINDOW', self.withdraw)
     self.gui = gui
     self.grid()
@@ -13,14 +13,14 @@ class OptionsWindow(tk.Toplevel):
     self.createWidgets()
 
   def createWidgets(self):
-    ''' sets up companents for user to interact with '''
+    ''' sets up components for user to interact with '''
     # menu bar
     self.menuBar = MBOptions(self)
     # options
     self.items = []
     self.i = 0
     self.j = 0
-    self.max = 30
+    self.max = 20
     self.side = 11
     for key,value in self.gui.model.options.items():
       if self.i > self.max:
@@ -89,7 +89,7 @@ class OptionsWindow(tk.Toplevel):
     ''' all items are placed in the grid '''
     self.i = 0
     self.j = 0
-    self.max = 30
+    self.max = 20
     self.side = 11
     for item in self.items:
       if self.i > self.max:
@@ -110,9 +110,9 @@ class OptionsWindow(tk.Toplevel):
     self.refreshValues()
 
 class Item:
-  def __init__(self,master,i,j,key,value):
+  def __init__(self,optionsWindow,i,j,key,value):
     ''' item repersenting options '''
-    self.master = master
+    self.optionsWindow = optionsWindow
     self.i = i
     self.j = j
     self.key = key
@@ -121,10 +121,10 @@ class Item:
     self.entryVar = tk.StringVar()
     self.entryVar.set( str(self.value) )
     self.entryVar.trace('w', self.callback)
-    self.label = tk.Label(self.master, text=str(self.key))
-    self.entry = tk.Entry(self.master, textvariable=self.entryVar, width=30)
+    self.label = tk.Label(self.optionsWindow, text=str(self.key))
+    self.entry = tk.Entry(self.optionsWindow, textvariable=self.entryVar, width=30)
 
-    self.removeBttn = tk.Button(self.master,text='X',command=self.delete,bg="indianRed1")
+    self.removeBttn = tk.Button(self.optionsWindow,text='X',command=self.delete,bg="indianRed1")
 
     self.label.grid(row=i,column=j)
     self.entry.grid(row=i,column=j+1)
@@ -132,11 +132,11 @@ class Item:
 
   def delete(self):
     ''' delets this item '''
-    self.master.removeItem(self)
+    self.optionsWindow.removeItem(self)
 
   def callback(self,*args):
     ''' updates this options in the model '''
-    self.master.gui.model.updateOption( self.key, self.entryVar.get() )
+    self.optionsWindow.gui.model.updateOption( self.key, self.entryVar.get() )
 
   def reGrid(self,i,j):
     ''' places this items at given position '''
@@ -152,10 +152,10 @@ class Item:
 
 
 class AddOptionsWindow(tk.Toplevel):
-  def __init__(self,master):
+  def __init__(self,optionsWindow):
     ''' creates add options window, allows new options to be created here '''
-    super().__init__(master.master)
-    self.master = master
+    super().__init__(optionsWindow.root)
+    self.optionsWindow = optionsWindow
     self.title("Add Option")
     self.protocol('WM_DELETE_WINDOW', self.withdraw)
     self.grid()
@@ -182,5 +182,5 @@ class AddOptionsWindow(tk.Toplevel):
     self.VALUEentry.grid()
 
     # done button
-    self.doneBttn = tk.Button(self,text='Commit',command=self.master.commitOption)
+    self.doneBttn = tk.Button(self,text='Commit',command=self.optionsWindow.commitOption)
     self.doneBttn.grid()
