@@ -39,7 +39,7 @@ class GUI():
 
 
   def setupOptionsWindow(self):
-    ''' create the options window '''
+    ''' sets up the options GUI for editting the configuration file JSON option fields '''
     self.widthOptions = 650
     self.heightOptions = 400
     self.optionsWindow = OptionsWindow(self.root,self)
@@ -50,7 +50,7 @@ class GUI():
 
 
   def setupInitSettingsWindow(self):
-    ''' create the initilization window '''
+    ''' sets up the initial settings GUI for the number rows and columns per nodes '''
     self.widthInitSettings = 400
     self.heightInitSettings = 400
     self.initSettingsWindow = InitSettingsWindow(self.root,self)

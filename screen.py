@@ -6,7 +6,7 @@ from jsonHandler import NoIndent
 
 class Screen:
   def __init__(self, model, canvas, ident, x, y, width, height, color, panel_color):
-    '''initialize screen objjects'''
+    '''initialize screen objects'''
     self.model = model
     self.canvas = canvas
     self.id = ident

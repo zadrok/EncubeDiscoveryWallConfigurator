@@ -320,7 +320,8 @@ class SelectionController:
 
 
   def rectOverlap(self, A, B):
-    '''returns true if the rectangle of A and B overlap'''
+    ''' returns true if the rectangle of A and B overlap 
+        A, B panels'''
     x1, y1, w1, h1 = A.getRect()
     x2, y2, w2, h2 = B.getRect()
     xOverlap = self.valueInRange(x1, x2, x2 + w2) or self.valueInRange(x2, x1, x1 + w1)
@@ -328,7 +329,8 @@ class SelectionController:
     return xOverlap and yOverlap
 
   def selectionOverlap(self, A, B):
-    '''returns true if the rectangle of A and B overlap'''
+    ''' returns true if the rectangle of A and B overlap.
+        A, B tuples'''
     x1, y1, w1, h1 = A
     x2, y2, w2, h2 = B
     xOverlap = self.valueInRange(x1, x2, x2 + w2) or self.valueInRange(x2, x1, x1 + w1)

@@ -9,6 +9,7 @@ from panel import Panel
 
 class Model:
   def __init__(self,gui):
+    ''' Handles relationships between options from file and screen/panels. '''
     self.screens = []
     self.max_width = 0
     self.max_height = 0
