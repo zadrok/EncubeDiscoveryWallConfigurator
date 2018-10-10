@@ -52,7 +52,7 @@ class GUI():
   def setupInitSettingsWindow(self):
     ''' sets up the initial settings GUI for the number rows and columns per nodes '''
     self.widthInitSettings = 400
-    self.heightInitSettings = 400
+    self.heightInitSettings = 200
     self.initSettingsWindow = InitSettingsWindow(self.root,self)
     self.initSettingsWindow.title("Init Settings")
     self.initSettingsWindow.minsize(width=self.widthInitSettings,height=self.heightInitSettings)

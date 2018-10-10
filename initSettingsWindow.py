@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 class InitSettingsWindow(tk.Toplevel):
   def __init__(self,root,gui):
     ''' creates options window, all model options are displayed here '''
@@ -14,6 +15,7 @@ class InitSettingsWindow(tk.Toplevel):
 
   def createWidgets(self):
     ''' sets up companents for user to interact with '''
+
     self.titleInformationLabel = tk.Label(self, text="Once this information is set it can't be changed")
 
     # number of nodes
@@ -36,20 +38,21 @@ class InitSettingsWindow(tk.Toplevel):
     self.aspectRatioScreensLabel = tk.Label(self, text='Aspect ratio of screens:')
     self.aspectRatioScreensEntry = tk.Entry(self, textvariable=self.aspectRatioScreensVar, width=30)
 
-    self.loadBttn = tk.Button(self,text='Load Settings',command=self.loadSettings)
+    self.loadBttn = tk.Button(self,text='Load from file',command=self.loadSettings)
     self.commitBttn = tk.Button(self,text='Commit',command=self.commitSettings)
 
-    self.titleInformationLabel.grid(row=0, column=0, columnspan=50, sticky=tk.W)
-    self.numNodesLabel.grid(row=2, column=0, sticky=tk.W)
-    self.numNodesEntry.grid(row=2, column=1, sticky=tk.W)
-    self.numScreensRowsLabel.grid(row=3, column=0, sticky=tk.W)
-    self.numScreensRowsEntry.grid(row=3, column=1, sticky=tk.W)
-    self.numScreensColumnsLabel.grid(row=4, column=0, sticky=tk.W)
-    self.numScreensColumnsEntry.grid(row=4, column=1, sticky=tk.W)
-    self.aspectRatioScreensLabel.grid(row=5, column=0, sticky=tk.W)
-    self.aspectRatioScreensEntry.grid(row=5, column=1, sticky=tk.W)
-    self.loadBttn.grid(row=10,column=1)
-    self.commitBttn.grid(row=11,column=1)
+
+    self.titleInformationLabel.grid(row=1, column=0, columnspan=50, sticky=tk.W, padx=10)
+    self.numNodesLabel.grid(row=3, column=0, sticky=tk.W, padx=10)
+    self.numNodesEntry.grid(row=3, column=1, sticky=tk.W)
+    self.numScreensRowsLabel.grid(row=4, column=0, sticky=tk.W, padx=10)
+    self.numScreensRowsEntry.grid(row=4, column=1, sticky=tk.W)
+    self.numScreensColumnsLabel.grid(row=5, column=0, sticky=tk.W, padx=10)
+    self.numScreensColumnsEntry.grid(row=5, column=1, sticky=tk.W)
+    self.aspectRatioScreensLabel.grid(row=6, column=0, sticky=tk.W, padx=10)
+    self.aspectRatioScreensEntry.grid(row=6, column=1, sticky=tk.W)
+    self.loadBttn.grid(row=0, column=0, sticky=tk.W, padx=10, pady=10)
+    self.commitBttn.grid(row=11,column=1, sticky=tk.E)
 
 
   def loadSettings(self):
