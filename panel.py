@@ -21,7 +21,7 @@ class Panel:
     # modes: cube, image, graph
     self.mode = mode
 
-    self.colorCubeNormal = "#2FA1D6"
+    self.colorCubeNormal = "#3366FF"
     self.colorCubeSelected = '#008080'
 
     self.colorImageNormal = "#e500ff"
@@ -101,7 +101,7 @@ class Panel:
   def set_mode(self, mode):
     self.mode = mode
 
-  def draw(self, color):
+  def draw(self):
     color = self.colorCubeNormal
     if self.mode == 'cube':
       color = self.colorCubeNormal

@@ -5,7 +5,7 @@ from jsonHandler import NoIndent
 # this should probably be changed to 'Node'
 
 class Screen:
-  def __init__(self, model, canvas, ident, x, y, width, height, color, panel_color):
+  def __init__(self, model, canvas, ident, x, y, width, height, color):
     '''initialize screen objects'''
     self.model = model
     self.canvas = canvas
@@ -15,7 +15,6 @@ class Screen:
     self.width = width
     self.height = height
     self.color = color
-    self.panel_color = panel_color
     self.panels = []
 
 
@@ -42,7 +41,7 @@ class Screen:
     bbox = ( self.x, self.y, self.x+self.width, self.y+self.height )
     self.canvas.create_rectangle( bbox, width=7, fill=color, outline='red' )
     for panel in self.panels:
-      panel.draw(self.panel_color)
+      panel.draw()
 
   def setPosition(self, x, y, w, h):
     self.x = x
