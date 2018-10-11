@@ -40,6 +40,7 @@ class Model:
     ''' opens a file dialog and saves the model to a file '''
     fname = tk.filedialog.asksaveasfilename( filetypes = (("json files","*.json"),("all files","*.*")) )
     if fname != '':
+      if not fname.endswith('.json'): fname += '.json'
       JsonHandler().exportFile( self, fname )
     else:
       print( 'file needs a name to save' )
