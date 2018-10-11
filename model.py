@@ -85,18 +85,25 @@ class Model:
         n_rows = int( self.options['n_rows'] )
         n_cols = int( self.options['n_cols'] )
         numNodes = len( data )
+        self.screens = []
         self.createScreens(numNodes,n_rows,n_cols)
-        i = 0 # current screen index
         for nKey,nValue in data.items():
           # print( 'nKey: ' + str(nKey) + ', nValue: ' + str(nValue) ) # for each screen in the file
-          screen = self.screens[i] # current screen
+          # print( 'nKey: ' + str(nKey) )
+          n = nKey.split( 'n' )[1]
+          screen = self.screens[ int( n ) ] # current screen
+          screen.panels = []
           for pKey,pValue in nValue.items():
             # print('x ' + str( pValue['dimensions'][0] ) + ' y ' + str( pValue['dimensions'][1] ) + ' w ' + str( pValue['dimensions'][2] ) + ' h ' + str( pValue['dimensions'][3] ))
+            # print( 'pKey: ' + str(pKey) )
             dim = pValue['dimensions']
             x1 = dim[0]
-            y1 = dim[3]
+            y1 = dim[1]
             x2 = dim[2]
-            y2 = dim[1]
+            y2 = dim[3]
+
+            # print( 'dim ' + str(dim)  )
+            # print( 'x1 ' + str(x1) + ", y1 " + str(y1) + ', x2 ' + str(x2) + ', y2 ' + str(y2)  )
 
             x = x1
             y = y1
@@ -117,8 +124,6 @@ class Model:
               mode=pValue['type']
             )
             screen.panels.append( p )
-          i += 1
-
     except Exception as e:
       print(e)
       # pass
@@ -226,8 +231,8 @@ class Model:
     return s.isdigit()
 
 
-  def createScreen(self, color):
-    self.screens.append( Screen(self, self.gui.mainWindow.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d", color) )
+  def createScreen(self):
+    self.screens.append( Screen(self, self.gui.mainWindow.canvas, "Screen", 0, 0, 0, 0, "#3d3d3d") )
 
 
   def createScreens(self,numNodes,numScreenRows,numScreenColumns,aspectRatioScreensA=16,aspectRatioScreensB=9):  # read AxB, 16x9
@@ -253,7 +258,7 @@ class Model:
 
     for node in range( self.numNodes ):
       # make screen for each node
-      screen = Screen(self, self.gui.mainWindow.canvas, "Screen", x, y, w, h, "#3d3d3d", "#3366FF")
+      screen = Screen(self, self.gui.mainWindow.canvas, "Screen", x, y, w, h, "#3d3d3d")
       # make panel for each self.numScreenRows
       screen.divideHorizontally(self.numScreenRows)
 
