@@ -1,9 +1,6 @@
 import tkinter as tk
 from gui import GUI
 
-##
-#
-#
 class Application:
   ''' Application
   The Application class is the main entry point into this configuration tool,
@@ -17,6 +14,7 @@ class Application:
   def run(self):
     ''' starts the GUI '''
     self.gui.mainloop()
+
 
 if __name__ == '__main__':
   ''' main entry point into the tool '''

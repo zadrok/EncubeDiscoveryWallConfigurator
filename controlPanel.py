@@ -100,25 +100,31 @@ class controlPanel():
     self.mainWindow.ChangePannelModeGraph = tk.Button(self.ChangePannelModeFrame, text="Graph", command=self.setPanelsGraphButton)
     self.mainWindow.ChangePannelModeGraph.pack(side="left",padx=(0,20))
 
+
   def saveWithButton(self):
     '''Save configuration'''
     self.mainWindow.gui.model.save()
+
 
   def loadWithButton(self):
     '''Load configuration'''
     self.mainWindow.gui.model.load()
 
+
   def setPanelsImageButton(self):
     '''Set panel as image'''
     selcon.setPanelsMode('image')
+
 
   def setPanelsCubeButton(self):
     '''Set panel as cube'''
     selcon.setPanelsMode('cube')
 
+
   def setPanelsGraphButton(self):
     '''Set panel as graph'''
     selcon.setPanelsMode('graph')
+
 
   def decreaseSplitNum(self):
     '''Decrease number of splitting panel'''
@@ -133,40 +139,48 @@ class controlPanel():
       self.splitNumber += 1
       self.splitNumberString.set("Split Number : "+ str(self.splitNumber))
 
+
   def HSplit(self):
     '''Horizontal Split'''
     selcon.splitHorizontally()
     self.mainWindow.draw()
+
 
   def VSplit(self):
     '''Vertical Split'''
     selcon.splitVertically()
     self.mainWindow.draw()
 
+
   def joinPanel(self):
     '''Join multiple panels'''
     selcon.join()
     self.mainWindow.draw()
+
 
   def removePanel(self):
     '''Remove selected panels'''
     selcon.remove()
     self.mainWindow.draw()
 
+
   def fillingGap(self):
     '''Filling empty panel '''
     selcon.fillGap()
     self.mainWindow.draw()
+
 
   def deselectPanel(self):
     '''Deselect panels'''
     selcon.deselectAll()
     self.mainWindow.draw()
 
+
   def selectAllPanel(self):
     '''Select all panels'''
     selcon.allselect()
     self.mainWindow.draw()
+
 
   def resetPanel(self):
     '''Reset configuration'''

@@ -66,6 +66,7 @@ class GUI():
         run this to start the GUI '''
     self.mainWindow.mainloop()
 
+
   def toggleOptionWindow(self,state=None):
     ''' shows and hides the options window.
         state=<hide/show> '''

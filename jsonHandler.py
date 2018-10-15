@@ -17,6 +17,7 @@ class JsonHandler:
       print( "Could not find/open " + str(file) )
     return conifg
 
+
   def exportFile(self,model,fileName):
     '''takes in model and file name, creates file and writes model data to it
     @param model the model with all settings that are needed to be exported
@@ -50,8 +51,10 @@ class MyEncoder(json.JSONEncoder):
     self.__sort_keys = kwargs.get('sort_keys', None)
     super(MyEncoder, self).__init__(**kwargs)
 
+
   def default(self, obj):
     return (self.FORMAT_SPEC.format(id(obj)) if isinstance(obj, NoIndent) else super(MyEncoder, self).default(obj))
+
 
   def encode(self, obj):
     format_spec = self.FORMAT_SPEC  # Local var to expedite access.
