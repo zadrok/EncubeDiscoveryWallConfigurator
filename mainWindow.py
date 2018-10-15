@@ -119,6 +119,7 @@ class MainWindow(tk.Frame):
       self.draw()
       self.rect = None
 
+
   def canvaslCicked(self, event):
     '''event handler for left click on the canvas screen
         event=<Button-1>

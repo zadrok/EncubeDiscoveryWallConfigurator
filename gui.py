@@ -26,6 +26,7 @@ class GUI():
     # can be hidden/closed without affecting main window
     self.setupInitSettingsWindow()
 
+
   def setupMainWindow(self):
     ''' create the main window with title'''
     self.widthMain = 1280

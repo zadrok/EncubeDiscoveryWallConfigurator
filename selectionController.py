@@ -10,14 +10,17 @@ class SelectionController:
     self.keyHandeler = None
     self.mainWindow = None
 
+
   def setKeyHandeler(self,kh):
     '''give the SelectionController a reference to a keyHandeler'''
     self.keyHandeler = kh
+
 
   def setMainWindow(self,w):
     '''give the SelectionController a reference to a mainWindow'''
     self.mainWindow = w
     self.reset()
+
 
   def setPanelsMode(self, mode):
     '''for all of the selected panels set their mode to "mode"'''
@@ -25,6 +28,7 @@ class SelectionController:
       p.mode = mode
     self.deselectAll()
     self.mainWindow.draw()
+
 
   def deselect(self,screen,panel):
     '''remove the "screen" and/or "panel" from the selected list'''
@@ -40,7 +44,6 @@ class SelectionController:
     except ValueError:
       return False
     return False
-
 
   def screenClick(self,x,y,screen):
     '''
@@ -67,6 +70,7 @@ class SelectionController:
         else:
           self.clearAll()
           self.screens.append( screen )
+
 
   def screenHighlighted(self,x,y,screen):
     '''
@@ -104,7 +108,6 @@ class SelectionController:
     self.clearAll()
 
 
-
   def removelinksbetweenPanelsInDifferentNodes(self):
     for panel in self.panels:
       for p in panel.sharePanels:
@@ -113,7 +116,6 @@ class SelectionController:
 
     self.clearAll()
     self.mainWindow.draw()
-
 
 
   def joinWithOtherScreens(self):
@@ -135,7 +137,6 @@ class SelectionController:
 
     self.clearAll()
     self.mainWindow.draw()
-
 
 
   def join(self):
@@ -235,6 +236,7 @@ class SelectionController:
 
     return False
 
+
   def panelShareVertex(self,panelA,panelB):
     '''return true if panelA and panelB share a corner(vertex)'''
     # create vertices
@@ -320,13 +322,14 @@ class SelectionController:
 
 
   def rectOverlap(self, A, B):
-    ''' returns true if the rectangle of A and B overlap 
+    ''' returns true if the rectangle of A and B overlap
         A, B panels'''
     x1, y1, w1, h1 = A.getRect()
     x2, y2, w2, h2 = B.getRect()
     xOverlap = self.valueInRange(x1, x2, x2 + w2) or self.valueInRange(x2, x1, x1 + w1)
     yOverlap = self.valueInRange(y1, y2, y2 + h2) or self.valueInRange(y2, y1, y1 + h1)
     return xOverlap and yOverlap
+
 
   def selectionOverlap(self, A, B):
     ''' returns true if the rectangle of A and B overlap.
@@ -336,6 +339,7 @@ class SelectionController:
     xOverlap = self.valueInRange(x1, x2, x2 + w2) or self.valueInRange(x2, x1, x1 + w1)
     yOverlap = self.valueInRange(y1, y2, y2 + h2) or self.valueInRange(y2, y1, y1 + h1)
     return xOverlap and yOverlap
+
 
   def panelIntersectionOtherPanels(self, pan, panels):
     '''returns true 'pan' overlaps and panel in 'panels'''
@@ -419,15 +423,18 @@ class SelectionController:
     self.allselect()
     self.initialPanel()
 
+
   def remove(self):
     '''remove all selected panels'''
     if self.mainWindow != None:
       for p in self.panels:
         p.screen.removePanel(p)
 
+
   def deselectAll(self):
     '''clear selected screens and panels lists'''
     self.clearAll()
+
 
   def allselect(self):
     '''add all screens and panels to selected lists'''
@@ -439,6 +446,7 @@ class SelectionController:
         else:
           for p in s.panels:
             self.panels.append( p )
+
 
   def selectedArea(self, selectedRect):
     for p in self.panels:
@@ -453,6 +461,7 @@ class SelectionController:
         return True
     return False
 
+
   def screenSelected(self,screen):
     '''returns true if screen is in selected list'''
     for s in self.screens:
@@ -460,21 +469,26 @@ class SelectionController:
         return True
     return False
 
+
   def clearAll(self):
     '''clear selected screens and panels lists'''
     self.clearPanels()
     self.clearScreens()
 
+
   def clearPanels(self):
     '''clear selected panels list'''
     self.panels = []
+
 
   def clearScreens(self):
     '''clear selected screens list'''
     self.screens = []
 
+
   def appendPanel(self, p):
     '''add a passed in panel, p to the panels list'''
     self.panels.append(p)
+
 
 selcon = SelectionController()

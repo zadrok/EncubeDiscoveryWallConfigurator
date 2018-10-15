@@ -38,6 +38,7 @@ class KeyHandeler:
     elif event.num == 5:
       self.mainWindow.controlPanel.DecreaseSplitNum()
 
+
   def onMouseWheel(self, event):
     ''' what sould happen when mouse wheel is used '''
     if event.delta > 0:
@@ -50,6 +51,7 @@ class KeyHandeler:
     ''' do this when a key is released '''
     # print('Doing up event ' + keySym)
     self.mainWindow.draw()
+
 
   def doEventDown(self,keySym):
     ''' do this when a key is pressed '''
@@ -82,10 +84,13 @@ class KeyHandeler:
 
 
   def keySafe(self,key):
-    ''' return true if key in key menory '''
+    ''' return true if key in key memory
+    @return boolean true if the key is in memory
+    '''
     for k,v in self.keyMemory.items():
       if k == key: return True
     return False
+
 
   def keyUp(self,e):
     ''' do this when a key is released '''
@@ -102,6 +107,7 @@ class KeyHandeler:
     else:
       # not sure how this would happen
       pass
+
 
   def keyDown(self,e):
     ''' do this when a key is pressed '''

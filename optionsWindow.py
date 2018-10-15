@@ -12,6 +12,7 @@ class OptionsWindow(tk.Toplevel):
 
     self.createWidgets()
 
+
   def createWidgets(self):
     ''' sets up components for user to interact with '''
     # menu bar
@@ -35,6 +36,7 @@ class OptionsWindow(tk.Toplevel):
     self.addOptionsWindow = AddOptionsWindow(self)
     self.addOptionsWindow.withdraw()
 
+
   def toggleAddOptionWindow(self,state=None):
     ''' shows and hides the add options window.
         state=<hide/show> '''
@@ -50,6 +52,7 @@ class OptionsWindow(tk.Toplevel):
     elif self.addOptionsWindow.state() == 'withdrawn':
       self.addOptionsWindow.deiconify()
 
+
   def commitOption(self):
       ''' takes values in add options window and adds item '''
       key = self.addOptionsWindow.KEYentryVar.get()
@@ -62,6 +65,7 @@ class OptionsWindow(tk.Toplevel):
       self.toggleAddOptionWindow()
       # reGrid Items
       self.reGridItems()
+
 
   def refreshValues(self):
     ''' checks all options and makes sure items displayed match '''
@@ -85,6 +89,7 @@ class OptionsWindow(tk.Toplevel):
     # make sure there are no gapes between items
     self.reGridItems()
 
+
   def reGridItems(self):
     ''' all items are placed in the grid '''
     self.i = 0
@@ -98,16 +103,19 @@ class OptionsWindow(tk.Toplevel):
       item.reGrid(self.i,self.j)
       self.i += 1
 
+
   def getItem(self,item):
     ''' returns item with same key '''
     for i in self.items:
       if i.key == item: return i
     return None
 
+
   def removeItem(self,item):
     ''' removes item with same key '''
     self.gui.model.removeOption(item.key)
     self.refreshValues()
+
 
 class Item:
   def __init__(self,optionsWindow,i,j,key,value):
@@ -130,19 +138,23 @@ class Item:
     self.entry.grid(row=i,column=j+1)
     self.removeBttn.grid(row=i,column=j+2)
 
+
   def delete(self):
     ''' delets this item '''
     self.optionsWindow.removeItem(self)
 
+
   def callback(self,*args):
     ''' updates this options in the model '''
     self.optionsWindow.gui.model.updateOption( self.key, self.entryVar.get() )
+
 
   def reGrid(self,i,j):
     ''' places this items at given position '''
     self.label.grid(row=i,column=j)
     self.entry.grid(row=i,column=j+1)
     self.removeBttn.grid(row=i,column=j+2)
+
 
   def destroy(self):
     ''' removes this items companents '''
@@ -160,6 +172,7 @@ class AddOptionsWindow(tk.Toplevel):
     self.protocol('WM_DELETE_WINDOW', self.withdraw)
     self.grid()
     self.createWidgets()
+
 
   def createWidgets(self):
     ''' sets up companents for user to interact with '''

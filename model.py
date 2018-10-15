@@ -161,9 +161,11 @@ class Model:
         screens['n'+str(index)] = screen.toDimensionArray()
     return screens
 
+
   def addOption(self,key,value):
     ''' adds key and value to options '''
     self.options.update( {key:value} )
+
 
   def updateOption(self,uKey,uValue):
     ''' finds matching key and sets new value in options '''
@@ -182,12 +184,14 @@ class Model:
     del r[key]
     self.options = r
 
+
   def inOptions(self,item):
     ''' finds if given key is contained in options '''
     for key,value in self.options.items():
       if key == item:
         return True
     return False
+
 
   def printOptions(self):
     ''' prints all options to console '''
@@ -196,6 +200,7 @@ class Model:
     for k,v in self.options.items():
       print( 'K: ' + str(k) + ', v: ' + str(v) )
     print('---------------------')
+
 
   def toJson(self):
     ''' creates a json sting to save to file '''
@@ -213,6 +218,7 @@ class Model:
     data = data.replace("'", '"')
     return data
 
+
   def processVar(self,d):
     ''' creates if value has to be modified when converted to string '''
     if d == '': return '""'
@@ -223,6 +229,7 @@ class Model:
     if d.lower() == 'true': return str(True).lower()
     if self.checkInt(d): return str(d)
     return '"' + str(d) + '"'
+
 
   def checkInt(self,s):
     ''' returns true if given string is a digit '''
@@ -276,6 +283,7 @@ class Model:
       x += w
 
     self.gui.mainWindow.draw()
+
 
   def countScreensPanels(self):
     cS = 0

@@ -6,7 +6,10 @@ import io
 class JsonHandler:
   ''' used to import and export json files '''
   def importFile(self,file):
-    ''' returns a json object '''
+    '''returns a json object
+    @param file this paramter is a file that is opened and loaded in as a config
+    @return config loaded from file
+    '''
     conifg = None
     try:
       conifg = json.load( open(file) )
@@ -15,13 +18,12 @@ class JsonHandler:
     return conifg
 
   def exportFile(self,model,fileName):
-    ''' takes in model and file name, creates file and writes model data to it '''
+    '''takes in model and file name, creates file and writes model data to it
+    @param model the model with all settings that are needed to be exported
+    @param fileName the name of the file to be saved
+    '''
     with io.open(fileName, 'w', encoding='utf-8') as f:
       f.write( model.toJson() )
-
-
-
-
 
 
 # this entire next part is to allow arrays to be printed on the same line when saving (json.dumps()) options to file

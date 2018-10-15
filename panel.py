@@ -32,6 +32,7 @@ class Panel:
 
     self.colorOther = None
 
+
   def getShareID(self):
     if self.shareID == None and len(self.sharePanels) > 0:
       # see if any of the shared panels have an id
@@ -43,6 +44,7 @@ class Panel:
         # if still none generate an id
         self.shareID = self.screen.model.getNextPanelShareID()
     return self.shareID
+
 
   def addSharePanel(self, aPanel):
     if self != aPanel and not self.sharePanelsContains(aPanel):
@@ -62,44 +64,58 @@ class Panel:
     self.width = w
     self.height = h
 
+
   def getId(self):
     return self.id
+
 
   def setId(self, ident):
     self.id = ident
 
+
   def getX(self):
     return self.x
+
 
   def setX(self, x):
     self.x = x
 
+
   def getY(self):
     return self.y
+
 
   def setY(self, y):
     self.y = y
 
+
   def getWidth(self):
     return self.width
+
 
   def setWidth(self, width):
     self.width = width
 
+
   def getHeight(self):
     return self.height
+
 
   def setHeight(self, height):
     self.height = height
 
+
   def getRectangle(self):
     return self.x, self.y, self.width, self.height
+
 
   def get_mode(self):
     return self.mode
 
+
   def set_mode(self, mode):
     self.mode = mode
+
 
   def draw(self):
     color = self.colorCubeNormal
@@ -160,7 +176,6 @@ class Panel:
     return [nx1, ny2, nx2, ny1]
 
 
-
   def divideHorizontally(self,num=2):
     ''' create new panels '''
     x = self.getX()
@@ -183,6 +198,7 @@ class Panel:
       self.screen.panels.append( p )
 
     self.screen.removePanel(self)
+
 
   def divideVertically(self,num=2):
     ''' create new panels '''

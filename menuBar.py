@@ -42,37 +42,46 @@ class MBMain():
 # ------------------------------------------------------------------------------
     mainWindow.root.config(menu=self.menuBar)
 
+
   def save(self):
     ''' calls model.save() '''
     self.mainWindow.gui.model.save()
+
 
   def load(self):
     ''' calls model.load() '''
     self.mainWindow.gui.model.load()
 
+
   def initWindow(self):
     ''' calls gui.setupInitSettingsWindow() '''
     self.mainWindow.gui.setupInitSettingsWindow()
+
 
   def setPanelsImage(self):
     ''' sets selected panels mode to image '''
     selcon.setPanelsMode('image')
 
+
   def setPanelsCube(self):
     ''' sets selected panels mode to cube '''
     selcon.setPanelsMode('cube')
+
 
   def setPanelsGraph(self):
     ''' sets selected panels mode to graph '''
     selcon.setPanelsMode('graph')
 
+
   def removeLinks(self):
     ''' removes any links panels have between nodes '''
     selcon.removelinksbetweenPanelsInDifferentNodes()
 
+
   def joinBetweenNodes(self):
     ''' creates links between selected panels in different nodes '''
     selcon.joinWithOtherScreens()
+
 
   # short hand to call passKeyEvent function
   def doKeyEvent1(self): self.passKeyEvent('1')
@@ -86,14 +95,11 @@ class MBMain():
   def doKeyEvent9(self): self.passKeyEvent('9')
   def doKeyEvent0(self): self.passKeyEvent('0')
 
+
   def passKeyEvent(self,event):
     ''' pass the key event to the key handeler '''
     if self.eventLock:
       self.mainWindow.keyHandeler.doEventDown(event)
-
-  def doNothing(self):
-    ''' used for menu items that are not implemented yet '''
-    print( ' This button does nothing ' )
 
 
 class MBOptions():
@@ -109,8 +115,3 @@ class MBOptions():
     self.menuBar.add_cascade(label = "File", menu = self.fileMenu)
 # ------------------------------------------------------------------------------
     optionsWindow.config(menu=self.menuBar)
-
-  def doNothing(self):
-    ''' used for menu items that are not implemented yet '''
-    print( ' This button does nothing ' )
-

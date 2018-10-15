@@ -43,56 +43,72 @@ class Screen:
     for panel in self.panels:
       panel.draw()
 
+
   def setPosition(self, x, y, w, h):
     self.x = x
     self.y = y
     self.width = w
     self.height = h
 
+
   def getId(self):
     return self.id
+
 
   def setId(self, ident):
     self.id = ident
 
+
   def getX(self):
     return self.x
+
 
   def setX(self, x):
     self.x = x
 
+
   def getY(self):
     return self.y
+
 
   def setY(self, y):
     self.y = y
 
+
   def getWidth(self):
     return self.width
+
 
   def setWidth(self, width):
     self.width = width
 
+
   def getHeight(self):
     return self.height
+
 
   def setHeight(self, height):
     self.height = height
 
+
   def get_canvas(self):
     return self.canvas
+
 
   def set_canvas(self, canvas):
     self.canvas = canvas
 
+
   def getRectangle(self):
     return self.x, self.y, self.width, self.height
+
 
   def countPanels(self):
     count = 0
     for panel in self.panels:
       count += panel.countPanels()
     return count
+
 
   def createPanel(self, method, x, y, width, height):
     p = Panel(
@@ -107,6 +123,7 @@ class Screen:
       )
     self.panels.append( p )
     return p
+
 
   def divideHorizontally(self,num=2):
     ''' create new panels '''
@@ -129,6 +146,7 @@ class Screen:
         )
         self.panels.append( p )
 
+
   def divideVertically(self,num=2):
     ''' create new panels '''
     x = 0
@@ -150,6 +168,7 @@ class Screen:
         )
         self.panels.append( p )
 
+
   def getPanelAtXY(self, x, y):
     for p in self.panels:
       px,py,pw,ph = p.getRect()
@@ -158,6 +177,7 @@ class Screen:
       if (x >= px and x <= pw) and (y >= py and y <= ph):
         return p
     return None
+
 
   def toDimensionArray(self):
     panels = dict()

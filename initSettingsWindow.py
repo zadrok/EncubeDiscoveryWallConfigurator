@@ -13,9 +13,9 @@ class InitSettingsWindow(tk.Toplevel):
 
     self.createWidgets()
 
+
   def createWidgets(self):
     ''' sets up companents for user to interact with '''
-
     self.titleInformationLabel = tk.Label(self, text="Once this information is set it can't be changed")
 
     # number of nodes
@@ -40,7 +40,6 @@ class InitSettingsWindow(tk.Toplevel):
 
     self.loadBttn = tk.Button(self,text='Load from file',command=self.loadSettings)
     self.commitBttn = tk.Button(self,text='Commit',command=self.commitSettings)
-
 
     self.titleInformationLabel.grid(row=1, column=0, columnspan=50, sticky=tk.W, padx=10)
     self.numNodesLabel.grid(row=3, column=0, sticky=tk.W, padx=10)
