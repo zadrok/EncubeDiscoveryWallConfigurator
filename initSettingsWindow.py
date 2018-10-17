@@ -17,6 +17,7 @@ class InitSettingsWindow(tk.Toplevel):
   def createWidgets(self):
     ''' sets up companents for user to interact with '''
     self.titleInformationLabel = tk.Label(self, text="Once this information is set it can't be changed")
+    self.nodeInformationLabel = tk.Label(self, text="A Node is a physical machine that screens are connected to")
 
     # number of nodes
     self.numNodesVar = tk.StringVar(self, value='6')
@@ -25,12 +26,12 @@ class InitSettingsWindow(tk.Toplevel):
 
     # number of columns per node
     self.numScreensColumnsVar = tk.StringVar(self, value='1')
-    self.numScreensColumnsLabel = tk.Label(self, text='Number of columns in Node:')
+    self.numScreensColumnsLabel = tk.Label(self, text='Number of Screen columns in Node:')
     self.numScreensColumnsEntry = tk.Entry(self, textvariable=self.numScreensColumnsVar, width=30)
 
     # number of rows per node
     self.numScreensRowsVar = tk.StringVar(self, value='2')
-    self.numScreensRowsLabel = tk.Label(self, text='Number of rows in Node:')
+    self.numScreensRowsLabel = tk.Label(self, text='Number of Screen rows in Node:')
     self.numScreensRowsEntry = tk.Entry(self, textvariable=self.numScreensRowsVar, width=30)
 
     # aspect ratio of each screen
@@ -41,7 +42,9 @@ class InitSettingsWindow(tk.Toplevel):
     self.loadBttn = tk.Button(self,text='Load from file',command=self.loadSettings)
     self.commitBttn = tk.Button(self,text='Commit',command=self.commitSettings)
 
+    self.loadBttn.grid(row=0, column=0, sticky=tk.W, padx=10, pady=10)
     self.titleInformationLabel.grid(row=1, column=0, columnspan=50, sticky=tk.W, padx=10)
+    self.nodeInformationLabel.grid(row=2, column=0, columnspan=50, sticky=tk.W, padx=10)
     self.numNodesLabel.grid(row=3, column=0, sticky=tk.W, padx=10)
     self.numNodesEntry.grid(row=3, column=1, sticky=tk.W)
     self.numScreensRowsLabel.grid(row=4, column=0, sticky=tk.W, padx=10)
@@ -50,7 +53,6 @@ class InitSettingsWindow(tk.Toplevel):
     self.numScreensColumnsEntry.grid(row=5, column=1, sticky=tk.W)
     self.aspectRatioScreensLabel.grid(row=6, column=0, sticky=tk.W, padx=10)
     self.aspectRatioScreensEntry.grid(row=6, column=1, sticky=tk.W)
-    self.loadBttn.grid(row=0, column=0, sticky=tk.W, padx=10, pady=10)
     self.commitBttn.grid(row=11,column=1, sticky=tk.E)
 
 
