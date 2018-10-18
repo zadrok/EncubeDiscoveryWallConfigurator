@@ -151,10 +151,10 @@ class Panel:
 
   def getRect(self):
     ''' returns pixel location for panel '''
-    x = math.floor( ( self.screen.getWidth() * self.getX() ) + self.screen.getX() )
-    y = math.floor( ( self.screen.getHeight() * self.getY() ) + self.screen.getY() )
-    w = math.floor( self.screen.getWidth() * self.getWidth() )
-    h = math.floor( self.screen.getHeight() * self.getHeight() )
+    x = round( ( self.screen.getWidth() * self.getX() ) + self.screen.getX(), 2 )
+    y = round( ( self.screen.getHeight() * self.getY() ) + self.screen.getY(), 2 )
+    w = round( self.screen.getWidth() * self.getWidth(), 2 )
+    h = round( self.screen.getHeight() * self.getHeight(), 2 )
     return x,y,w,h
 
 
@@ -174,7 +174,7 @@ class Panel:
     ny2 = y2 / self.screen.getHeight()
     ny2 = abs((ny2 - 1) * 1)
 
-    return [round(nx1, 1), round(ny2, 1), round(nx2, 1), round(ny1, 1)]
+    return [round(nx1, 2), round(ny2, 2), round(nx2, 2), round(ny1, 2)]
     
 
 

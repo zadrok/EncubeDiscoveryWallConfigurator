@@ -15,7 +15,7 @@ class Model:
     self.max_height = 0
     self.n_panels   = 0
     self.gui = gui
-    self.currentPanelShareID = 0;
+    self.currentPanelShareID = 0
     # options
     self.defaultConfigFile = 'defaultConfig.json'
     self.options = JsonHandler().importFile( self.defaultConfigFile )
@@ -101,14 +101,15 @@ class Model:
             y1 = dim[1]
             x2 = dim[2]
             y2 = dim[3]
-
+            flippedY1 = abs(y1 - 1) * 1
+            flippedY2 = abs(y2 - 1) * 1
             # print( 'dim ' + str(dim)  )
             # print( 'x1 ' + str(x1) + ", y1 " + str(y1) + ', x2 ' + str(x2) + ', y2 ' + str(y2)  )
 
             x = x1
-            y = y1
+            y = flippedY1
             w = x2 - x1
-            h = y2 - y1
+            h = flippedY2 - flippedY1
 
             # print('x ' + str(x) + ' y ' + str(y) + ' w ' + str(w) + ' h ' + str(h))
 
