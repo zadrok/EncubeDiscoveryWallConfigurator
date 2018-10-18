@@ -158,7 +158,7 @@ class Panel:
     return x,y,w,h
 
 
-  def toS2plotDimensions(self):
+  def toS2plotDimensions(self, roundValue=2):
     x,y,w,h = self.getRect()
     x1 = x - self.screen.getX()
     y1 = y - self.screen.getY()
@@ -173,8 +173,7 @@ class Panel:
     ny1 = abs((ny1 - 1) * 1)
     ny2 = y2 / self.screen.getHeight()
     ny2 = abs((ny2 - 1) * 1)
-
-    return [round(nx1, 2), round(ny2, 2), round(nx2, 2), round(ny1, 2)]
+    return [round(nx1, roundValue), round(ny2, roundValue), round(nx2, roundValue), round(ny1, roundValue)]
     
 
 
