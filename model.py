@@ -94,13 +94,13 @@ class Model:
           screen = self.screens[ int( n ) ] # current screen
           screen.panels = []
           for pKey,pValue in nValue.items():
-            # print('x ' + str( pValue['dimensions'][0] ) + ' y ' + str( pValue['dimensions'][1] ) + ' w ' + str( pValue['dimensions'][2] ) + ' h ' + str( pValue['dimensions'][3] ))
             # print( 'pKey: ' + str(pKey) )
+            # print('x ' + str( pValue['dimensions'][0] ) + ' y ' + str( pValue['dimensions'][1] ) + ' w ' + str( pValue['dimensions'][2] ) + ' h ' + str( pValue['dimensions'][3] ))
             dim = pValue['dimensions']
             x1 = dim[0]
-            y1 = dim[1]
+            y1 = dim[3]
             x2 = dim[2]
-            y2 = dim[3]
+            y2 = dim[1]
             flippedY1 = abs(y1 - 1) * 1
             flippedY2 = abs(y2 - 1) * 1
             # print( 'dim ' + str(dim)  )
@@ -109,7 +109,7 @@ class Model:
             x = x1
             y = flippedY1
             w = x2 - x1
-            h = flippedY2 - flippedY1
+            h = abs( flippedY2 - flippedY1 )
 
             # print('x ' + str(x) + ' y ' + str(y) + ' w ' + str(w) + ' h ' + str(h))
 
